@@ -1,0 +1,166 @@
+{
+    "intents": [
+        {
+            "tag": "saludos",
+            "patterns": [
+                "hola",
+                "qué tal",
+                "cómo estás",
+                "buenos días",
+                "buenas tardes",
+                "buenas noches",
+                "cómo va todo",
+                "qué pasa"
+            ],
+            "responses": [
+                "¡Hola! ¿En qué puedo ayudarte?",
+                "¡Hey! ¿Buscas algún producto?",
+                "¡Saludos! Estoy aquí para ayudarte con nuestras soluciones de automatización."
+            ]
+        },
+        {
+            "tag": "nombre",
+            "patterns": [
+                "¿Cuál es tu nombre?",
+                "¿Me puedes decir tu nombre?",
+                "¿Cómo te llamas?"
+            ],
+            "responses": [
+                "Soy un asistente virtual de ventas, diseñado para ayudarte a encontrar la mejor solución de automatización.",
+                "Llámame Asistente. Estoy aquí para guiarte en la elección de nuestros productos."
+            ]
+        },
+        {
+            "tag": "edad",
+            "patterns": [
+                "¿Cuál es tu edad?",
+                "¿Cuántos años tienes?",
+                "¿Edad?"
+            ],
+            "responses": [
+                "Soy un chatbot, siempre listo para ayudarte en cualquier momento.",
+                "No tengo una edad específica, ¡pero siempre estoy en mi mejor momento!"
+            ]
+        },
+        {
+            "tag": "productos",
+            "patterns": [
+                "¿Qué productos ofrecen?",
+                "¿Qué tipos de automatización tienen?",
+                "¿Qué soluciones de IA tienen?",
+                "¿Qué opciones de automatización ofrecen?"
+            ],
+            "responses": [
+                "Ofrecemos soluciones de automatización en ventas, atención al cliente, y marketing.",
+                "Nuestros productos incluyen bots para ventas, asistentes virtuales de atención al cliente, y sistemas de IA para marketing personalizado.",
+                "Tenemos soluciones adaptables en IA, desde chatbots hasta automatización avanzada para diversas industrias."
+            ]
+        },
+        {
+            "tag": "precios",
+            "patterns": [
+                "¿Cuánto cuestan sus productos?",
+                "¿Cuáles son los precios de sus soluciones?",
+                "¿Tienen algún plan o paquete?",
+                "¿Ofrecen precios personalizados?"
+            ],
+            "responses": [
+                "Nuestros precios varían según la solución y el nivel de personalización. ¿Te gustaría conocer un presupuesto?",
+                "Tenemos paquetes estándar y planes personalizados según las necesidades de cada negocio. ¿Te gustaría saber más?"
+            ]
+        },
+        {
+            "tag": "soporte",
+            "patterns": [
+                "¿Ofrecen soporte?",
+                "¿Hay soporte técnico?",
+                "¿Puedo obtener ayuda después de la compra?",
+                "¿Cuentan con servicio de soporte?"
+            ],
+            "responses": [
+                "Sí, ofrecemos soporte técnico y asistencia post-venta para asegurarnos de que nuestras soluciones funcionen perfectamente para ti.",
+                "Contamos con un equipo de soporte listo para ayudarte en cada paso de la implementación y más allá."
+            ]
+        },
+        {
+            "tag": "funciones",
+            "patterns": [
+                "¿Qué funcionalidades tiene el bot?",
+                "¿Qué puede hacer el sistema de automatización?",
+                "¿Qué capacidades tiene la IA?",
+                "¿Qué hace el asistente virtual?"
+            ],
+            "responses": [
+                "Nuestro bot puede gestionar consultas, realizar ventas automatizadas, y proveer recomendaciones personalizadas.",
+                "Nuestras soluciones de IA tienen funcionalidades de análisis de datos, marketing automatizado, y más, adaptadas a tus necesidades.",
+                "El asistente virtual ayuda a tus clientes a resolver dudas, encontrar productos, y realizar pedidos automáticamente."
+            ]
+        },
+        {
+            "tag": "implementacion",
+            "patterns": [
+                "¿Cómo se implementa el sistema?",
+                "¿Es fácil de instalar?",
+                "¿Cómo integro la solución en mi negocio?",
+                "¿Es compatible con mis sistemas actuales?"
+            ],
+            "responses": [
+                "La implementación es rápida y sencilla, y nuestro equipo te asiste en cada paso.",
+                "Nuestras soluciones están diseñadas para integrarse con la mayoría de los sistemas. ¿Quieres saber más sobre la instalación?"
+            ]
+        },
+        {
+            "tag": "tiempo_respuesta",
+            "patterns": [
+                "¿Cuánto tiempo toma responder?",
+                "¿Qué tan rápido es el bot?",
+                "¿Es el sistema rápido?",
+                "¿Cómo es la velocidad de respuesta?"
+            ],
+            "responses": [
+                "Nuestros sistemas responden en tiempo real, ofreciendo una experiencia fluida y rápida a tus clientes.",
+                "La velocidad de respuesta es casi inmediata, optimizada para que tus clientes obtengan respuestas rápidamente."
+            ]
+        },
+        {
+            "tag": "personalizacion",
+            "patterns": [
+                "¿Puedo personalizar el sistema?",
+                "¿Se pueden ajustar las respuestas?",
+                "¿Es adaptable a mi negocio?",
+                "¿Se puede personalizar el bot?"
+            ],
+            "responses": [
+                "¡Claro! Todas nuestras soluciones son personalizables para adaptarse a la imagen y necesidades de tu negocio.",
+                "Podemos ajustar las respuestas, funciones y más para que se adapten perfectamente a tu empresa."
+            ]
+        },
+        {
+            "tag": "demo",
+            "patterns": [
+                "¿Puedo probar una demo?",
+                "¿Tienen versión de prueba?",
+                "¿Hay una demostración del sistema?",
+                "¿Ofrecen una prueba gratuita?"
+            ],
+            "responses": [
+                "Ofrecemos una demo gratuita para que explores nuestras funcionalidades. ¿Te gustaría agendar una?",
+                "¡Claro! Podemos organizar una demostración para que veas el sistema en acción. Solo dime cuándo te viene bien."
+            ]
+        },
+        {
+            "tag": "fin_preguntas",
+            "patterns": [
+                "No tengo más preguntas",
+                "Gracias, eso es todo",
+                "Eso responde mis dudas",
+                "Perfecto, gracias"
+            ],
+            "responses": [
+                "¡Gracias por tu interés! Si tienes más preguntas, no dudes en volver.",
+                "Fue un placer ayudarte. ¡Espero que encuentres lo que buscas!",
+                "Estamos aquí para ayudarte en cualquier momento."
+            ]
+        }
+    ]
+}

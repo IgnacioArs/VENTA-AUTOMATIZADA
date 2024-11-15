@@ -4,8 +4,10 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const config_1 = require("@nestjs/config");
 const swagger_1 = require("@nestjs/swagger");
+const logging_interceptor_1 = require("./interceptors/logging.interceptor");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    app.useGlobalInterceptors(new logging_interceptor_1.LoggingInterceptor());
     const configService = app.get(config_1.ConfigService);
     app.enableCors({
         origin: configService.get('cors'),
@@ -20,14 +22,14 @@ async function bootstrap() {
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, swaggerConfig);
     swagger_1.SwaggerModule.setup('api/nestjs', app, document);
-    const port = configService.get('port') || 3000;
+    const port = configService.get('port');
     await app.listen(port);
     console.clear();
     console.log(`██████████████████████████████████████████████████████████████████`);
     console.log(`██**************************************************************██`);
     console.log(`██**************************************************************██`);
     console.log(`   SECURITY application is running at: http://localhost:${port}   `);
-    console.log(`   Swagger Docs available at: http://localhost:${port}/api-docs   `);
+    console.log(`   Swagger Docs available at: http://localhost:${port}/api/nestjs   `);
     console.log(`██**************************************************************██`);
     console.log(`██**************************************************************██`);
     console.log(`██████████████████████████████████████████████████████████████████`);
