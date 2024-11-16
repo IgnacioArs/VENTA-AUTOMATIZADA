@@ -42,8 +42,9 @@ El proyecto está organizado de la siguiente manera:
 
 2. **Servicios Implementados**:
    - **Frontend**: Aplicación estática o SPA (React).
-   - **NestJS Backend**: API REST escrita en Node.js.
-   - **Python Service**: Microservicio adicional en Python.
+   - **NestJS Backend BFF**: API REST escrita en Node.js.
+   - **NestJS Backend SECURITY**: API REST escrita en Node.js.
+   - **Python Service CHATBOT REDES NEURONALES**: Microservicio adicional en Python.
    - **NGINX**: Servidor proxy inverso para enrutar tráfico.
 
 3. **Control de Tráfico con Ingress**:
