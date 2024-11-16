@@ -12,8 +12,9 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const config_1 = require("@nestjs/config");
 const configuration_1 = require("./config/configuration");
-const auth_module_1 = require("./modules/modules/auth/auth.module");
-const users_module_1 = require("./modules/modules/users/users.module");
+const auth_module_1 = require("./modules/auth/auth.module");
+const users_module_1 = require("./modules/users/users.module");
+const chat_module_1 = require("./modules/chat/chat.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -26,7 +27,8 @@ exports.AppModule = AppModule = __decorate([
                 load: [configuration_1.default],
             }),
             users_module_1.UsersModule,
-            auth_module_1.AuthModule
+            auth_module_1.AuthModule,
+            chat_module_1.ChatBotModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

@@ -1,0 +1,257 @@
+/* Estilos generales para el contenedor del navbar */
+/* Estilos generales para el contenedor del navbar */
+.navbar {
+    background-image: url('../components/images/NovaEdge-.png');
+    background-size: 40%;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-color: #e6e6e6;
+    /* Fondo sólido sin transparencia */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: 560;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid #b1b1b1;
+}
+
+
+.navbar:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-menu,
+.navbar-menu-dos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar-menu {
+    margin-right: auto;
+    /* Alinea el menú a la izquierda */
+}
+
+.navbar-menu-dos {
+    margin-left: auto;
+    /* Alinea el menú a la derecha */
+}
+
+.navbar-menu li,
+.navbar-menu-dos li {
+    margin: 0 10px;
+}
+
+
+
+.navbar-menu-tres {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-left: 20px;
+}
+
+
+.navbar-menu-tres {
+    margin-left: auto;
+    /* Alinea el menú a la derecha */
+}
+
+.navbar-menu li,
+.navbar-menu-tres li {
+    margin: 0 0px;
+    margin-left: 0px;
+}
+
+/* Estilos generales para los enlaces de la navbar */
+.navbar-link {
+    color: #000000;
+    /* Color negro para los enlaces */
+    text-decoration: none;
+    /* Elimina el subrayado */
+    font-size: 1.1em;
+    /* Tamaño de fuente */
+    font-family: Arial, sans-serif;
+    /* Fuente de los enlaces */
+    position: relative;
+    overflow: hidden;
+    padding: 0.5rem 1rem;
+    /* Añade algo de espacio alrededor del texto */
+    transition: border-color 0.3s ease, color 0.3s ease;
+    /* Transiciones para el cambio de color del borde y texto */
+}
+
+/* Estilo fijo para el enlace de Registro */
+.contorno {
+    display: inline-block;
+    border: 1px solid #222831;
+    /* Borde delgado fijo para el contorno */
+    border-radius: 5px;
+    /* Bordes redondeados para el contorno */
+    padding: 5px;
+    /* Espacio alrededor del texto */
+    margin: 0 10px;
+    /* Espacio horizontal */
+}
+
+.contorno .navbar-link {
+    padding: 10px 20px;
+    /* Espacio adicional dentro del enlace */
+    color: #222831;
+    /* Color del texto dentro del contorno */
+}
+
+/* Cambia el color del texto al hacer hover */
+.navbar-link:hover {
+    color: #222831;
+    /* Color para hover */
+}
+
+/* Estilo para el enlace activo */
+.navbar-link.active::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    /* Línea más delgada */
+    background: linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0));
+    bottom: 0;
+    left: -100%;
+    animation: waterWave 1s forwards;
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
+    /* Sombra en la línea */
+}
+
+/* Animación del efecto de agua */
+@keyframes waterWave {
+    0% {
+        left: -50%;
+    }
+
+    50% {
+        left: 0;
+    }
+
+    100% {
+        left: 0%;
+    }
+}
+
+/* Efecto de agua al hacer hover sobre cualquier enlace */
+.navbar-link:hover::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    /* Línea más delgada */
+    background: linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0));
+    bottom: 0;
+    left: 0;
+    box-shadow: 0px 0px 5px rgb(255, 255, 255);
+    /* Sombra en la línea */
+}
+
+/* Estilo para el menú desplegable */
+.user-menu {
+    position: relative;
+}
+
+.user-menu span {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #e6e6e6;
+    color: #000000;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    position: relative;
+}
+
+.user-menu span:after {
+    content: '⌄';
+    font-size: 12px;
+    margin-left: 5px;
+    position: relative;
+    top: 2px;
+    /* Ajusta este valor para centrar verticalmente el símbolo */
+}
+
+.user-menu-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    font-size: 15px;
+    background-color: #222831;
+    color: #000000;
+    border-radius: 5px;
+    width: 170px;
+    box-shadow: 0px 0px 10px rgba(34, 40, 49, 0.8);
+    z-index: 1000;
+}
+
+.user-menu-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: solid;
+    color: #fff;
+    border-bottom: 1px solid #000000;
+}
+
+.user-menu-content a:hover {
+    background-color: #444;
+}
+
+.user-menu:hover .user-menu-content {
+    display: block;
+}
+
+.logout-button {
+    background-color: #333;
+    color: #333;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logout-button:hover {
+    background-color: #333;
+}
+
+.imagen {
+    text-align: center;
+}
+
+.imagen img {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    padding-top: 10px;
+    pointer-events: none;
+    user-select: none;
+}
+
+.inicio-imagen {
+    width: 30px;
+    height: 40px;
+    display: inline-block;
+    padding-top: 10px;
+    pointer-events: none;
+    user-select: none;
+}

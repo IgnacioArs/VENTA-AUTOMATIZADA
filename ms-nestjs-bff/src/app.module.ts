@@ -3,8 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
-import { AuthModule } from './modules/modules/auth/auth.module';
-import { UsersModule } from './modules/modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { ChatBotModule } from './modules/chat/chat.module';
 
 
 @Module({
@@ -15,7 +16,8 @@ import { UsersModule } from './modules/modules/users/users.module';
       load: [configuration],
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    ChatBotModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -3,5 +3,6 @@ declare const _default: () => {
     cors: string;
     secret: string;
     msSecurity: string;
+    msPython: string;
 };
 export default _default;

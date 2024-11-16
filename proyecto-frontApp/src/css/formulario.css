@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(1.1);
+        opacity: 0;
+    }
+
+    200% {
+        transform: scale(2.3);
+        opacity: 0;
+    }
+
+    400% {
+        transform: scale(2);
+    }
+}
+
+.formulario-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #ffffff;
+    background-size: cover;
+    position: relative;
+    margin-top: 50px;
+    animation: bounceIn 0.8s ease;
+}
+
+.formulario-content {
+    position: relative;
+    padding: 30px;
+    width: 100%;
+    max-width: 360px;
+    background: #222831;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    color: rgb(255, 255, 255);
+    animation: bounceIn 0.8s ease;
+}
+
+header {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.field {
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.field input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgb(255, 255, 255);
+    color: #222831;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.field input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.space {
+    margin-top: 20px;
+}
+
+.pass a:hover {
+    text-decoration: underline;
+}
+
+/* Botones */
+button {
+    background-color: #1e4568;
+    border: none;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #1e4568;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.textA {
+    color: white;
+}
