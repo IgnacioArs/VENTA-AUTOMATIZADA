@@ -1,194 +1,83 @@
-/* Estilos generales para el contenedor del navbar */
-/* Estilos generales para el contenedor del navbar */
+/* Estilos generales para el navbar */
 .navbar {
-    background-image: url('../components/images/NovaEdge-.png');
-    background-size: 40%;
-    background-position: left;
-    background-repeat: no-repeat;
-    background-color: #e6e6e6;
-    /* Fondo sólido sin transparencia */
-    padding: 10px 20px;
+    background-color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
+    padding: 15px 30px;
+    height: 80px;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    font-weight: 560;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid #b1b1b1;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    font-family: 'Arial', sans-serif;
 }
 
-
-.navbar:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-.navbar-menu,
-.navbar-menu-dos {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-.navbar-menu {
-    margin-right: auto;
-    /* Alinea el menú a la izquierda */
-}
-
-.navbar-menu-dos {
-    margin-left: auto;
-    /* Alinea el menú a la derecha */
-}
-
-.navbar-menu li,
-.navbar-menu-dos li {
-    margin: 0 10px;
-}
-
-
-
-.navbar-menu-tres {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    margin-left: 20px;
-}
-
-
-.navbar-menu-tres {
-    margin-left: auto;
-    /* Alinea el menú a la derecha */
-}
-
-.navbar-menu li,
-.navbar-menu-tres li {
-    margin: 0 0px;
-    margin-left: 0px;
-}
-
-/* Estilos generales para los enlaces de la navbar */
-.navbar-link {
-    color: #000000;
-    /* Color negro para los enlaces */
-    text-decoration: none;
-    /* Elimina el subrayado */
-    font-size: 1.1em;
-    /* Tamaño de fuente */
-    font-family: Arial, sans-serif;
-    /* Fuente de los enlaces */
-    position: relative;
-    overflow: hidden;
-    padding: 0.5rem 1rem;
-    /* Añade algo de espacio alrededor del texto */
-    transition: border-color 0.3s ease, color 0.3s ease;
-    /* Transiciones para el cambio de color del borde y texto */
-}
-
-/* Estilo fijo para el enlace de Registro */
-.contorno {
-    display: inline-block;
-    border: 1px solid #222831;
-    /* Borde delgado fijo para el contorno */
+/* Contenedor del logo */
+.navbar-logo {
+    width: 425px;
+    /* Aumentar el tamaño del ancho del logo */
+    height: 75px;
+    /* Aumentar el tamaño del alto del logo */
+    background-image: url('../components/images/logoEmpresa.jpg');
+    /* Ruta al logo */
+    background-size: cover;
+    /* Asegura que el logo cubra todo el contenedor */
+    /*    background-repeat: no-repeat; */
+    background-position: center;
+    margin-left: 400px;
+    /* Espacio entre el logo y el menú */
     border-radius: 5px;
-    /* Bordes redondeados para el contorno */
-    padding: 5px;
-    /* Espacio alrededor del texto */
-    margin: 0 10px;
-    /* Espacio horizontal */
 }
 
-.contorno .navbar-link {
-    padding: 10px 20px;
-    /* Espacio adicional dentro del enlace */
-    color: #222831;
-    /* Color del texto dentro del contorno */
+
+
+/* Menú principal */
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-/* Cambia el color del texto al hacer hover */
+.navbar-menu li {
+    margin: 0 15px;
+}
+
+.navbar-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+}
+
 .navbar-link:hover {
-    color: #222831;
-    /* Color para hover */
+    color: #007bff;
 }
 
-/* Estilo para el enlace activo */
-.navbar-link.active::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    /* Línea más delgada */
-    background: linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0));
-    bottom: 0;
-    left: -100%;
-    animation: waterWave 1s forwards;
-    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
-    /* Sombra en la línea */
-}
-
-/* Animación del efecto de agua */
-@keyframes waterWave {
-    0% {
-        left: -50%;
-    }
-
-    50% {
-        left: 0;
-    }
-
-    100% {
-        left: 0%;
-    }
-}
-
-/* Efecto de agua al hacer hover sobre cualquier enlace */
-.navbar-link:hover::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    /* Línea más delgada */
-    background: linear-gradient(90deg, rgb(0, 0, 0), rgb(0, 0, 0), rgb(0, 0, 0));
-    bottom: 0;
-    left: 0;
-    box-shadow: 0px 0px 5px rgb(255, 255, 255);
-    /* Sombra en la línea */
-}
-
-/* Estilo para el menú desplegable */
+/* Menú desplegable */
 .user-menu {
     position: relative;
+    cursor: pointer;
 }
 
 .user-menu span {
-    cursor: pointer;
-    display: inline-flex;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #007bff;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 10px;
-    background-color: #e6e6e6;
-    color: #000000;
-    border-radius: 5px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 20px;
-    position: relative;
 }
 
 .user-menu span:after {
-    content: '⌄';
-    font-size: 12px;
+    content: '▼';
     margin-left: 5px;
-    position: relative;
-    top: 2px;
-    /* Ajusta este valor para centrar verticalmente el símbolo */
+    font-size: 0.8rem;
 }
 
 .user-menu-content {
@@ -197,61 +86,97 @@
     top: 100%;
     right: 0;
     font-size: 15px;
-    background-color: #222831;
-    color: #000000;
+    background-color: #ffffff;
+    color: #007bff;
     border-radius: 5px;
     width: 170px;
+    /* Ancho del menú */
     box-shadow: 0px 0px 10px rgba(34, 40, 49, 0.8);
     z-index: 1000;
+    text-align: center;
+    /* Centra el contenido */
 }
 
 .user-menu-content a {
     display: block;
     padding: 10px;
-    text-decoration: solid;
-    color: #fff;
-    border-bottom: 1px solid #000000;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.3s ease;
 }
 
 .user-menu-content a:hover {
-    background-color: #444;
+    background: #c7cace;
 }
 
 .user-menu:hover .user-menu-content {
     display: block;
 }
 
+/* Botón de logout */
 .logout-button {
-    background-color: #333;
-    color: #333;
+    background-color: #ff4d4d;
+    /* Rojo claro */
+    color: #ffffff;
     border: none;
-    padding: 10px;
+    padding: 10px 0;
+    /* Ajusta el padding vertical */
+    width: 100%;
+    /* Hace que el botón ocupe todo el ancho del menú */
     cursor: pointer;
     border-radius: 5px;
+    margin: 10px 0;
+    /* Espaciado entre elementos */
+    text-align: center;
+    /* Centra el texto dentro del botón */
 }
 
 .logout-button:hover {
-    background-color: #333;
+    background-color: #f32424;
+    /* Color rojo oscuro para hover */
 }
 
-.imagen {
-    text-align: center;
-}
-
-.imagen img {
-    width: 30px;
-    height: 30px;
+.navbar li {
     display: inline-block;
-    padding-top: 10px;
-    pointer-events: none;
-    user-select: none;
+    margin: 0 10px;
+    position: relative;
+    /* Necesario para el subrayado */
 }
 
-.inicio-imagen {
-    width: 30px;
-    height: 40px;
-    display: inline-block;
-    padding-top: 10px;
-    pointer-events: none;
-    user-select: none;
+.navbar img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    vertical-align: middle;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    /* Animación de interacción */
+}
+
+/* Estilo para el subrayado en el enlace activo */
+.navbar li .active::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    /* Debajo del enlace */
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #152e49;
+    /* Cambia el color según el diseño */
+    transition: width 0.3s ease;
+    /* Animación del subrayado */
+}
+
+/* Subrayado solo cuando esté activo */
+.navbar li .active:hover::after {
+    width: 100%;
+    /* Aparece el subrayado completo al pasar el mouse */
+}
+
+/* Efecto interactivo al hacer hover */
+.navbar img:hover {
+    transform: scale(1.1);
+    /* Aumenta ligeramente el tamaño */
+    opacity: 0.8;
+    /* Le da un efecto de "toque" */
 }

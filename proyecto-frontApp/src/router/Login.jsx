@@ -52,7 +52,7 @@ const Login = () => {
         }
 
         const resLogin = await login(payloadLoginSession);
-        if (resLogin === 400 || resLogin === 401 || resLogin === 404) {
+        if (resLogin === 400 || resLogin === 401 || resLogin === 404 || resLogin === 409) {
             setAbrirModal(true);
             setMensajeModal('Error al ingresar los datos correspondientes');
             return

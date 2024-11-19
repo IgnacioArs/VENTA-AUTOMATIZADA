@@ -1,20 +1,36 @@
+/* Estilos generales del footer */
 .footer {
     background-color: #222831;
     color: #fff;
-    padding: 20px 0;
+    padding: 30px 0;
+    font-family: 'Arial', sans-serif;
     text-align: center;
+    position: relative;
 }
 
+/* Contenedor del footer */
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
+/* Logo en el footer */
+.footer-logo {
+    margin-bottom: 20px;
+}
+
+.footer-logo-img {
+    width: 150px;
+    /* Ajusta el tamaño del logo */
+    height: auto;
+}
+
+/* Navegación del footer */
 .footer-nav ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 20px 0;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -28,25 +44,61 @@
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
 }
 
 .footer-nav a:hover {
+    color: #00aaff;
+    /* Nuevo color al hacer hover */
     text-decoration: underline;
 }
 
-.footer-info {
+/* Redes sociales */
+.footer-socials {
     margin-top: 20px;
+}
+
+.footer-social-icon {
+    color: #fff;
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-social-icon:hover {
+    color: #00aaff;
+}
+
+/* Información en el footer */
+.footer-info {
+    margin-top: 30px;
 }
 
 .footer-info p {
     margin: 5px 0;
+    font-size: 0.9rem;
 }
 
 .footer-info a {
     color: #00aaff;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .footer-info a:hover {
+    color: #fff;
     text-decoration: underline;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .footer-nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-nav li {
+        margin: 10px 0;
+    }
 }

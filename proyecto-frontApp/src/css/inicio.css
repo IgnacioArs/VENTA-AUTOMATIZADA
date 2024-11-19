@@ -1,4 +1,4 @@
-/* Estilos generales para el contenedor de inicio */
+/* Animaciones generales */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -11,14 +11,54 @@
     }
 }
 
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Estilos generales */
 body,
 html {
     overflow-x: hidden;
     /* Oculta el desbordamiento horizontal */
 }
 
+/* Sección de inicio */
 .inicio-container {
-    font-family: Arial, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: #000000;
     background-color: hsl(0, 0%, 100%);
     min-height: 100vh;
@@ -27,13 +67,12 @@ html {
     align-items: center;
     text-align: center;
     padding: 2rem;
-    margin-top: 50px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 25px;
+    margin-top: 80px;
+    font-size: 18px;
     animation: fadeInUp 1s ease-in-out;
 }
 
-/* Estilos para el encabezado */
+/* Sección de encabezado */
 .col-md-6-3 {
     display: flex;
     align-items: center;
@@ -41,23 +80,35 @@ html {
     width: 100%;
     height: 60vh;
     position: relative;
-    background-color: #f0f0f0;
-    /* Color de fondo en caso de que no haya imagen */
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     animation: fadeInUp 1s ease-in-out;
     margin-top: 50px;
 }
 
+/* Imagen con logoiados.png (sin animación) */
 .image-container {
-    background: url('../components/images/fondoHeaderH1P.png') no-repeat center center;
+    background: url('../components/images/logoiados.png') no-repeat center center;
     background-size: cover;
+    width: 50%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Imagen con logoia.png (sin animación) */
+.image-container-ia {
+    background: url('../components/images/logoia.png') no-repeat center center;
+    background-size: contain;
     width: 50%;
     height: 100%;
     border-radius: 10px;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Contenedor de texto */
 .text-container {
     width: 50%;
     padding: 2rem;
@@ -65,77 +116,131 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    animation: fadeInLeft 1s ease-in-out;
 }
 
+/* Títulos de texto */
 .text-container h1 {
     margin-bottom: 1rem;
-    font-size: 2rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    animation: fadeInRight 1s ease-in-out;
 }
 
+/* Descripción de texto */
 .text-container p {
     font-size: 1.2rem;
+    line-height: 1.6;
+    color: #333;
+    animation: fadeInUp 1.2s ease-in-out;
 }
 
-/* Estilos para col-md-6-1 */
-.col-md-6-1 {
-    background-color: rgb(255, 255, 255);
-    /* Blanco un poco oscuro y transparente */
+/* Sección de características */
+.features-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.feature-box {
+    background-color: #f9f9f9;
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-    margin-bottom: 50px;
-    width: 100%;
+    width: 30%;
+    margin-bottom: 30px;
     animation: fadeInUp 1s ease-in-out;
+    text-align: center;
 }
 
-/* Estilos para col-md-6-2 */
-.col-md-6-2 {
-    background: url('../components/images/logoia.png') no-repeat center center;
-    background-size: cover;
-    /* Ajusta la imagen para que cubra el área */
-    color: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.0);
-    margin-top: 50px;
-    margin-bottom: 50px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* Espacio entre texto e imagen */
-    text-align: left;
-    /* Alinea el texto a la izquierda */
-    gap: 1rem;
-    /* Espacio entre el texto y la imagen */
-    animation: fadeInUp 1s ease-in-out;
+/* Características */
+.feature-box h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    animation: bounce 1s infinite;
 }
 
-/* Aplicar el efecto de desplazamiento suave */
-.scroll-fade {
-    position: relative;
-    transition: transform 0.5s ease-in-out;
-}
-
-/* Botones */
-.cta-button {
-    background-color: #222831;
-    border: none;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
+.feature-box p {
     font-size: 1rem;
-    border-radius: 0.3rem;
+    color: #666;
+}
+
+
+
+.testimonial {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    margin-bottom: 30px;
+    text-align: center;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.testimonial h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.testimonial p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Círculos */
+.circles-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.circle {
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    padding: 2rem;
+    width: 300px;
+    height: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.circle h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.circle p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.circle:hover {
+    transform: scale(1.2);
+    /* Efecto hover */
+}
+
+/* Botones de llamada a la acción */
+.cta-button {
+    margin-top: 10px;
+    background-color: #333;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s ease;
 }
 
 .cta-button:hover {
-    background-color: #444;
-    transform: translateY(-2px);
-}
-
-.cta-button:active {
     background-color: #333;
-    transform: translateY(0);
+    animation: bounce 1s infinite;
 }

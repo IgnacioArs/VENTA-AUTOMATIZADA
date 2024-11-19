@@ -1,0 +1,40 @@
+/* Contenedor del Carrusel */
+.testimonials-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    height: 200px;
+    /* Ajusta el alto según el contenido */
+    overflow: hidden;
+    /* Esconde el contenido que se sale del contenedor */
+    width: 100%;
+    /* Asegura que el carrusel ocupe el 100% del ancho disponible */
+}
+
+/* Contenedor de los testimonios */
+.testimonials {
+    display: flex;
+    transition: transform 1s ease-in-out;
+    /* Transición suave para el cambio de testimonio */
+}
+
+/* Testimonio individual */
+.testimonial {
+    min-width: 100%;
+    /* Ocupa todo el ancho del contenedor */
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.testimonial h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.testimonial p {
+    font-size: 1.1rem;
+    color: #555;
+}
