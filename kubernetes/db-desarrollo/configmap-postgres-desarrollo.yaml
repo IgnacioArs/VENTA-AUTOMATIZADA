@@ -1,0 +1,13 @@
+apiVersion: v1          # Define la versión de la API de Kubernetes que se usa.
+kind: ConfigMap         # Especifica que este objeto es un ConfigMap.
+metadata:
+  name: configmap-postgres-desarrollo  # Nombre del ConfigMap para identificarlo.
+data:
+  initdb.sh: |-              # Definición de un archivo de script (initdb.sh).
+    #!/bin/bash             # Indicador de que es un script bash.
+    set -e                   # Hace que el script falle si cualquier comando devuelve un error.
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL  # Comando para ejecutar SQL dentro de PostgreSQL.
+    CREATE USER admin WITH PASSWORD 'admin';     # Crea un usuario admin con la contraseña 'admin'.
+    CREATE DATABASE proyecto;                    # Crea la base de datos 'proyecto'.
+    GRANT ALL PRIVILEGES ON DATABASE proyecto TO admin;  # Otorga todos los privilegios sobre la base de datos 'proyecto' al usuario admin.
+    EOSQL

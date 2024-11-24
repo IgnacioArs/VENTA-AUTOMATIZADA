@@ -1,0 +1,40 @@
+apiVersion: v1
+# La versión de la API utilizada para este recurso.
+
+kind: Service
+# Tipo de recurso. Un Service expone un conjunto de pods y permite el acceso a los mismos a través de una IP y puerto.
+
+metadata:
+  name: postgres-service-desarrollo
+  # Nombre del Service, utilizado para referenciar el servicio en el clúster.
+  labels:
+    app: postgres-service-desarrollo
+    # Etiquetas que permiten identificar y organizar el Service dentro del clúster.
+
+spec:
+  clusterIP: 10.96.1.2
+  # Dirección IP asignada al Service dentro del clúster. Esta IP es accesible solo dentro del clúster.
+
+  ipFamilies:
+  - IPv4
+  # La familia de direcciones IP. En este caso, el Service utiliza IPv4.
+
+  ports:
+  - name: postgres
+    # Nombre del puerto del servicio, útil para identificar el puerto en configuraciones o depuración.
+    port: 5432
+    # Puerto interno del Service. Este es el puerto en el que PostgreSQL escucha dentro del contenedor.
+    targetPort: 5432 
+    # Puerto interno del contenedor
+    nodePort: 30432
+    # Puerto asignado en los nodos del clúster. Permite acceso externo al servicio a través de este puerto en los nodos.
+
+  type: NodePort
+  # Tipo de Service. `NodePort` expone el servicio en un puerto de cada nodo del clúster para acceso desde fuera del clúster.
+  # Si quieres un acceso más dinámico, podrías usar `LoadBalancer`.
+
+  selector:
+    app: deployment-postgres-desarrollo
+    # Selector que vincula este Service con los pods que tienen la etiqueta `app: deployment-postgres-desarrollo`.
+    # Esto asegura que el tráfico sea dirigido a los pods correctos.
+

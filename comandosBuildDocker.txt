@@ -1,0 +1,62 @@
+Para ms-python:
+Copiar código
+docker build -t ms-python-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-python
+docker build -t ms-python-produccion --build-arg ENTORNO_ENV=produccion ./ms-python
+
+Para ms-nestjs-security:
+Copiar código
+docker build -t ms-nestjs-security-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-security
+docker build -t ms-nestjs-security-produccion --build-arg ENTORNO_ENV=produccion ./ms-nestjs-security
+
+Para ms-nestjs-bff:
+Copiar código
+docker build -t ms-nestjs-bff-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-bff
+docker build -t ms-nestjs-bff-produccion --build-arg ENTORNO_ENV=produccion ./ms-nestjs-bff
+
+**********************************************************************************************************
+Comandos para Port Forward
+Ejecución simultánea
+Si deseas ejecutar todos los comandos en paralelo, puedes abrir varias terminales o utilizar un solo comando en el fondo con &:
+
+PARA CADA TERMINAL
+kubectl port-forward deployment/ms-python-desarrollo 32000:3000
+kubectl port-forward deployment/ms-nestjs-security 32001:3001
+kubectl port-forward deployment/ms-nestjs-bff 32002:3002
+
+bash
+Copiar código
+kubectl port-forward deployment/ms-python-desarrollo 32000:3000 &
+kubectl port-forward deployment/ms-nestjs-security 32001:3001 &
+kubectl port-forward deployment/ms-nestjs-bff 32002:3002 &
+kubectl port-forward deployment/pgadmin-deployment 30200:80 &
+
+
+Limpiar recursos de Kubernetes sin eliminar Minikube (Opción 1):
+# Eliminar todos los pods, deployments y servicios
+kubectl delete all --all -n default
+
+# Eliminar los Secrets y ConfigMaps
+kubectl delete secrets --all -n default
+kubectl delete configmaps --all -n default
+
+# Eliminar PersistentVolumeClaims (PVC)
+kubectl delete pvc --all -n default
+
+# Eliminar PersistentVolumes (PV)
+kubectl delete pv --all
+
+# Eliminar Namespaces personalizados (si tienes más de uno, reemplaza <namespace_name> con el nombre del namespace)
+kubectl delete namespace <namespace_name>
+
+Eliminar Minikube completamente y recrearlo (Opción 2):
+# Detener Minikube
+minikube stop
+
+# Eliminar Minikube y sus configuraciones
+minikube delete --purge
+
+# Reiniciar un nuevo clúster Minikube
+minikube start
+
+#ACTIVAR LA VARIABLE DE ENTORNO
+minikube docker-env

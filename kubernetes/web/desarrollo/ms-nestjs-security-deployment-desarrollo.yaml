@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-nestjs-security
+  labels:
+    app: ms-nestjs-security
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-nestjs-security
+  template:
+    metadata:
+      labels:
+        app: ms-nestjs-security
+    spec:
+      containers:
+      - name: ms-nestjs-security
+        image: ms-nestjs-security-desarrollo-devops:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3001
+        env:
+        - name: ENTORNO_ENV
+          value: "desarrollo"

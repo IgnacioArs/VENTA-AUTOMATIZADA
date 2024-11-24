@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-nestjs-bff
+spec:
+  selector:
+    app: ms-nestjs-bff
+  ports:
+  - protocol: TCP
+    port: 3002 # Puerto interno del clúster para el servicio ms-nestjs-bff.
+    targetPort: 3002 # Puerto en el pod donde la aplicación está escuchando.
+    nodePort: 32002 # Puerto externo para acceder desde fuera del clúster.
+  type: NodePort # Permite el acceso externo al servicio.
+

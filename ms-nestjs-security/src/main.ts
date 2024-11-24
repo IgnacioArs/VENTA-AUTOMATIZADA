@@ -13,6 +13,15 @@ async function bootstrap() {
   // Obtener la instancia de ConfigService
   const configService = app.get(ConfigService);
 
+  console.log("MOSTRANDO PORT SECURITY",configService.get<number>('port'));
+  console.log("MOSTRANDO CORS SECURITY",configService.get<string>('cors'));
+  console.log("MOSTRANDO SECRET SECURITY",configService.get<string>('secret'));
+  console.log("MOSTRANDO HOST DATABASE SECURITY",configService.get<string>('database.host'));
+  console.log("MOSTRANDO PORT DATABASE SECURITY",configService.get<number>('database.port'));
+  console.log("MOSTRANDO USERNAME DATABASE SECURITY",configService.get<string>('database.username'));
+  console.log("MOSTRANDO PASSWORD DATABASE SECURITY",configService.get<string>('database.password'));
+  console.log("MOSTRANDO NAME DATABASE SECURITY",configService.get<string>('database.name'));
+  
   // Configuración de CORS
   app.enableCors({
     origin: configService.get<string>('cors'), // Permite todas las solicitudes en desarrollo

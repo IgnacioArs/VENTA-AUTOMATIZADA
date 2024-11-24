@@ -20,7 +20,7 @@ app = FastAPI(
 # Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:3002','http://localhost:4002'],  # Permite todas las fuentes. Cambia esto para restringir orígenes específicos.
+    allow_origins=['http://localhost:3002','http://localhost:4002','http://192.168.49.2:32002'],  # Permite todas las fuentes. Cambia esto para restringir orígenes específicos.
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
     allow_headers=["*"]   # Permite todos los encabezados

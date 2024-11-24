@@ -9,6 +9,11 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.useGlobalInterceptors(new logging_interceptor_1.LoggingInterceptor());
     const configService = app.get(config_1.ConfigService);
+    console.log("MOSTRANDO PORT BFF", configService.get('port'));
+    console.log("MOSTRANDO CORS BFF", configService.get('cors'));
+    console.log("MOSTRANDO SECRET BFF", configService.get('secret'));
+    console.log("MOSTRANDO MSSECURITY BFF", configService.get('msSecurity'));
+    console.log("MOSTRANDO MSPYTHON BFF", configService.get('msPython'));
     app.enableCors({
         origin: configService.get('cors'),
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

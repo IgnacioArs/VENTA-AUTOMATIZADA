@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-nestjs-bff
+  labels:
+    app: ms-nestjs-bff
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-nestjs-bff
+  template:
+    metadata:
+      labels:
+        app: ms-nestjs-bff
+    spec:
+      containers:
+      - name: ms-nestjs-bff
+        image: ms-nestjs-bff-desarrollo-devops:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3002
+        env:
+        - name: ENTORNO_ENV
+          value: "desarrollo"

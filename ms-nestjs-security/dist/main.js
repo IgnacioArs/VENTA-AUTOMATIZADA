@@ -9,6 +9,14 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.useGlobalInterceptors(new logging_interceptor_1.LoggingInterceptor());
     const configService = app.get(config_1.ConfigService);
+    console.log("MOSTRANDO PORT SECURITY", configService.get('port'));
+    console.log("MOSTRANDO CORS SECURITY", configService.get('cors'));
+    console.log("MOSTRANDO SECRET SECURITY", configService.get('secret'));
+    console.log("MOSTRANDO HOST DATABASE SECURITY", configService.get('database.host'));
+    console.log("MOSTRANDO PORT DATABASE SECURITY", configService.get('database.port'));
+    console.log("MOSTRANDO USERNAME DATABASE SECURITY", configService.get('database.username'));
+    console.log("MOSTRANDO PASSWORD DATABASE SECURITY", configService.get('database.password'));
+    console.log("MOSTRANDO NAME DATABASE SECURITY", configService.get('database.name'));
     app.enableCors({
         origin: configService.get('cors'),
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

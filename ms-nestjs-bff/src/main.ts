@@ -13,7 +13,13 @@ async function bootstrap() {
 
   // Obtener la instancia de ConfigService
   const configService = app.get(ConfigService);
-
+  console.log("MOSTRANDO PORT BFF",configService.get<number>('port'));
+  console.log("MOSTRANDO CORS BFF",configService.get<string>('cors'));
+  console.log("MOSTRANDO SECRET BFF",configService.get<string>('secret'));
+  console.log("MOSTRANDO MSSECURITY BFF",configService.get<string>('msSecurity'));
+  console.log("MOSTRANDO MSPYTHON BFF",configService.get<string>('msPython'));
+    
+    
   // Configuración de CORS
   app.enableCors({
     origin: configService.get<string>('cors'), // Permite todas las solicitudes en desarrollo

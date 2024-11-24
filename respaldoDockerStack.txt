@@ -1,0 +1,169 @@
+  # Servicio para el frontend ReactJS en desarrollo
+  frontend-desarrollo:
+    build:
+      context: ./proyecto-frontApp
+      dockerfile: Dockerfile
+      args:
+        VITE_NODE_ENV: desarrollo
+        VITE_PORT_LOCAL: 3003
+    image: dev-ops_frontend-desarrollo:latest
+    environment:
+      - VITE_NODE_ENV=desarrollo
+      - VITE_PORT_LOCAL=3003
+    networks:
+      - env_desarrollo
+    depends_on:
+      - nestjs-desarrollo
+      - python-service-desarrollo
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+
+******************************************************************************************
+  # Servicio para la base de datos PostgreSQL en desarrollo
+  postgres_db_desarrollo:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=proyecto
+    networks:
+      - env_desarrollo
+    volumes:
+      - postgres_data_desarrollo:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+
+******************************************************************************************
+
+  # Servicio para nginx en desarrollo
+  nginx-desarrollo:
+    build:
+      context: ./nginx-desarrollo/apache2-utils
+      dockerfile: Dockerfile
+    image: dev-ops_nginx-desarrollo:latest
+    volumes:
+      - ./nginx-desarrollo/apache2-utils/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx-desarrollo/apache2-utils/.htpasswd:/etc/nginx/.htpasswd
+    networks:
+      - env_desarrollo
+    ports:
+      - "3003:80"
+    depends_on:
+      - frontend-desarrollo
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+******************************************************************************************
+
+  # Servicio para el frontend ReactJS en producción
+  frontend-produccion:
+    build:
+      context: ./proyecto-frontApp
+      dockerfile: Dockerfile
+      args:
+        VITE_NODE_ENV: produccion
+        VITE_PORT_PRODUCCION: 4003
+    image: dev-ops_frontend-produccion:latest
+    environment:
+      - VITE_NODE_ENV=produccion
+      - VITE_PORT_PRODUCCION=4003
+    networks:
+      - env_produccion
+    depends_on:
+      - nestjs-produccion
+      - python-service-produccion
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+******************************************************************************************
+  # Servicio para la base de datos PostgreSQL en producción
+  postgres_db_produccion:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "4432:5432" # internamente este servicio de la red de produccion esta trabajando en 5432 pero 4432 de forma externa para el frontend local
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=proyecto
+    networks:
+      - env_produccion
+    volumes:
+      - postgres_data_produccion:/var/lib/postgresql/data
+    deploy:
+      replicas: 1  
+******************************************************************************************
+
+
+  # Servicio para nginx en producción
+  nginx-produccion:
+    build:
+      context: ./nginx-produccion/apache2-utils
+      dockerfile: Dockerfile
+    image: dev-ops_nginx-produccion:latest
+    volumes:
+      - ./nginx-produccion/apache2-utils/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx-produccion/apache2-utils/.htpasswd:/etc/nginx/.htpasswd
+    networks:
+      - env_produccion
+    ports:
+      - "4003:81"
+    depends_on:
+      - frontend-produccion
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+******************************************************************************************
+  # Servicio para Adminer (administración de base de datos)
+  adminer:
+    image: adminer:latest
+    #container_name: adminer #DOCKER SWARN NO SOPORTA CONTAINER NAME POR LAS REPLICAS LO HACE AUTOMATICO
+    restart: always
+    depends_on:
+      - postgres_db_desarrollo
+      - postgres_db_produccion
+    ports:
+      - "8080:8080"
+    networks:
+      - env_desarrollo
+      - env_produccion
+******************************************************************************************
+# Redes y volúmenes para desarrollo y producción
+networks:
+  env_desarrollo:
+    driver: overlay
+  env_produccion:
+    driver: overlay
+
+volumes:
+  postgres_data_desarrollo:
+  postgres_data_produccion:

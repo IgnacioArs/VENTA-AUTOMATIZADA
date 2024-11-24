@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-python-desarrollo
+  labels:
+    app: ms-python-desarrollo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-python-desarrollo
+  template:
+    metadata:
+      labels:
+        app: ms-python-desarrollo
+    spec:
+      containers:
+      - name: ms-python-desarrollo
+        image: ms-python-desarrollo-devops:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        env:
+        - name: ENTORNO_ENV
+          value: "desarrollo"
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+

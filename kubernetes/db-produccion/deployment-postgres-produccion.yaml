@@ -1,0 +1,50 @@
+apiVersion: apps/v1            # Define la versión de la API de Kubernetes para el Deployment. En este caso, usamos 'apps/v1' que es la versión estable para recursos de tipo Deployment.
+kind: Deployment               # Especifica que este recurso es un Deployment, que se encarga de crear y gestionar pods.
+metadata:
+  name: deployment-postgres-produccion  # Nombre del Deployment. Esto es lo que se utiliza para identificar este recurso.
+  labels:
+    app: deployment-postgres-produccion
+    # Etiqueta que se puede usar para organizar y filtrar recursos en Kubernetes.
+spec:
+  replicas: 1                   # Define el número de réplicas de pods que deseas. Aquí, solo se necesita una réplica de PostgreSQL.
+  selector:
+    matchLabels:
+      app: deployment-postgres-produccion
+      # El Deployment identifica y gestiona los pods que coinciden con estas etiquetas.
+  template:                     
+    # Plantilla que describe cómo deben ser los pods gestionados por este Deployment.
+    metadata:
+      labels:
+        app: deployment-postgres-produccion
+        # Las etiquetas se aplican a todos los pods que serán creados a partir de esta plantilla.
+    spec:
+      containers:
+        - name: deployment-postgres-produccion
+          # El nombre del contenedor dentro del pod.
+          image: postgres:latest
+          # La imagen de Docker que se usará para el contenedor de PostgreSQL. Aquí se usa la versión más reciente de PostgreSQL.
+          imagePullPolicy: IfNotPresent
+          # Define la política para extraer la imagen. Si la imagen ya está en el nodo, no se descargará de nuevo.
+          ports:
+            - containerPort: 5432
+              # El puerto dentro del contenedor donde PostgreSQL escuchará las conexiones (puerto predeterminado de PostgreSQL).
+          envFrom:
+            - secretRef:
+                name: postgres-secret-produccion
+                # El contenedor obtendrá las variables de entorno desde un Secret que contiene configuraciones sensibles (como contraseñas y configuraciones de base de datos).
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb-produccion
+              # El volumen persistente se monta en la ruta `/var/lib/postgresql/data` dentro del contenedor. Esto garantiza que los datos de PostgreSQL persistan incluso después de reiniciar el pod.
+            - mountPath: /docker-entrypoint-initdb.d
+              name: init-script
+              # Monta un ConfigMap que contiene scripts de inicialización en PostgreSQL.
+      volumes:
+        - name: postgredb-produccion
+          persistentVolumeClaim:
+            claimName: postgres-claim-produccion
+            # Utiliza un PersistentVolumeClaim (PVC) llamado `postgres-claim-produccion` para reclamar el almacenamiento persistente.
+        - name: init-script
+          configMap:
+            name: configmap-postgres-produccion
+            # Utiliza un ConfigMap llamado `configmap-postgres-desarrollo` para cargar los scripts de inicialización en el contenedor.

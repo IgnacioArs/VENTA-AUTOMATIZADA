@@ -3,7 +3,7 @@ declare const _default: () => {
     cors: string;
     secret: string;
     database: {
-        host: number;
+        host: string;
         port: number;
         username: string;
         password: string;

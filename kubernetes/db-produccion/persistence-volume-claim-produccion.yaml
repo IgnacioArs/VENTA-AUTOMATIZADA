@@ -1,0 +1,25 @@
+kind: PersistentVolumeClaim
+# Define que el recurso es un PersistentVolumeClaim (PVC), que es una solicitud de almacenamiento que hará un pod a Kubernetes.
+
+apiVersion: v1
+# Se utiliza la versión `v1` de la API, que es la versión estable para el recurso PersistentVolumeClaim.
+
+metadata:
+  name: postgres-claim-produccion
+  # Nombre del PersistentVolumeClaim que los pods utilizarán para referenciar este PVC.
+  labels:
+    app: postgres-claim-produccion
+    # Etiqueta para organizar y filtrar recursos, en este caso, el PVC.
+
+spec:
+  storageClassName: manual
+  # Nombre de la StorageClass. Especifica qué tipo de almacenamiento se utilizará. En este caso, se está usando `manual`, lo que implica que el administrador debe configurar manualmente el PersistentVolume (PV) correspondiente.
+
+  accessModes:
+    - ReadWriteMany
+    # El modo de acceso que permite que múltiples pods lean y escriban simultáneamente en el volumen. Este es un modo adecuado cuando varios pods necesitan acceder al mismo almacenamiento.
+
+  resources:
+    requests:
+      storage: 2Gi
+      # Solicita 2 GiB de almacenamiento del PersistentVolume. Este valor debe ser satisfecho por el volumen asignado a este PVC.

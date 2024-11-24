@@ -34,8 +34,9 @@ async createAuth(createAuthDto: CreateAuthDto): Promise<UserEntity> {
       `${ms}/auth/registro`,
       nuevoUsuario
     );
-
+    
     if (!registro.data) {
+      console.log("MS",ms, " RESULTADOOOO REGISTRO",registro);
       throw new HttpException(
         'CONFLICT',
         HttpStatus.CONFLICT,
@@ -44,7 +45,7 @@ async createAuth(createAuthDto: CreateAuthDto): Promise<UserEntity> {
         }
       );
     }
-
+    console.log("MS",ms, " RESULTADOOOO REGISTRO",registro);
     return registro.data;
 
   } catch (error) {
@@ -74,7 +75,7 @@ async createAuth(createAuthDto: CreateAuthDto): Promise<UserEntity> {
           nuevoUsuario
         );
 
-
+        console.log("MS",ms, " RESULTADOOOO LOGIIIN",loginUsuario);
         const payload = {
           id: loginUsuario.data.user.id,
           name: loginUsuario.data.user.name
@@ -86,7 +87,7 @@ async createAuth(createAuthDto: CreateAuthDto): Promise<UserEntity> {
           tokenSecurity:loginUsuario.data.token,
           token: token,
         };
-        
+        console.log("MS",ms, " RESULTADOOOO LOOGIIIN",loginUsuario);
         /* const token = this.jwtService.sign(payload); */
         return userResponse;
 

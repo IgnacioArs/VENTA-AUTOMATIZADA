@@ -1,0 +1,29 @@
+kind: PersistentVolume
+# Define un PersistentVolume (PV), que es un recurso de almacenamiento en Kubernetes que tiene un ciclo de vida independiente de los pods.
+
+apiVersion: v1
+# La versión de la API usada para el recurso, en este caso `v1`.
+
+metadata:
+  name: postgres-volume-produccion
+  # Nombre del PersistentVolume. Es el identificador único dentro del clúster.
+  labels:
+    type: local
+    # Etiqueta para identificar el tipo del volumen. En este caso, `local`, indicando que se utiliza un volumen local en el nodo.
+    app: postgres-volume-produccion
+    # Etiqueta adicional para organizar el volumen en el clúster.
+
+spec:
+  storageClassName: manual
+  # Nombre de la StorageClass que se utilizará para este volumen. Aquí se utiliza `manual`, lo que implica que el volumen es gestionado manualmente por el administrador del clúster.
+  capacity:
+    storage: 5Gi
+    # La capacidad total del volumen. Este volumen proporciona 5 GiB de almacenamiento.
+
+  accessModes:
+    - ReadWriteMany
+    # El modo de acceso especificado es `ReadWriteMany`, lo que significa que varios pods pueden acceder al volumen simultáneamente. Este modo es útil si deseas que múltiples pods (en diferentes nodos) puedan leer y escribir en el volumen.
+
+  hostPath:
+    path: "/mnt/data/"
+    # El volumen utiliza un `hostPath`, lo que significa que está mapeado a una ruta específica en el nodo del clúster. En este caso, los datos se almacenarán en el directorio `/mnt/data/` del nodo donde se crea el volumen.
