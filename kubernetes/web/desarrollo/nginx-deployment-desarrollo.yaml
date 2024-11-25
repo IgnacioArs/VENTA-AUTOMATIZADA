@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proyecto-frontapp-desarrollo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proyecto-frontapp-desarrollo
+  template:
+    metadata:
+      labels:
+        app: proyecto-frontapp-desarrollo
+    spec:
+      containers:
+      - name: proyecto-frontapp
+        image: proyecto-frontapp-desarrollo-devops:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80

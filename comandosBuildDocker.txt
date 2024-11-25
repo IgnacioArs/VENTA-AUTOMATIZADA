@@ -1,17 +1,25 @@
 Para ms-python:
 Copiar código
 docker build -t ms-python-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-python
-docker build -t ms-python-produccion --build-arg ENTORNO_ENV=produccion ./ms-python
+docker build -t ms-python-produccion-devops --build-arg ENTORNO_ENV=produccion ./ms-python
 
 Para ms-nestjs-security:
 Copiar código
 docker build -t ms-nestjs-security-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-security
-docker build -t ms-nestjs-security-produccion --build-arg ENTORNO_ENV=produccion ./ms-nestjs-security
+docker build -t ms-nestjs-security-produccion-devops --build-arg ENTORNO_ENV=produccion ./ms-nestjs-security
 
 Para ms-nestjs-bff:
 Copiar código
 docker build -t ms-nestjs-bff-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-bff
-docker build -t ms-nestjs-bff-produccion --build-arg ENTORNO_ENV=produccion ./ms-nestjs-bff
+docker build -t ms-nestjs-bff-produccion-devops --build-arg ENTORNO_ENV=produccion ./ms-nestjs-bff
+
+
+PARA FRONTEND
+docker build -t proyecto-frontapp-desarrollo-devops --build-arg VITE_ENTORNO=desarrollo ./proyecto-frontApp
+docker build -t proyecto-frontapp-produccion-devops --build-arg VITE_ENTORNO=produccion ./proyecto-frontApp
+
+docker build --no-cache -t proyecto-frontapp-desarrollo-devops --build-arg VITE_ENTORNO=desarrollo ./proyecto-frontApp
+docker build --no-cache -t proyecto-frontapp-produccion-devops --build-arg VITE_ENTORNO=produccion ./proyecto-frontApp
 
 **********************************************************************************************************
 Comandos para Port Forward
@@ -22,13 +30,17 @@ PARA CADA TERMINAL
 kubectl port-forward deployment/ms-python-desarrollo 32000:3000
 kubectl port-forward deployment/ms-nestjs-security 32001:3001
 kubectl port-forward deployment/ms-nestjs-bff 32002:3002
+kubectl port-forward deployment/proyecto-frontapp-desarrollo 32003:80
+
 
 bash
 Copiar código
 kubectl port-forward deployment/ms-python-desarrollo 32000:3000 &
 kubectl port-forward deployment/ms-nestjs-security 32001:3001 &
 kubectl port-forward deployment/ms-nestjs-bff 32002:3002 &
+kubectl port-forward deployment/proyecto-frontapp-desarrollo 32003:80 &
 kubectl port-forward deployment/pgadmin-deployment 30200:80 &
+
 
 
 Limpiar recursos de Kubernetes sin eliminar Minikube (Opción 1):

@@ -30,7 +30,7 @@ export class AuthService {
       }
       const usuarioRegistrado = await this.usersRepository.save(nuevoUsuario);
         
-      console.log(usuarioRegistrado);
+    
       return usuarioRegistrado
   }
 

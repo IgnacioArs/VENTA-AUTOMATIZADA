@@ -23,7 +23,7 @@ export class ChatBotService {
       }
       );
       
-      console.log("MICROSERVICIO",ms,"RESULTADO",getUsuariosAll);
+  
       return getUsuariosAll.data;
   
     } catch (error) {

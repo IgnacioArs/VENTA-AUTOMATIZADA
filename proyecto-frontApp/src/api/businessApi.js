@@ -33,7 +33,8 @@ function cargarToken() {
 
 businessApi.interceptors.request.use(config => {
     const token = cargarToken();
-    console.log("VEO EL TOKEN NESTJS", token);
+
+    console.log("VEO EL TOKEN NESTJS", token, VITE_ENTORNO === 'desarrollo' ? VITE_ENV_MS_BUSINESS_API_URL_DESARROLLO : VITE_ENV_MS_BUSINESS_API_URL_PRODUCCION);
     if (token) {
         config.headers = {
             ...config.headers,
