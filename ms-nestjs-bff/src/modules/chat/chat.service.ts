@@ -14,7 +14,7 @@ export class ChatBotService {
     const ms = this.configService.get<string>('msPython');
 
     try {
-      const getUsuariosAll = await this.httpservice.axiosRef.get(
+      const getChatResponse = await this.httpservice.axiosRef.get(
         `${ms}/api/chat-bot`,
         {
           params: {
@@ -23,8 +23,7 @@ export class ChatBotService {
       }
       );
       
-  
-      return getUsuariosAll.data;
+      return getChatResponse.data;
   
     } catch (error) {
       // Captura errores de Axios o problemas con la creación de usuario

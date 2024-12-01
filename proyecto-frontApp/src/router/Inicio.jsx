@@ -45,16 +45,6 @@ const Inicio = () => {
                 </tbody>
             </table>
 
-            <div className="col-md-6-3">
-                <div className="image-container"></div>
-                <div className="text-container">
-                    <h1>Mantenimiento Predictivo</h1>
-                    <p>
-                        Utilizamos tecnología avanzada para anticipar y prevenir fallos en sus sistemas, garantizando una operación sin interrupciones.
-                    </p>
-                </div>
-            </div>
-
             {/* Nuevas secciones de características */}
             <div className="features-container">
                 <div className="feature-box">
@@ -71,20 +61,9 @@ const Inicio = () => {
                 </div>
             </div>
 
-            {/* Nueva sección para logoia.png */}
-            <div className="col-md-6-3">
-                <div className="image-container-ia"></div> {/* Aquí va el logo de IA */}
-                <div className="text-container">
-                    <h1>Asistentes Virtuales</h1>
-                    <p>
-                        Asistentes Virtuales es un servicio dedicado a proporcionar asistencia personal y profesional a través de tecnología avanzada de inteligencia artificial. Ideal para empresas y particulares que necesitan optimizar su tiempo y recursos.
-                    </p>
-                </div>
-            </div>
-
             {/* Testimonios */}
             <TestimonialsCarousel />
-
+            
             {/* Nueva sección de círculos */}
             <div className="circles-container">
                 <div className="circle">
@@ -105,6 +84,7 @@ const Inicio = () => {
 }
 
 export default Inicio;
+
 
 
 

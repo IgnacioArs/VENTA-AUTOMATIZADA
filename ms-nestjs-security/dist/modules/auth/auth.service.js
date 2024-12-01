@@ -34,7 +34,6 @@ let AuthService = class AuthService {
             password: hash
         };
         const usuarioRegistrado = await this.usersRepository.save(nuevoUsuario);
-        console.log(usuarioRegistrado);
         return usuarioRegistrado;
     }
     async authLogin(LoginAuthDto) {

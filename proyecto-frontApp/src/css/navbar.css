@@ -1,6 +1,6 @@
 /* Estilos generales para el navbar */
 .navbar {
-    background-color: #ffffff;
+    background-color: #ffffff; /* Fondo oscuro para un look moderno */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,29 +10,15 @@
     top: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px #0a74da; /* Sombra más marcada */
     transition: all 0.3s ease;
     font-family: 'Arial', sans-serif;
 }
 
-/* Contenedor del logo */
-.navbar-logo {
-    width: 425px;
-    /* Aumentar el tamaño del ancho del logo */
-    height: 75px;
-    /* Aumentar el tamaño del alto del logo */
-    background-image: url('../components/images/logoEmpresa.jpg');
-    /* Ruta al logo */
-    background-size: cover;
-    /* Asegura que el logo cubra todo el contenedor */
-    /*    background-repeat: no-repeat; */
-    background-position: center;
-    margin-left: 400px;
-    /* Espacio entre el logo y el menú */
-    border-radius: 5px;
+/* Hover en el logo */
+.navbar-logo:hover {
+    transform: scale(1.05); /* El logo se agranda un poco */
 }
-
-
 
 /* Menú principal */
 .navbar-menu {
@@ -43,33 +29,50 @@
 }
 
 .navbar-menu li {
-    margin: 0 15px;
+    margin: 0 20px; /* Más separación entre los enlaces */
+    position: relative;
+    text-transform: uppercase; /* Letras en mayúsculas */
 }
 
 .navbar-link {
-    color: #333;
+    color: #333; /* Texto blanco para mayor contraste */
     text-decoration: none;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600; /* Peso de fuente más fuerte */
     position: relative;
     padding: 5px 10px;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease; /* Añadí una animación de transformación */
 }
 
 .navbar-link:hover {
-    color: #007bff;
+    color: #0a74da; /* Color vibrante para hover */
+    transform: scale(1.1); /* Efecto de aumento al hacer hover */
+}
+
+/* Subrayado en enlaces al hacer hover */
+.navbar-menu li:hover .navbar-link::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px; /* Hizo más grueso el subrayado */
+    background-color: #0a74da;
+    transition: width 0.3s ease; /* Animación de subrayado */
 }
 
 /* Menú desplegable */
 .user-menu {
     position: relative;
     cursor: pointer;
+    padding: 10px;
+    transition: transform 0.3s ease;
 }
 
 .user-menu span {
     font-size: 1rem;
     font-weight: 600;
-    color: #007bff;
+    color: #fff;
     display: flex;
     align-items: center;
 }
@@ -85,98 +88,90 @@
     position: absolute;
     top: 100%;
     right: 0;
-    font-size: 15px;
-    background-color: #ffffff;
-    color: #007bff;
+    font-size: 14px;
+    background-color: #333; /* Fondo oscuro para el menú */
+    color: #fff;
     border-radius: 5px;
-    width: 170px;
-    /* Ancho del menú */
-    box-shadow: 0px 0px 10px rgba(34, 40, 49, 0.8);
+    width: 180px;
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     text-align: center;
-    /* Centra el contenido */
 }
 
 .user-menu-content a {
     display: block;
-    padding: 10px;
-    color: #333;
+    padding: 12px;
+    color: #fff;
     text-decoration: none;
     transition: background 0.3s ease;
 }
 
 .user-menu-content a:hover {
-    background: #c7cace;
+    background-color: #444;
 }
 
 .user-menu:hover .user-menu-content {
     display: block;
+    animation: fadeIn 0.3s ease-in-out; /* Animación para el menú */
 }
 
 /* Botón de logout */
 .logout-button {
-    background-color: #ff4d4d;
-    /* Rojo claro */
-    color: #ffffff;
+    background-color: #0a74da; /* Rojo vibrante */
+    color: #fff;
     border: none;
-    padding: 10px 0;
-    /* Ajusta el padding vertical */
+    padding: 12px 0;
     width: 100%;
-    /* Hace que el botón ocupe todo el ancho del menú */
     cursor: pointer;
     border-radius: 5px;
-    margin: 10px 0;
-    /* Espaciado entre elementos */
     text-align: center;
-    /* Centra el texto dentro del botón */
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
 }
 
 .logout-button:hover {
-    background-color: #f32424;
-    /* Color rojo oscuro para hover */
+    background-color: #0a74da; /* Rojo oscuro */
 }
 
-.navbar li {
-    display: inline-block;
-    margin: 0 10px;
-    position: relative;
-    /* Necesario para el subrayado */
+/* Animaciones */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
+/* Efectos para el icono en los enlaces */
 .navbar img {
     width: 24px;
     height: 24px;
     object-fit: contain;
     vertical-align: middle;
     transition: transform 0.3s ease, opacity 0.3s ease;
-    /* Animación de interacción */
 }
 
-/* Estilo para el subrayado en el enlace activo */
-.navbar li .active::after {
+/* Hover sobre los íconos */
+.navbar img:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+/* Subrayado en el enlace activo */
+.navbar-menu li .active::after {
     content: "";
     position: absolute;
     bottom: -5px;
-    /* Debajo del enlace */
     left: 0;
     width: 100%;
-    height: 1px;
-    background-color: #152e49;
-    /* Cambia el color según el diseño */
+    height: 2px;
+    background-color: #0a74da;
     transition: width 0.3s ease;
-    /* Animación del subrayado */
 }
 
-/* Subrayado solo cuando esté activo */
-.navbar li .active:hover::after {
-    width: 100%;
-    /* Aparece el subrayado completo al pasar el mouse */
-}
-
-/* Efecto interactivo al hacer hover */
-.navbar img:hover {
-    transform: scale(1.1);
-    /* Aumenta ligeramente el tamaño */
-    opacity: 0.8;
-    /* Le da un efecto de "toque" */
+/* Efectos generales en el navbar */
+.navbar:hover {
+    box-shadow: 0 6px 15px #0a74da; /* Aumento de sombra al pasar el mouse */
+    transition: box-shadow 0.3s ease;
 }

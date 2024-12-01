@@ -1,138 +1,66 @@
-/* Animaciones generales */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-}
-
-/* Estilos generales */
-body,
-html {
-    overflow-x: hidden;
-    /* Oculta el desbordamiento horizontal */
-}
-
-/* Sección de inicio */
+/* Sección de inicio con fondo de imagen */
 .inicio-container {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: #000000;
-    background-color: hsl(0, 0%, 100%);
-    min-height: 100vh;
-    display: flex;
+    color: #ffffff; /* Textos blancos para el contraste */
+    background-image: url('../components/images/registro.png'); /* Imagen de fondo */
+    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+    background-position: center;
+    background-attachment: fixed;
+    height: 80vh; /* Altura al 50% de la ventana */
+    width: 100%; /* Ancho completo */
+/*     display: flex; */
     flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
     align-items: center;
     text-align: center;
-    padding: 2rem;
-    margin-top: 80px;
-    font-size: 18px;
+    padding: 3rem 2rem; /* Añadido padding para no amontonar el contenido */
     animation: fadeInUp 1s ease-in-out;
+    margin-top: 5%;
+    opacity: 0;
+    animation: fadeInUp 2s forwards; /* Animación de aparición */
 }
 
-/* Sección de encabezado */
-.col-md-6-3 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Ajustes a los textos dentro de la sección de inicio */
+.inicio-container h1,
+.inicio-container p {
+    color: #fff; /* Texto en blanco para mayor visibilidad */
+    animation: fadeInUp 0s ease-in-out;
+    margin-bottom: 1rem; /* Espacio entre el título y el párrafo */
+    opacity: 0;
+    animation: fadeInUp 3s forwards; /* Animación de aparición */
+}
+/* Contenedor de los botones de llamada a la acción */
+.table {
     width: 100%;
-    height: 60vh;
-    position: relative;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    animation: fadeInUp 1s ease-in-out;
-    margin-top: 50px;
+    margin-top: 10%;
+    text-align: center;
 }
 
-/* Imagen con logoiados.png (sin animación) */
-.image-container {
-    background: url('../components/images/logoiados.png') no-repeat center center;
-    background-size: cover;
-    width: 50%;
-    height: 100%;
-    border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease-in-out;
-}
-
-/* Imagen con logoia.png (sin animación) */
-.image-container-ia {
-    background: url('../components/images/logoia.png') no-repeat center center;
-    background-size: contain;
-    width: 50%;
-    height: 100%;
-    border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Contenedor de texto */
-.text-container {
-    width: 50%;
-    padding: 2rem;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    animation: fadeInLeft 1s ease-in-out;
-}
-
-/* Títulos de texto */
-.text-container h1 {
-    margin-bottom: 1rem;
-    font-size: 2.5rem;
-    font-weight: bold;
-    animation: fadeInRight 1s ease-in-out;
-}
-
-/* Descripción de texto */
-.text-container p {
+.cta-button {
+    margin-top: 20px;
+    background-color: #2b2d30;
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
     font-size: 1.2rem;
-    line-height: 1.6;
-    color: #333;
-    animation: fadeInUp 1.2s ease-in-out;
+    cursor: pointer;
+    transition: background-color 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease, opacity 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 1s 1s forwards; /* Animación para la aparición */
+}
+
+.cta-button:hover {
+    background-color: #030303;  /* Azul galáctico brillante */
+    color: #fff; /* Mantener el texto blanco */
+    transform: scale(1); /* Mantiene el tamaño normal */
+    opacity: 0.8; /* Hace que el botón se vuelva opaco al pasar el cursor */
+    box-shadow: 0 4px 15px rgba(38, 39, 41, 0.6); /* Sombra futurista */
+    animation: glow 1s ease-in-out infinite alternate; /* Añadido efecto de resplandor */
+}
+
+.cta-button + .cta-button {
+    margin-left: 15px; /* Espacio entre botones */
 }
 
 /* Sección de características */
@@ -140,8 +68,8 @@ html {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    width: 100%;
     margin-top: 50px;
+    gap: 2rem;
 }
 
 .feature-box {
@@ -153,22 +81,25 @@ html {
     margin-bottom: 30px;
     animation: fadeInUp 1s ease-in-out;
     text-align: center;
+    opacity: 0;
+    animation: fadeInUp 2s forwards; /* Animación de aparición */
 }
 
-/* Características */
 .feature-box h3 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
+    color: #2b2d30;  /* Azul futurista */
     animation: bounce 1s infinite;
 }
 
 .feature-box p {
     font-size: 1rem;
     color: #666;
+    opacity: 0;
+    animation: fadeInUp 2s 1s forwards; /* Animación de aparición */
 }
 
-
-
+/* Testimonios */
 .testimonial {
     background-color: #fff;
     border-radius: 10px;
@@ -184,11 +115,13 @@ html {
 .testimonial h4 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
+    color: #2b2d30; /* Azul galáctico */
+    animation: fadeInUp 1s ease-in-out; /* Animación para el título */
 }
 
 .testimonial p {
     font-size: 1rem;
-    color: #555;
+    color: #000000;
 }
 
 /* Círculos */
@@ -198,6 +131,7 @@ html {
     align-items: center;
     width: 100%;
     margin-top: 50px;
+    gap: 2rem;
 }
 
 .circle {
@@ -208,39 +142,74 @@ html {
     height: 300px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: transform 0.3s ease-in-out;
-    animation: fadeInUp 1s ease-in-out;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 2s forwards;
 }
 
 .circle h3 {
     font-size: 1.6rem;
     margin-bottom: 1rem;
+    color: #2b2d30;  /* Azul futurista */
+    opacity: 0;
+    animation: fadeInUp 3s 1s forwards; /* Animación para el texto */
 }
 
 .circle p {
     font-size: 1rem;
-    color: #555;
+    color: #666;
 }
 
 .circle:hover {
-    transform: scale(1.2);
-    /* Efecto hover */
+    transform: scale(1.1);
+    background-color: #ffffff; /* Azul futurista al pasar el cursor */
+    color: #fff; /* Texto blanco al hacer hover */
+    box-shadow: 0 6px 15px #0a74da;
+    animation: pulse 1s infinite; /* Efecto pulsante */
 }
 
-/* Botones de llamada a la acción */
-.cta-button {
-    margin-top: 10px;
-    background-color: #333;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+/* Animaciones personalizadas */
+
+/* Animación de desvanecimiento (fadeInUp) */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.cta-button:hover {
-    background-color: #333;
-    animation: bounce 1s infinite;
+/* Animación de rebote (bounce) */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Animación de resplandor */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 10px #0a74da;
+    }
+    100% {
+        box-shadow: 0 0 20px #0a74da;
+    }
+}
+
+/* Animación de pulsado (pulse) */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

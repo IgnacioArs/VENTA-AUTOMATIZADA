@@ -31,6 +31,7 @@
     position: relative;
     margin-top: 50px;
     animation: bounceIn 0.8s ease;
+    margin-left: 50%;
 }
 
 .formulario-content {
