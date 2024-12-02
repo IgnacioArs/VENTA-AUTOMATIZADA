@@ -10,9 +10,11 @@
     top: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 0 20px #0a74da; /* Sombra más marcada */
+    box-shadow: 0 0 20px #00bcd4; /* Sombra más marcada */
     transition: all 0.3s ease;
     font-family: 'Arial', sans-serif;
+    border-color: #1a1a1a;
+    border-width: 100px;
 }
 
 /* Hover en el logo */
@@ -35,7 +37,7 @@
 }
 
 .navbar-link {
-    color: #333; /* Texto blanco para mayor contraste */
+    color: #1a1a1a; /* Texto blanco para mayor contraste */
     text-decoration: none;
     font-size: 1rem;
     font-weight: 600; /* Peso de fuente más fuerte */
@@ -45,7 +47,7 @@
 }
 
 .navbar-link:hover {
-    color: #0a74da; /* Color vibrante para hover */
+    color: #00bcd4; /* Color vibrante para hover */
     transform: scale(1.1); /* Efecto de aumento al hacer hover */
 }
 
@@ -57,7 +59,7 @@
     left: 0;
     width: 100%;
     height: 2px; /* Hizo más grueso el subrayado */
-    background-color: #0a74da;
+    background-color: #00bcd4;
     transition: width 0.3s ease; /* Animación de subrayado */
 }
 
@@ -89,7 +91,7 @@
     top: 100%;
     right: 0;
     font-size: 14px;
-    background-color: #333; /* Fondo oscuro para el menú */
+    background-color: #1a1a1a; /* Fondo oscuro para el menú */
     color: #fff;
     border-radius: 5px;
     width: 180px;
@@ -117,7 +119,7 @@
 
 /* Botón de logout */
 .logout-button {
-    background-color: #0a74da; /* Rojo vibrante */
+    background-color: #00bcd4; /* Rojo vibrante */
     color: #fff;
     border: none;
     padding: 12px 0;
@@ -130,7 +132,7 @@
 }
 
 .logout-button:hover {
-    background-color: #0a74da; /* Rojo oscuro */
+    background-color: #00bcd4; /* Rojo oscuro */
 }
 
 /* Animaciones */
@@ -166,12 +168,12 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #0a74da;
+    background-color: #00bcd4;
     transition: width 0.3s ease;
 }
 
 /* Efectos generales en el navbar */
 .navbar:hover {
-    box-shadow: 0 6px 15px #0a74da; /* Aumento de sombra al pasar el mouse */
+    box-shadow: 0 6px 15px #00bcd4; /* Aumento de sombra al pasar el mouse */
     transition: box-shadow 0.3s ease;
 }

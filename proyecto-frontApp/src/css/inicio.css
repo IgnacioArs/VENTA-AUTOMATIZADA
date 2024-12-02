@@ -2,13 +2,12 @@
 .inicio-container {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: #ffffff; /* Textos blancos para el contraste */
-    background-image: url('../components/images/registro.png'); /* Imagen de fondo */
+    background-image: url('../components/images/inicio.png'); /* Imagen de fondo */
     background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
     background-position: center;
     background-attachment: fixed;
     height: 80vh; /* Altura al 50% de la ventana */
     width: 100%; /* Ancho completo */
-/*     display: flex; */
     flex-direction: column;
     justify-content: center; /* Centra el contenido verticalmente */
     align-items: center;
@@ -51,7 +50,7 @@
 }
 
 .cta-button:hover {
-    background-color: #030303;  /* Azul galáctico brillante */
+    background-color: #00bcd4;  /* Azul galáctico brillante */
     color: #fff; /* Mantener el texto blanco */
     transform: scale(1); /* Mantiene el tamaño normal */
     opacity: 0.8; /* Hace que el botón se vuelva opaco al pasar el cursor */
@@ -163,7 +162,7 @@
     transform: scale(1.1);
     background-color: #ffffff; /* Azul futurista al pasar el cursor */
     color: #fff; /* Texto blanco al hacer hover */
-    box-shadow: 0 6px 15px #0a74da;
+    box-shadow: 0 6px 15px #00bcd4;
     animation: pulse 1s infinite; /* Efecto pulsante */
 }
 

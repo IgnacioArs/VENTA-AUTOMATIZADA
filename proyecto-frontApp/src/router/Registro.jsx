@@ -135,8 +135,11 @@ const Registro = () => {
         <div className='col'>
             <div className='col-md-6'>
                 <div className="container formulario-container">
+                <div className="imagen-izquierda-registro">
+         
+                </div>
                     <div className="formulario-content">
-                        <header>Registro</header>
+                        <header>Registrarse</header>
                         <form className="form-container">
                             <div className="field">
                                 <input
@@ -180,11 +183,13 @@ const Registro = () => {
 
                                 />
                             </div>
+                            <div className='texto-enunciado'>
                             <div className="space">
                                 <button onClick={onclickRegistro}>Registrar</button>
                             </div>
                             <div className="pass">
-                                <a className='textA' onClick={onclickIrRegistro}>¿Por favor ingrese sus datos correspondiente?</a>
+                                <a className='textA' onClick={onclickIrRegistro}>Por favor, Ingrese sus datos correspondientes</a>
+                            </div>
                             </div>
                         </form>
                     </div>

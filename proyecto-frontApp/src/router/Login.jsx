@@ -89,44 +89,49 @@ const Login = () => {
     }, []);
 
     return (
-        <div className='col'>
-            <div className='col-md-6'>
-                <div className="container formulario-container">
-                    <div className="formulario-content">
-                        <header>Login</header>
-                        <form className="form-container">
-                            <div className="field">
-                                <input
-                                    type='email'
-                                    name='email'
-                                    placeholder='email@gmail.com'
-                                    onChange={onchangeEmail}
-                                    value={email}
-                                />
-                            </div>
-                            <div className="field">
-                                <input
-                                    type='password'
-                                    name='password'
-                                    className="pass-key"
-                                    placeholder='Password'
-                                    onChange={onchangePassword}
-                                    value={password}
-
-                                />
-                            </div>
-                            <div className="space">
-                                <button onClick={onclickLogin}>Acceder</button>
-                            </div>
-                            <div className="pass">
-                                <a className='textA' onClick={onclickIrRegistro}>¿Se ha olvidado de su contraseña?</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+<div className="col">
+    <div className="col-md-6">
+        <div className="container formulario-container">
+            <div className="imagen-izquierda-login">
+         
             </div>
-            <ErrorModal abrirModal={abrirModal} cerrarModal={cerrarModal} MensajeAlerta={mensajeModal} />
+            <div className="formulario-content">
+                <header>Acceso</header>
+                <form className="form-container">
+                    <div className="field">
+                        <input
+                            type='email'
+                            name='email'
+                            placeholder='email@gmail.com'
+                            onChange={onchangeEmail}
+                            value={email}
+                        />
+                    </div>
+                    <div className="field">
+                        <input
+                            type='password'
+                            name='password'
+                            className="pass-key"
+                            placeholder='Password'
+                            onChange={onchangePassword}
+                            value={password}
+                        />
+                    </div>
+                    <div className='texto-enunciado'>
+                    <div className="space">
+                        <button onClick={onclickLogin}>INGRESAR</button>
+                    </div>
+                    <div className="pass">
+                        <a className='textA' onClick={onclickIrRegistro}>¿Se ha olvidado de su contraseña?</a>
+                    </div>
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
+    <ErrorModal abrirModal={abrirModal} cerrarModal={cerrarModal} MensajeAlerta={mensajeModal} />
+</div>
+
 
     );
 };
