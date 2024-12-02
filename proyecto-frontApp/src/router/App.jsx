@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { setAuthPayload, setStatus } from '../store/auth/authSlice';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import Chatbot from './menu/chat/Chatbot';
+
 
 
 function App() {
@@ -54,6 +54,7 @@ function App() {
         <Route path='/inicio' element={<Inicio />} />
         <Route path='/login' element={<Login />} />
         <Route path='/registro' element={<Registro />} />
+        
 
         {/* Rutas protegidas */}
         {tokenState && (
@@ -67,7 +68,6 @@ function App() {
         {/* Ruta para manejo de páginas no encontradas */}
         <Route path='*' element={<Navigate to="/login" />} />
       </Routes>
-      <Footer />
     </>
   );
 }

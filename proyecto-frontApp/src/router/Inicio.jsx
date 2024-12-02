@@ -4,6 +4,7 @@ import '../css/inicio.css';
 import verifySession from '../utils/verifySession';
 import { useSelector } from 'react-redux';
 import TestimonialsCarousel from './components/TestimonialsCarousel';
+import Footer from '../router/components/Footer'
 
 const Inicio = () => {
     const { authPayload, status } = useSelector(state => state.auth);
@@ -79,6 +80,7 @@ const Inicio = () => {
                     <p>La compra de nuestros productos es rápida y sencilla, con recomendaciones personalizadas basadas en tus preferencias y comportamientos.</p>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

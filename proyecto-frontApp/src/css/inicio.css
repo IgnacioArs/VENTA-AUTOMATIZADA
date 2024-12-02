@@ -27,6 +27,7 @@
     margin-bottom: 1rem; /* Espacio entre el título y el párrafo */
     opacity: 0;
     animation: fadeInUp 3s forwards; /* Animación de aparición */
+    font-size: 29px;
 }
 /* Contenedor de los botones de llamada a la acción */
 .table {

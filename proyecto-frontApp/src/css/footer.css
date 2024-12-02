@@ -1,13 +1,13 @@
 /* Estilos generales del footer */
 .footer {
-    background-color: #1a1a1a; /* Fondo oscuro para un aspecto profesional */
+    background-color: #ffffff; /* Fondo oscuro para un aspecto profesional */
     color: #f5f5f5; /* Texto en blanco suave para contraste */
     padding: 40px 0;
     font-family: 'Roboto', sans-serif; /* Fuente más moderna */
     text-align: center;
     position: relative;
-    border-top: 2px solid #444; /* Línea sutil en la parte superior */
-    margin-top: 60%;
+    border-top: 1px solid #444; /* Línea sutil en la parte superior */
+    margin-top: 5%;
 }
 
 /* Contenedor del footer */
@@ -17,68 +17,7 @@
     padding: 0 20px;
 }
 
-/* Logo en el footer */
-.footer-logo {
-    margin-bottom: 30px;
-}
 
-.footer-logo-img {
-    width: 180px; /* Ajusté el tamaño del logo */
-    height: auto;
-    opacity: 0.9; /* Sutil opacidad para dar un toque elegante */
-    transition: opacity 0.3s ease; /* Efecto de hover para el logo */
-}
-
-.footer-logo-img:hover {
-    opacity: 1; /* Aumenta la opacidad al hacer hover */
-}
-
-/* Navegación del footer */
-.footer-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px; /* Espacio entre los enlaces */
-}
-
-.footer-nav li {
-    position: relative;
-}
-
-.footer-nav a {
-    color: #f5f5f5;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.1rem;
-    transition: color 0.3s ease, transform 0.3s ease; /* Agregué animación de transform */
-    padding: 5px;
-}
-
-.footer-nav a:hover {
-    color: #00aaff; /* Azul vibrante para hover */
-    text-decoration: underline;
-    transform: translateY(-3px); /* Efecto de elevación al hacer hover */
-}
-
-/* Redes sociales */
-.footer-socials {
-    margin-top: 100px;
-}
-
-.footer-social-icon {
-    color: #f5f5f5;
-    font-size: 2rem; /* Iconos más grandes */
-    margin: 0 15px;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.footer-social-icon:hover {
-    color: #00aaff;
-    transform: translateY(-5px); /* Efecto de elevación para los iconos */
-}
 
 /* Información adicional en el footer */
 .footer-info {
@@ -88,33 +27,8 @@
 .footer-info p {
     margin: 5px 0;
     font-size: 0.95rem;
-    color: #bbb; /* Color gris suave para el texto adicional */
+    color: #000000; /* Color gris suave para el texto adicional */
 }
 
-.footer-info a {
-    color: #00aaff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
 
-.footer-info a:hover {
-    color: #fff;
-    text-decoration: underline;
-}
 
-/* Responsividad */
-@media (max-width: 768px) {
-    .footer-nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .footer-nav li {
-        margin: 10px 0;
-    }
-
-    .footer-social-icon {
-        font-size: 1.8rem; /* Iconos más pequeños en dispositivos móviles */
-        margin: 10px 5px;
-    }
-}
