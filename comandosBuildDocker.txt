@@ -72,3 +72,40 @@ minikube start
 
 #ACTIVAR LA VARIABLE DE ENTORNO
 minikube docker-env
+
+
+APIS
+https://www.freepublicapis.com/tags/development
+
+JENKINS-FILES:
+https://downloads.apache.org/maven/
+
+https://www.jenkins.io/
+
+https://hub.docker.com/r/jenkins/jenkins
+
+https://github.com/jenkinsci/docker/blob/master/README.md
+
+
+
+SOLUCION ERROR DOCKER LOCAL
+
+sudo nano /etc/resolv.conf
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+
+sudo systemctl restart docker
+docker run -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk17  /CORRER JENKINS
+OTRA OPCION SI LO MONTAMOS CON KUBERNETES 
+1) CREAMOS EL deployment
+2) LUEGO EL SERVICE Y LO EXPONEMO EN SU RESPECTIVO PUERTO
+kubectl port-forward service/jenkins-service 8080:8080
+
+
+minikube stop
+sudo systemctl restart docker
+
+
+
+
+

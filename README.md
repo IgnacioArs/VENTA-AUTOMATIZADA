@@ -23,7 +23,7 @@ El objetivo de este proyecto es demostrar habilidades avanzadas de **DevOps** y 
 - **ConfigMaps y Secrets**: Para manejar configuraciones sensibles y no sensibles.
 - **Ingress Controller**: Gestión de tráfico HTTP y HTTPS.
 - **Helm** (opcional): Plantillas de configuración para simplificar despliegues.
-
+- **Jenkins**: Herramienta de automatizacion pruebas y despliegue.
 ---
 
 ## Estructura del Proyecto
@@ -58,6 +58,10 @@ El proyecto está organizado de la siguiente manera:
    - Uso de imágenes Docker específicas para desarrollo y producción.
    - Política de `imagePullPolicy` configurada para usar imágenes locales.
 
+6. **Automatizacion con Jenkins**:
+   - Uso de imágenes Docker específicas para desarrollo y producción.
+   - Automatizacion , Continues integration , Continues Delivery, Continues Deployments.
+
 ---
 
 ## Configuración Inicial
@@ -67,5 +71,6 @@ El proyecto está organizado de la siguiente manera:
 - **Kubernetes Cluster**: Minikube, Kind, o un clúster real.
 - **Docker**: Para crear imágenes de contenedores.
 - **Kubectl**: Herramienta CLI para interactuar con Kubernetes.
+- **Jenkins**: Herramienta Automatizacion CI/CD.
 
 
