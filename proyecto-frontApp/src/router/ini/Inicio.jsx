@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../css/inicio.css';
-import verifySession from '../utils/verifySession';
+import '../../css/ini/inicio.css';
+import verifySession from '../../utils/verifySession';
 import { useSelector } from 'react-redux';
-import TestimonialsCarousel from './components/TestimonialsCarousel';
-import Footer from '../router/components/Footer'
+import TestimonialsCarousel from '../components/TestimonialsCarousel';
+import Footer from '../components/Footer'
 
 const Inicio = () => {
     const { authPayload, status } = useSelector(state => state.auth);

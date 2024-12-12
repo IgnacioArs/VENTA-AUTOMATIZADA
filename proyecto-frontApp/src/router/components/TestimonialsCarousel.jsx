@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../css/testimonials.css';
+import '../../css/ini/testimonials.css';
 
 const TestimonialsCarousel = () => {
     const testimonials = [

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../css/navbar.css';
+import '../../css/ini/navbar.css';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import logAuthMethod from '../../utils/logAuth';
@@ -41,7 +41,7 @@ const Navbar = () => {
             <ul className="navbar-menu">
                 {status === "authenticated" && user ? (
                     <>
-                        <li><Link to="/dashboard" className={isActive('/dashboard')}>Dashboard</Link></li>
+                        <li><Link to="/dashboard" className={isActive('/dashboard')}>Productos</Link></li>
                         <li><Link to="/chatbot" className={isActive('/chatbot')}>Chatear con IA</Link></li>
                     </>
                 ) : null}

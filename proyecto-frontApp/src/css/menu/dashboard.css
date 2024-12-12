@@ -1,0 +1,144 @@
+.dashboard-container {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Múltiples columnas ajustables */
+    gap: 25px; /* Espaciado entre tarjetas */
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Ajusta automáticamente según el contenido */
+    font-family: Arial, sans-serif;
+    background: #1e1e1e;
+    padding: 20px; /* Espaciado interno del contenedor */
+  }
+  
+  
+  /* Estilos de la tarjeta */
+  .product-card {
+    position: relative;
+    width: 320px;
+    height: 480px;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s, box-shadow 0.5s;
+    margin-top: 100px;
+    margin-left: 25px;
+  }
+  
+  /* Efecto de hover para la card */
+  .product-card:hover {
+    transform: translateY(-15px) scale(1.05); /* Levanta la tarjeta y agranda */
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.5); /* Aumenta la sombra */
+  }
+  
+  /* Fondo dinámico en hover */
+  .product-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, #00bcd4, #0059be);
+    transform: skewY(345deg);
+    z-index: 0;
+    transition: 0.5s;
+  }
+  
+  .product-card:hover::before {
+    top: -70%;
+    transform: skewY(390deg);
+  }
+  
+  /* Estilo de texto translúcido detrás */
+  .product-card::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-weight: 700;
+    font-size: 4em;
+    text-align: center;
+    color: #00bcd4;
+    z-index: 0;
+    
+  }
+  
+  /* Imagen del producto */
+  .product-img-box {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Fija un área consistente para todas las imágenes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Oculta cualquier parte que exceda */
+    padding-top: 10px;
+    z-index: 1;
+  }
+  
+  
+  .product-image {
+    max-width: 100%; /* Ajusta el ancho al contenedor */
+    max-height: 300px; /* Define una altura máxima */
+    object-fit: contain; /* Escala la imagen sin recortar */
+    transition: transform 0.5s;
+    margin-top: 25px;
+  }
+  
+  
+  /* Animación para la imagen */
+  .product-card:hover .product-image {
+    transform: rotate(-5deg) scale(1.2); /* Gira y agranda ligeramente */
+  }
+  
+  /* Contenido */
+  .product-content-box {
+    position: relative;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 2;
+  }
+  
+  .product-content-box h3 {
+    font-size: calc(14px + 0.2vw); /* Ajusta la fuente dinámicamente según el ancho de la pantalla */
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  
+  .product-content-box .product-price {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+  }
+  
+  .product-content-box .product-buy-btn {
+    margin-top: 15px;
+    padding: 10px 30px;
+    color: #ffffff;
+    text-decoration: none;
+    background: #33ff00;
+    border-radius: 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0; /* Oculta inicialmente */
+    transform: translateY(20px); /* Baja un poco inicialmente */
+  }
+  
+  /* Muestra el botón al hacer hover */
+  .product-card:hover .product-buy-btn {
+    opacity: 1;
+    transform: translateY(0); /* Sube el botón a su posición original */
+  }
+  
+  
+
+
+

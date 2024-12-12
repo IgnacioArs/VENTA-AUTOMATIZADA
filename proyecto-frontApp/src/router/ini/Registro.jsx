@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import SuccessModal from '../components/modals/succesModal';
-import '../css/formulario.css'
-import ErrorModal from '../components/modals/errorModal';
-import { authSession } from '../hooks/auth';
+import SuccessModal from '../../components/modals/succesModal';
+import '../../css/ini/formulario.css'
+import ErrorModal from '../../components/modals/errorModal';
+import { authSession } from '../../hooks/auth';
 import { useNavigate } from 'react-router-dom'
-import verifySession from '../utils/verifySession';
+import verifySession from '../../utils/verifySession';
 import { useSelector } from 'react-redux';
 
 const Registro = () => {

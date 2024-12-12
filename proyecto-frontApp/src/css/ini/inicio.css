@@ -2,7 +2,7 @@
 .inicio-container {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: #ffffff; /* Textos blancos para el contraste */
-    background-image: url('../components/images/inicio.png'); /* Imagen de fondo */
+    background-image: url('../../components/images/inicio.png'); /* Imagen de fondo */
     background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
     background-position: center;
     background-attachment: fixed;

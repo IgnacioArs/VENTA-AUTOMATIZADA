@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/modals.css';
+import '../../css/ini/modals.css';
 import errorIcon from '../icon/error.png';
 
 const ErrorModal = ({ abrirModal, cerrarModal, MensajeAlerta }) => {

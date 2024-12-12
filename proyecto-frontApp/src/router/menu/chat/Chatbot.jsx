@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../../css/chatbot.css'; // Asegúrate de crear y vincular este archivo CSS
+import '../../../css/menu/chatbot.css'; // Asegúrate de crear y vincular este archivo CSS
 import { useSelector } from 'react-redux';
 import { pythonApiMs } from '../../../hooks/usechatBotStore';
 
@@ -56,12 +56,13 @@ const Chatbot = () => {
     if (tokenString) {
       try {
         const parsedData = JSON.parse(tokenString);
-
-        if (parsedData && parsedData.usuario) {
-          const { usuario, token } = parsedData;
-          const { id, name, email, password } = usuario;
+   
+        if (parsedData && parsedData.user) {
+          const { user, token } = parsedData;
+          const { id, name, email, password } = user;
           setUser({ id, name, email, password });
           setUserToken(token);
+          
         } else {
           console.warn("El formato de `parsedData` no es el esperado.");
         }
@@ -72,6 +73,8 @@ const Chatbot = () => {
       console.warn("out session");
     }
   }, [authPayload, status]);
+    
+
 
   return (
     <div className="chat-container">

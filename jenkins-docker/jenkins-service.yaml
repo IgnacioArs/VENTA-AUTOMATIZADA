@@ -4,12 +4,15 @@ metadata:
   name: jenkins-service
 spec:
   ports:
-    - port: 8080
+    - name: http  # Añadí un nombre para el puerto 8080
+      port: 8080
       targetPort: 8080
       protocol: TCP
-    - port: 50000
+    - name: agent  # Añadí un nombre para el puerto 50000
+      port: 50000
       targetPort: 50000
       protocol: TCP
   selector:
     app: jenkins
   type: LoadBalancer  # O ClusterIP si prefieres no exponerlo fuera del clúster
+

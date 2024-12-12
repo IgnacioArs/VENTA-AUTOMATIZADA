@@ -2,12 +2,12 @@ import { Routes, Route, useNavigate, Outlet, Navigate, json } from 'react-router
 import Inicio from './Inicio';
 import Login from './Login';
 import Registro from './Registro';
-import Dashboard from './Dashboard';
+import Dashboard from '../menu/dashboard/Dashboard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { setAuthPayload, setStatus } from '../store/auth/authSlice';
-import Navbar from './components/Navbar';
-import Chatbot from './menu/chat/Chatbot';
+import { setAuthPayload, setStatus } from '../../store/auth/authSlice';
+import Navbar from '../components/Navbar';
+import Chatbot from '../menu/chat/Chatbot';
 
 
 

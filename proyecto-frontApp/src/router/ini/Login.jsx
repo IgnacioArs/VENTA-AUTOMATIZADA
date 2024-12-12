@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ErrorModal from '../components/modals/errorModal'; // Ajusta la ruta según tu estructura
-import { authSession } from '../hooks/auth';
-import '../css/formulario.css'
+import ErrorModal from '../../components/modals/errorModal'; // Ajusta la ruta según tu estructura
+import { authSession } from '../../hooks/auth';
+import '../../css/ini/formulario.css'
 import { useNavigate } from 'react-router-dom';
-import verifySession from '../utils/verifySession';
+import verifySession from '../../utils/verifySession';
 import { useSelector } from 'react-redux';
 
 const Login = () => {

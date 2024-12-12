@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/modals.css';
+import '../../css/ini/modals.css';
 import succesIcon from '../icon/succes.png'
 
 

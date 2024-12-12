@@ -56,7 +56,7 @@
 
 .imagen-izquierda-login {
     width: 50%;
-    background-image: url('../components/images/login.webp');
+    background-image: url('../../components/images/login.webp');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -70,7 +70,7 @@
 
 .imagen-izquierda-registro {
     width: 50%;
-    background-image: url('../components/images/registro.jpg');
+    background-image: url('../../components/images/registro.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -102,7 +102,7 @@
 header {
     font-size: 32px;
     font-weight: 600;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     font-family: 'Verdana', Geneva, Tahoma, sans-serif;
     color: #333;
 }
