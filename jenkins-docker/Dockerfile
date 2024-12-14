@@ -1,67 +1,63 @@
-# Usar la imagen oficial de Jenkins LTS (Long Term Support)
-FROM jenkins/jenkins:lts
+# Usa la imagen oficial de Jenkins como base
+FROM jenkins/jenkins:latest
 
-# Establecer el usuario root para poder instalar paquetes
+# Cambia al usuario root para instalar dependencias
 USER root
 
-# Actualizar el sistema e instalar dependencias del sistema necesarias
+# Capa 1: Actualiza el sistema y herramientas básicas
 RUN apt-get update && \
-    apt-get install -y \
-    python3 \
-    python3-pip \
-    python3-dev \
-    curl \
-    git \
-    build-essential \
-    ca-certificates \
-    apt-transport-https \
-    software-properties-common \
-    nodejs \
-    npm \
-    && apt-get clean
+    apt-get install -y ca-certificates curl wget gnupg2 lsb-release python3 python3-pip python3-dev build-essential nodejs npm python3-venv && \
+    apt-get clean
 
-# Actualizar pip
-RUN pip3 install --upgrade pip
+# Capa 2: Agrega Docker's GPG key
+RUN install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
+    chmod a+r /etc/apt/keyrings/docker.asc
 
-# Instalar dependencias de Python que necesita tu microservicio
-RUN pip3 install fastapi \
-    uvicorn \
-    requests \
-    pydantic \
-    python-dotenv \
-    tensorflow \
-    nltk
+# Capa 3: Agrega el repositorio de Docker utilizando VERSION_CODENAME
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list && \
+    apt-get update
 
-# Agregar el repositorio oficial de Docker
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
-
-# Instalar Docker CLI
-RUN apt-get update && \
-    apt-get install -y docker-ce-cli && \
+# Capa 4: Instala Docker
+RUN apt-get install -y docker-ce-cli && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Exponer los puertos de Jenkins y los puertos de tus microservicios
-EXPOSE 8080        
-EXPOSE 50000       
-EXPOSE 3000        
-# Puerto de Jenkins para acceder al panel
-# Puerto para agentes de Jenkins
-# Puerto para tu servicio de Python (FastAPI)
+# Capa 5: Crea un entorno virtual y activa
+RUN python3 -m venv /venv && \
+    /venv/bin/pip install --upgrade pip
 
-# Instalar Node.js y NPM para ReactJS y NestJS
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs
+# Capa 6: Instalar TensorFlow en el entorno virtual
+RUN /venv/bin/pip install --no-cache-dir tensorflow
 
-# Instalar plugins de Jenkins
-RUN jenkins-plugin-cli --plugins "nodejs docker-workflow python kubernetes workflow-aggregator pipeline-utility-steps git"
+# Capa 7: Instala Create React App y NestJS CLI globalmente con npm
+RUN npm install -g create-react-app @nestjs/cli
 
-# Cambiar al usuario Jenkins para evitar ejecutar Jenkins como root
+# Cambia de nuevo al usuario jenkins para la ejecución de Jenkins
 USER jenkins
 
-# Definir el comando para iniciar Jenkins
-CMD ["java", "-jar", "/usr/share/jenkins/jenkins.war"]
+# Establece el directorio de trabajo
+WORKDIR /var/jenkins_home
+
+# Exponer puertos para Jenkins
+EXPOSE 8080
+EXPOSE 50000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

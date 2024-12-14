@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: my-jenkins:latest  # Aquí se usa la imagen de Docker que ya tienes
-        imagePullPolicy: Never
+        image: jenkins:latest  # La imagen personalizada que creaste  # Aquí se usa la imagen de Docker que tienes
+        imagePullPolicy: Never  # Usamos "Never" ya que la imagen está local
         ports:
         - containerPort: 8080
         - containerPort: 50000
@@ -25,4 +25,6 @@ spec:
           mountPath: /var/jenkins_home
       volumes:
       - name: jenkins-home
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: jenkins-pvc  # Referencia a un PVC
+

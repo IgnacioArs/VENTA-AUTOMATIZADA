@@ -98,14 +98,17 @@ sudo systemctl restart docker
 docker run -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk17  /CORRER JENKINS
 
 OTRA OPCION SI LO MONTAMOS CON KUBERNETES 
-1) CREAMOS EL deployment
-2) LUEGO EL SERVICE Y LO EXPONEMO EN SU RESPECTIVO PUERTO
+1) CREAMOS EL pvc
+2) CREAMOS EL deployment
+3) LUEGO EL SERVICE Y LO EXPONEMO EN SU RESPECTIVO PUERTO
 kubectl port-forward service/jenkins-service 8080:8080
 
 
 minikube stop
 sudo systemctl restart docker
 
+docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:alpine
+docker build -t jenkin:latest .
 
 
 
