@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import logAuthMethod from '../../utils/logAuth';
 import inicioIcon from '../../components/icon/inicio.png';
 import loginIcon from '../../components/icon/login.png';
+import sessionLogOutMethod from '../../utils/sessionLogOut';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -30,6 +31,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         setUser(null);
+        sessionLogOutMethod(dispatch);
         logAuthMethod(dispatch, navigate);
     };
 

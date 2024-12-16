@@ -8,37 +8,39 @@ const businessApi = axios.create({
 });
 
 function cargarToken() {
-    const tokenString = localStorage.getItem("token");
+    const tokenString = localStorage.getItem("token"); // Obtenemos el token desde localStorage
 
     if (tokenString) {
         try {
+            // Intentar analizar el token como JSON (si es un objeto almacenado)
             const parsedData = JSON.parse(tokenString);
 
-            if (parsedData && parsedData.usuario) {
-                const { usuario, token } = parsedData;
-                const { id, name, email, password } = usuario;
-                /*  setUser({ id, name, email, password });
-                 setUserToken(token); */
-                return token;
+            if (parsedData && typeof parsedData === 'object' && parsedData.token) {
+                return parsedData.token; // Retornar directamente el token
             } else {
-                console.warn("El formato de `parsedData` no es el esperado.");
+                // Si no es un objeto, retornarlo como está (para compatibilidad)
+                return tokenString;
             }
         } catch (error) {
-            console.error("Error al analizar el JSON del token", error);
+            // Si no se puede analizar, asumir que es un string plano
+            return tokenString;
         }
-    } else {
-        console.warn("out session");
     }
+
+    console.warn("Sesión no iniciada o token no encontrado.");
+    return null; // No hay token
 }
 
 businessApi.interceptors.request.use(config => {
     const token = cargarToken();
 
-    console.log("VEO EL TOKEN NESTJS", token, VITE_ENTORNO === 'desarrollo' ? VITE_ENV_MS_BUSINESS_API_URL_DESARROLLO : VITE_ENV_MS_BUSINESS_API_URL_PRODUCCION);
+    console.log("VEO EL TOKEN NESTJS", token);
+
     if (token) {
+        // Configurar los headers de la solicitud con el formato 'Bearer <token>'
         config.headers = {
             ...config.headers,
-            'Authorization': token
+            'Authorization': `Bearer ${token}`
         };
     }
 

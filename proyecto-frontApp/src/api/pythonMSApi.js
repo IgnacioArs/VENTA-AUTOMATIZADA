@@ -34,7 +34,7 @@ function cargarToken() {
 
 pythonMsAPI.interceptors.request.use(config => {
     const payloadToken = cargarToken();
-    console.log("SI VEMOS EL TOKEN EN PYTHON", payloadToken);
+    console.log("VEO EL TOKEN NESTJS", payloadToken, VITE_ENTORNO === 'desarrollo' ? VITE_ENV_MS_PYTHON_API_URL_DESARROLLO : VITE_ENV_MS_PYTHON_API_URL_PRODUCCION);
     if (payloadToken) {
         config.headers = {
             ...config.headers,

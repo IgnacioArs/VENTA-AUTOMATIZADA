@@ -8,6 +8,7 @@ const logAuthMethod = (dispatch, navigate) => {
     dispatch(setStatus("not-authenticated"));
     // Redirige al usuario a la página de inicio de sesión
     navigate("/login");
+    console.log("PASANDO POR LOGOUT METHOD");
 }
 
 export default logAuthMethod;
