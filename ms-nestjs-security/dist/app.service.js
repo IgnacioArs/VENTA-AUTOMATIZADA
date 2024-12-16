@@ -18,7 +18,7 @@ let AppService = class AppService {
     }
     getHello() {
         const port = this.configService.get('port');
-        return 'Hello World! SERVER RUNNING PORT:' + `${port}`;
+        return 'Hello World!';
     }
 };
 exports.AppService = AppService;
