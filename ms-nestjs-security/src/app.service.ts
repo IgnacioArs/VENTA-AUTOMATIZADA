@@ -6,6 +6,6 @@ export class AppService {
   constructor(private configService:ConfigService){}
   getHello(): string {
     const port = this.configService.get<number>('port');
-    return 'Hello World! SERVER RUNNING PORT:'+`${port}`;
+    return 'Hello World! SERVER RUNNING PORT:'+`${port? port:3001}`;
   }
 }
