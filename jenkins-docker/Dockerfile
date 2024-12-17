@@ -34,6 +34,11 @@ RUN /venv/bin/pip install --no-cache-dir tensorflow
 # Capa 7: Instala Create React App y NestJS CLI globalmente con npm
 RUN npm install -g create-react-app @nestjs/cli
 
+# Instalar kubectl con reintentos
+RUN curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl" && \
+    chmod +x ./kubectl && \
+    mv ./kubectl /usr/local/bin/kubectl
+
 # Cambia de nuevo al usuario jenkins para la ejecución de Jenkins
 USER jenkins
 
@@ -43,6 +48,7 @@ WORKDIR /var/jenkins_home
 # Exponer puertos para Jenkins
 EXPOSE 8080
 EXPOSE 50000
+
 
 
 

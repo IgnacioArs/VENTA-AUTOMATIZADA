@@ -14,8 +14,9 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: jenkins:latest  # La imagen personalizada que creaste  # Aquí se usa la imagen de Docker que tienes
-        imagePullPolicy: Never  # Usamos "Never" ya que la imagen está local
+        image: jenkins:latest
+        serviceAccountName: jenkins-sa  #aqui lo deje ia esta bien?
+        imagePullPolicy: Never
         ports:
         - containerPort: 8080
         - containerPort: 50000
@@ -23,8 +24,15 @@ spec:
         volumeMounts:
         - name: jenkins-home
           mountPath: /var/jenkins_home
+        - name: kubeconfig
+          mountPath: /root/.kube/config  # Ruta en el contenedor donde estará el kubeconfig
+          subPath: config
       volumes:
       - name: jenkins-home
         persistentVolumeClaim:
-          claimName: jenkins-pvc  # Referencia a un PVC
+          claimName: jenkins-pvc
+      - name: kubeconfig
+        configMap:
+          name: kubeconfig-map  # ConfigMap que contiene el kubeconfig
+
 

@@ -98,17 +98,35 @@ sudo systemctl restart docker
 docker run -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk17  /CORRER JENKINS
 
 OTRA OPCION SI LO MONTAMOS CON KUBERNETES 
-1) CREAMOS EL pvc
-2) CREAMOS EL deployment
-3) LUEGO EL SERVICE Y LO EXPONEMO EN SU RESPECTIVO PUERTO
-kubectl port-forward service/jenkins-service 8080:8080
+1) docker build -t jenkin:latest . 
+# Crea el ServiceAccount
+kubectl apply -f jenkins-service-account.yaml
 
+# Crea el Role y RoleBinding
+kubectl apply -f jenkins-role.yaml
+kubectl apply -f jenkins-rolebinding.yaml
 
+# Crea el PersistentVolumeClaim
+kubectl apply -f jenkins-pvc.yaml
+
+# Despliega Jenkins
+kubectl apply -f jenkins-deployment.yaml
+
+# Crea el Service para exponer Jenkins
+kubectl apply -f jenkins-service.yaml
+2) kubectl port-forward service/jenkins-service 8080:8080
+3) kubectl exec -it <nombre-del-pod> -- cat /var/jenkins_home/secrets/initialAdminPassword
+
+4) kubectl create configmap kubeconfig-map --from-file=$HOME/.kube/config (INTERACTUAMOS CON KUBERNETES)
+5) kubectl exec -it <nombre-del-pod> -- cat /root/.kube/config
+6) LUEGO EL SERVICE Y LO EXPONEMO EN SU RESPECTIVO PUERTO
+7) kubectl port-forward service/jenkins-service 8080:8080
+
+//OTROS CASOS
 minikube stop
 sudo systemctl restart docker
-
 docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:alpine
-docker build -t jenkin:latest .
+
 
 
 
