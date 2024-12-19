@@ -12,10 +12,10 @@ spec:
       labels:
         app: jenkins
     spec:
+      serviceAccountName: jenkins-sa  # Mover aquí el serviceAccountName
       containers:
       - name: jenkins
-        image: jenkins:latest
-        serviceAccountName: jenkins-sa  #aqui lo deje ia esta bien?
+        image: jenkin:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 8080
@@ -34,5 +34,6 @@ spec:
       - name: kubeconfig
         configMap:
           name: kubeconfig-map  # ConfigMap que contiene el kubeconfig
+
 
 
