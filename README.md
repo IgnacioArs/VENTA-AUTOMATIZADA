@@ -74,16 +74,16 @@ El proyecto está organizado de la siguiente manera:
 - **Jenkins**: Herramienta Automatizacion CI/CD y delivery (Dockerhub).
 
 ### Estructura del Jenkinsfile
-**1)** (instalacion de plugins - y crecion de credenciales)
-**2)**Clonar el repositorio.
-**3)**Construir las imágenes Docker para cada servicio.
-**4)**Realizar los tests.
-**5)**Subir las imágenes (si usas un registro como DockerHub o Nexus).
-**6)**Aplicar los archivos YAML para los deployments y services en Kubernetes.
+- **1)** (instalacion de plugins - y crecion de credenciales)
+- **2)** Clonar el repositorio.
+- **3)** Construir las imágenes Docker para cada servicio.
+- **4)** Realizar los tests.
+- **5)** Subir las imágenes (si usas un registro como DockerHub o Nexus).
+- **6)** Aplicar los archivos YAML para los deployments y services en Kubernetes.
 
 ### Explicación de las etapas
-**Checkout**:Clona el repositorio desde GitHub.
-**Build Docker Images**:Construye las imágenes Docker para cada microservicio.
+- **Checkout**: Clona el repositorio desde GitHub.
+- **Build Docker Images**: Construye las imágenes Docker para cada microservicio.
                         Los ARG de construcción se ajustan para el entorno de desarrollo.
-**Run Tests**: Corre los tests para cada microservicio usando las herramientas específicas (e.g., npm test, pytest).
-**Deploy to Kubernetes**:Aplica los archivos YAML de configuración en tu clúster de Minikube.
+- **Run Tests**: Corre los tests para cada microservicio usando las herramientas específicas (e.g., npm test, pytest).
+- **Deploy to Kubernetes**: Aplica los archivos YAML de configuración en tu clúster de Minikube.
