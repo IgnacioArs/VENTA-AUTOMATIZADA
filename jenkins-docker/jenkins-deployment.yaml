@@ -34,6 +34,10 @@ spec:
       - name: kubeconfig
         configMap:
           name: kubeconfig-map  # ConfigMap que contiene el kubeconfig
-
+      # Volumen para Docker socket
+      - name: docker-socket
+        hostPath:
+          path: /var/run/docker.sock  # El path del socket en el host
+          type: Socket
 
 
