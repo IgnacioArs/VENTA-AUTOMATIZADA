@@ -86,3 +86,4 @@ El proyecto está organizado de la siguiente manera:
                         Los ARG de construcción se ajustan para el entorno de desarrollo.
 - **Run Tests**: Corre los tests para cada microservicio usando las herramientas específicas (e.g., npm test, pytest).
 - **Deploy to Kubernetes**: Aplica los archivos YAML de configuración en tu clúster de Minikube.
+- **Ngrok**: Automatizar ejecución de pipelines mediante eventos webhooks (ngrok,jenkins,git)
