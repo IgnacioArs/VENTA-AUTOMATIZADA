@@ -72,6 +72,7 @@ El proyecto está organizado de la siguiente manera:
 - **Docker**: Para crear imágenes de contenedores.
 - **Kubectl**: Herramienta CLI para interactuar con Kubernetes.
 - **Jenkins**: Herramienta Automatizacion CI/CD y delivery (Dockerhub) (instalacion de plugins - y crecion de credenciales).
+- **Ngrok**: Automatizar ejecución de pipelines mediante eventos webhooks (ngrok,jenkins,git)
 
 ### Estructura del Jenkinsfile
 - **1)** Clonar el repositorio.
@@ -86,4 +87,3 @@ El proyecto está organizado de la siguiente manera:
                         Los ARG de construcción se ajustan para el entorno de desarrollo.
 - **Run Tests**: Corre los tests para cada microservicio usando las herramientas específicas (e.g., npm test, pytest).
 - **Deploy to Kubernetes**: Aplica los archivos YAML de configuración en tu clúster de Minikube.
-- **Ngrok**: Automatizar ejecución de pipelines mediante eventos webhooks (ngrok,jenkins,git)
