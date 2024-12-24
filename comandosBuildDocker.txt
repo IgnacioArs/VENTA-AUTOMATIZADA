@@ -121,7 +121,7 @@ kubectl apply -f jenkins-clusterrolebinding.yaml
 kubectl apply -f jenkins-role.yaml
 kubectl apply -f jenkins-rolebinding.yaml
 kubectl apply -f jenkins-pvc.yaml
-ls -l ~/.kube/config -> kubectl create configmap kubeconfig-map --from-file=config="~/.kube/config"  (SI EXISTE NO EJECUTAR) 
+ls -l ~/.kube/config -> kubectl create configmap kubeconfig-map --from-file=config=/home/devars/.kube/config  (SI EXISTE NO EJECUTAR) 
 kubectl apply -f jenkins-service.yaml
 kubectl apply -f jenkins-deployment.yaml
 
