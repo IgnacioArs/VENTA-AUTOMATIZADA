@@ -125,6 +125,17 @@ ls -l ~/.kube/config -> kubectl create configmap kubeconfig-map --from-file=conf
 kubectl apply -f jenkins-service.yaml
 kubectl apply -f jenkins-deployment.yaml
 
+EXPLICACION: 
+Debe ejecutarse en tu clúster Kubernetes después de desplegar la aplicación y la ServiceAccount. 
+Este comando asigna permisos específicos (en este caso, 
+el rol de cluster-admin) a la ServiceAccount llamada jenkins-sa.
+
+kubectl create clusterrolebinding jenkins-role-binding \
+  --clusterrole=cluster-admin \
+  --serviceaccount=default:jenkins-sa
+
+
+
 # Verificar recursos creados
 kubectl get pods
 kubectl get svc
