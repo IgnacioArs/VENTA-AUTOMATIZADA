@@ -107,96 +107,130 @@ sudo systemctl restart docker
 # - --restart=on-failure: Reinicia el contenedor en caso de fallos.
 docker run -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk17
 
-Opción 2: Desplegar Jenkins en Kubernetes
-# Construye una imagen de Jenkins personalizada, etiquetada como `jenkin:latest`.
-docker build -t jenkin:latest .
 
+
+# Opción 2: Desplegar Jenkins en Kubernetes
+
+# Construir una imagen personalizada de Jenkins
+docker build -t jenkins:latest .
+
+# Aplicar configuraciones en Kubernetes
+kubectl apply -f jenkins-service-account.yaml
 kubectl apply -f jenkins-clusterrole.yaml
 kubectl apply -f jenkins-clusterrolebinding.yaml
-kubectl apply -f jenkins-deployment.yaml
 kubectl apply -f jenkins-role.yaml
 kubectl apply -f jenkins-rolebinding.yaml
-kubectl apply -f jenkins-service-account.yaml
 kubectl apply -f jenkins-pvc.yaml
+ls -l ~/.kube/config -> kubectl create configmap kubeconfig-map --from-file=config="~/.kube/config"  (SI EXISTE NO EJECUTAR) 
 kubectl apply -f jenkins-service.yaml
+kubectl apply -f jenkins-deployment.yaml
 
+# Verificar recursos creados
+kubectl get pods
+kubectl get svc
+kubectl get pvc
 
-# Redirige localmente el puerto 8080 para acceder a la interfaz web de Jenkins.
+# Redirigir localmente el puerto 8080 para acceder a la interfaz web de Jenkins
 kubectl port-forward service/jenkins-service 8080:8080
 
-# Obtén la contraseña inicial de administrador desde el pod de Jenkins.
+# Obtener la contraseña inicial de administrador desde el pod
 kubectl exec -it <nombre-del-pod> -- cat /var/jenkins_home/secrets/initialAdminPassword
 
-# Detén Minikube si ya está corriendo.
-minikube stop
-
-# Reinicia el servicio Docker.
-sudo systemctl restart docker
-
-# Ejecuta Jenkins en modo contenedor con almacenamiento persistente.
-docker run -d --name jenkins -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:alpine
-
-# Obtén la configuración del clúster de Kubernetes desde dentro del pod.
-# Esto puede ser útil para configurar herramientas adicionales dentro de Jenkins.
+# Obtener configuración del clúster de Kubernetes desde el pod
 kubectl exec -it <nombre-del-pod> -- cat /root/.kube/config
 
-# Redirige el puerto local 8080 al puerto 8080 del Service de Jenkins, para permitir el acceso
-# a la interfaz web desde tu máquina local.
-kubectl port-forward service/jenkins-service 8080:8080
+# Validar permisos en el socket de Docker
+ls -l /var/run/docker.sock
 
+# Configurar el contexto de Docker en Jenkins
+minikube docker-env
+eval $(minikube docker-env)
 
-Plugins recomendados para Jenkins según tu proyecto
-MS-PYTHON
-Python Plugin: Para ejecutar scripts y pruebas en Python. (LISTO)
-ShiningPanda Plugin: Configura entornos de Python virtuales. (LISTO)
-Cobertura: Para el análisis de cobertura de pruebas en proyectos de Python. (LISTO)
+# Detener Minikube si ya está corriendo
+minikube stop
 
-MS-NESTJS-SECURITY y MS-NESTJS-BFF
-NodeJS Plugin: Permite trabajar con pipelines que usan Node.js.   (LISTO)
-Pipeline Utility Steps: Útil para manipular archivos YAML o JSON.    (LISTO)
-JUnit Plugin: Para reportar resultados de pruebas automatizadas, como las de jest. (LISTO)
-Proyecto-frontApp
-HTML Publisher Plugin: Publica reportes generados de herramientas frontend. (LISTO)
-GitHub Plugin: Conecta Jenkins con tu repositorio de frontend. (LISTO)
-Build Pipeline Plugin: Organiza pasos de construcción y pruebas frontend. (LISTO)
+# Reiniciar el servicio Docker
+sudo systemctl restart docker
 
-OTROS PLUGIN:
-Plugins esenciales para Jenkins y Kubernetes
-Kubernetes Plugin
-Permite que Jenkins se integre directamente con Kubernetes y ejecute builds en contenedores.
+**********************************************************************************************************
 
-Pipeline Plugin
-Para manejar pipelines declarativos como el Jenkinsfile.
+Plugins recomendados para Jenkins
 
-Docker Pipeline Plugin
-Permite trabajar con Docker directamente desde Jenkins pipelines.
+MS-PYTHON:
+- Python Plugin: Ejecutar scripts y pruebas en Python.
+- ShiningPanda Plugin: Configurar entornos virtuales de Python.
+- Cobertura Plugin: Análisis de cobertura de pruebas.
 
-Git Plugin
-Para interactuar con repositorios Git.
+MS-NESTJS-SECURITY y MS-NESTJS-BFF:
+- NodeJS Plugin: Ejecutar pipelines que usen Node.js.
+- Pipeline Utility Steps Plugin: Manipular archivos YAML o JSON.
+- JUnit Plugin: Reportar resultados de pruebas automatizadas (jest).
 
-GitHub Integration Plugin (opcional)
-Si estás usando GitHub, este plugin facilita las interacciones.
+Proyecto-frontApp:
+- HTML Publisher Plugin: Publicar reportes generados por herramientas frontend.
+- GitHub Plugin: Conectar Jenkins con repositorios frontend.
+- Build Pipeline Plugin: Organizar pasos de construcción y pruebas frontend.
 
-Credentials Plugin
-Ayuda a administrar credenciales seguras para Docker Hub, Kubernetes, etc.
+Otros plugins esenciales:
+- Kubernetes Plugin: Integrar Jenkins con Kubernetes.
+- Pipeline Plugin: Manejar pipelines declarativos.
+- Docker Pipeline Plugin: Trabajar con Docker desde pipelines.
+- Git Plugin: Interactuar con repositorios Git.
+- Credentials Plugin: Administrar credenciales seguras.
+- Blue Ocean Plugin: Visualización amigable de pipelines.
+- Kubernetes CLI Plugin: Ejecutar comandos `kubectl` desde Jenkins.
 
-Blue Ocean Plugin (opcional)
-Proporciona una interfaz más amigable para visualizar pipelines.
+**********************************************************************************************************
 
-Kubernetes CLI Plugin
-Para ejecutar comandos kubectl desde Jenkins.
+Plugins recomendados para Jenkins
 
+MS-PYTHON:
+- Python Plugin: Ejecutar scripts y pruebas en Python.
+- ShiningPanda Plugin: Configurar entornos virtuales de Python.
+- Cobertura Plugin: Análisis de cobertura de pruebas.
+
+MS-NESTJS-SECURITY y MS-NESTJS-BFF:
+- NodeJS Plugin: Ejecutar pipelines que usen Node.js.
+- Pipeline Utility Steps Plugin: Manipular archivos YAML o JSON.
+- JUnit Plugin: Reportar resultados de pruebas automatizadas (jest).
+
+Proyecto-frontApp:
+- HTML Publisher Plugin: Publicar reportes generados por herramientas frontend.
+- GitHub Plugin: Conectar Jenkins con repositorios frontend.
+- Build Pipeline Plugin: Organizar pasos de construcción y pruebas frontend.
+
+Otros plugins esenciales:
+- Kubernetes Plugin: Integrar Jenkins con Kubernetes.
+- Pipeline Plugin: Manejar pipelines declarativos.
+- Docker Pipeline Plugin: Trabajar con Docker desde pipelines.
+- Git Plugin: Interactuar con repositorios Git.
+- Credentials Plugin: Administrar credenciales seguras.
+- Blue Ocean Plugin: Visualización amigable de pipelines.
+- Kubernetes CLI Plugin: Ejecutar comandos `kubectl` desde Jenkins.
+
+**********************************************************************************************************
 
 Flujo de trabajo automatizado
 Construcción:
-Configura un job para clonar los repositorios (MS-PYTHON, MS-NESTJS-SECURITY, etc.).
-Realiza pruebas unitarias en cada microservicio.
+- Configurar un job para clonar repositorios.
+- Realizar pruebas unitarias en cada microservicio.
+
 Integración:
-Usa un pipeline multietapa para orquestar pruebas de integración entre servicios.
+- Crear un pipeline multietapa para pruebas de integración.
+
 Despliegue:
-Integra un job que despliegue los servicios en Kubernetes o Docker Compose.
+- Configurar un job que despliegue servicios en Kubernetes o Docker Compose.
+
 Notificación:
-Configura notificaciones con plugins como Email Extension o Slack.
+- Configurar notificaciones con Email Extension Plugin o Slack Plugin.
+
+**********************************************************************************************************
+Configuración del daemon Docker desde Jenkins
+# Montar el socket Docker del host en el deployment YAML
+# Configurar el contexto de Docker en Jenkins
+RUN groupadd docker && usermod -aG docker jenkins
+
+
 
 
 

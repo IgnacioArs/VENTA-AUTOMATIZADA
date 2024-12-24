@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jenkins
+  labels:
+    app: jenkins
 spec:
   replicas: 1
   selector:
@@ -12,32 +14,34 @@ spec:
       labels:
         app: jenkins
     spec:
-      serviceAccountName: jenkins-sa  # Mover aquí el serviceAccountName
+      serviceAccountName: jenkins-sa  # Asegúrate de que este service account exista y tenga permisos adecuados
       containers:
       - name: jenkins
-        image: jenkin:latest
-        imagePullPolicy: Never
+        image: jenkins:latest  # Aquí usas la imagen local que acabas de construir
+        imagePullPolicy: Never  # No es necesario descargar la imagen, ya está construida localmente
         ports:
-        - containerPort: 8080
-        - containerPort: 50000
-        - containerPort: 3000
+        - containerPort: 8080  # Puerto para la interfaz de Jenkins
+        - containerPort: 50000  # Puerto para agentes remotos de Jenkins
         volumeMounts:
         - name: jenkins-home
-          mountPath: /var/jenkins_home
+          mountPath: /var/jenkins_home  # Donde se almacenan los datos persistentes de Jenkins
         - name: kubeconfig
-          mountPath: /root/.kube/config  # Ruta en el contenedor donde estará el kubeconfig
+          mountPath: /root/.kube/config  # Ruta en el contenedor para el kubeconfig
           subPath: config
+        - name: docker-socket
+          mountPath: /var/run/docker.sock  # Montar el socket Docker para acceso al daemon
       volumes:
       - name: jenkins-home
         persistentVolumeClaim:
-          claimName: jenkins-pvc
+          claimName: jenkins-pvc  # Asegúrate de que el PVC "jenkins-pvc" esté configurado
       - name: kubeconfig
         configMap:
-          name: kubeconfig-map  # ConfigMap que contiene el kubeconfig
-      # Volumen para Docker socket
+          name: kubeconfig-map  # El ConfigMap que contiene tu archivo kubeconfig
       - name: docker-socket
         hostPath:
-          path: /var/run/docker.sock  # El path del socket en el host
+          path: /var/run/docker.sock
           type: Socket
+
+
 
 
