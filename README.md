@@ -70,8 +70,10 @@ El proyecto está organizado de la siguiente manera:
 
 - **Kubernetes Cluster**: Minikube, Kind, o un clúster real.
 - **Docker**: Para crear imágenes de contenedores.
-- **Kubectl**: Herramienta CLI para interactuar con Kubernetes.
-- **Jenkins**: Herramienta Automatizacion CI/CD y delivery (Dockerhub) (instalacion de plugins - y crecion de credenciales).
+- **Kubectl**: Herramienta CLI para interactuar con Kubernetes. (Configuracion del contexto DOCKER       
+               Y MINIKUBE)
+- **Jenkins**: Herramienta Automatizacion CI/CD y deployment (Dockerhub) (instalacion de plugins -   
+               y crecion de credenciales).
 - **Ngrok**: Automatizar ejecución de pipelines mediante eventos webhooks (ngrok,jenkins,git)
 
 ### Estructura del Jenkinsfile
@@ -85,5 +87,6 @@ El proyecto está organizado de la siguiente manera:
 - **Checkout**: Clona el repositorio desde GitHub.
 - **Build Docker Images**: Construye las imágenes Docker para cada microservicio.
                         Los ARG de construcción se ajustan para el entorno de desarrollo.
-- **Run Tests**: Corre los tests para cada microservicio usando las herramientas específicas (e.g., npm test, pytest).
+- **Run Tests**: Corre los tests para cada microservicio usando las herramientas específicas (e.g., npm 
+                 test, pytest).
 - **Deploy to Kubernetes**: Aplica los archivos YAML de configuración en tu clúster de Minikube.
