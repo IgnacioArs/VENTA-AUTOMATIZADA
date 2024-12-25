@@ -103,9 +103,7 @@ sudo systemctl restart docker
 docker run -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk17
 
 
-
 # Opción 2: Desplegar Jenkins en Kubernetes
-
 # Construir una imagen personalizada de Jenkins
 docker build -t jenkins:latest .
 
@@ -135,7 +133,6 @@ ls -l /var/run/docker.sock
 usuario que tiene acceso al socket
 
 Si el comando para agregar el grupo se ejecuta en el arranque, asegúrate de modificar la configuración. Busca algo como esto en el jenkins-deployment.yaml:
-
 env:
           - name: DOCKER_GID
             value: "989"  # Reemplaza con el GID que obtuviste del host
