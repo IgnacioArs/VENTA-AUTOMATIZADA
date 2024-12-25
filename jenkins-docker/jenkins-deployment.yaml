@@ -30,20 +30,20 @@ spec:
           subPath: config
         - name: docker-socket
           mountPath: /var/run/docker.sock  # Montar el socket Docker para acceso al daemon
-        #env:
-        #  - name: DOCKER_GID
-        #    value: "989"  # Reemplaza con el GID que obtuviste del host
-        #command: ["/bin/sh", "-c"]
-        #args:
-        #- >
-        #  if ! getent group docker > /dev/null; then
-        #    groupadd -g $DOCKER_GID docker;
-        #  fi &&
-        #  usermod -aG docker jenkins &&
-        #  /usr/bin/tini -- /usr/local/bin/jenkins.sh;
-        #securityContext:
-        #  runAsUser: 0  # Ejecuta como root
-        #  runAsGroup: 0 # Ejecuta como root
+        env:
+          - name: DOCKER_GID
+            value: "989"  # Reemplaza con el GID que obtuviste del host
+        command: ["/bin/sh", "-c"]
+        args:
+        - >
+          if ! getent group docker > /dev/null; then
+            groupadd -g $DOCKER_GID docker;
+          fi &&
+          usermod -aG docker jenkins &&
+          /usr/bin/tini -- /usr/local/bin/jenkins.sh;
+        securityContext:
+          runAsUser: 0  # Ejecuta como root
+          runAsGroup: 0 # Ejecuta como root
       volumes:
       - name: jenkins-home
         persistentVolumeClaim:
