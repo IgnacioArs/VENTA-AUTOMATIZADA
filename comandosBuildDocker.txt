@@ -157,6 +157,7 @@ ls -l /var/run/docker.sock
 minikube docker-env
 eval $(minikube docker-env)
 
+
 # Detener Minikube si ya está corriendo
 minikube stop
 
@@ -168,21 +169,25 @@ sudo systemctl restart docker
 Plugins recomendados para Jenkins
 
 MS-PYTHON:
+
 - Python Plugin: Ejecutar scripts y pruebas en Python.
 - ShiningPanda Plugin: Configurar entornos virtuales de Python.
 - Cobertura Plugin: Análisis de cobertura de pruebas.
 
 MS-NESTJS-SECURITY y MS-NESTJS-BFF:
+
 - NodeJS Plugin: Ejecutar pipelines que usen Node.js.
 - Pipeline Utility Steps Plugin: Manipular archivos YAML o JSON.
 - JUnit Plugin: Reportar resultados de pruebas automatizadas (jest).
 
 Proyecto-frontApp:
+
 - HTML Publisher Plugin: Publicar reportes generados por herramientas frontend.
 - GitHub Plugin: Conectar Jenkins con repositorios frontend.
 - Build Pipeline Plugin: Organizar pasos de construcción y pruebas frontend.
 
 Otros plugins esenciales:
+
 - Kubernetes Plugin: Integrar Jenkins con Kubernetes.
 - Pipeline Plugin: Manejar pipelines declarativos.
 - Docker Pipeline Plugin: Trabajar con Docker desde pipelines.
@@ -196,21 +201,25 @@ Otros plugins esenciales:
 Plugins recomendados para Jenkins
 
 MS-PYTHON:
+
 - Python Plugin: Ejecutar scripts y pruebas en Python.
 - ShiningPanda Plugin: Configurar entornos virtuales de Python.
 - Cobertura Plugin: Análisis de cobertura de pruebas.
 
 MS-NESTJS-SECURITY y MS-NESTJS-BFF:
+
 - NodeJS Plugin: Ejecutar pipelines que usen Node.js.
 - Pipeline Utility Steps Plugin: Manipular archivos YAML o JSON.
 - JUnit Plugin: Reportar resultados de pruebas automatizadas (jest).
 
 Proyecto-frontApp:
+
 - HTML Publisher Plugin: Publicar reportes generados por herramientas frontend.
 - GitHub Plugin: Conectar Jenkins con repositorios frontend.
 - Build Pipeline Plugin: Organizar pasos de construcción y pruebas frontend.
 
 Otros plugins esenciales:
+
 - Kubernetes Plugin: Integrar Jenkins con Kubernetes.
 - Pipeline Plugin: Manejar pipelines declarativos.
 - Docker Pipeline Plugin: Trabajar con Docker desde pipelines.
@@ -223,6 +232,7 @@ Otros plugins esenciales:
 
 Flujo de trabajo automatizado
 Construcción:
+
 - Configurar un job para clonar repositorios.
 - Realizar pruebas unitarias en cada microservicio.
 
