@@ -282,9 +282,9 @@ Configuración del daemon Docker desde Jenkins
 RUN groupadd docker && usermod -aG docker jenkins
 
 
-
 SIGUIENTE PRUEBA
 SIGUIENTE PRUEBA DOS
+SIGUIENTE PRUEBA TRES
 
 
 
