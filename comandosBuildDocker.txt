@@ -73,7 +73,6 @@ minikube start
 #ACTIVAR LA VARIABLE DE ENTORNO
 minikube docker-env
 
-
 APIS
 https://www.freepublicapis.com/tags/development
 
@@ -86,15 +85,11 @@ https://hub.docker.com/r/jenkins/jenkins
 
 https://github.com/jenkinsci/docker/blob/master/README.md
 
-
-
 SOLUCION ERROR DOCKER LOCAL
 
 sudo nano /etc/resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
-
-
 
 Ejecutar Jenkins directamente con Docker
 
