@@ -6,7 +6,19 @@ USER root
 
 # Capa 1: Actualiza el sistema y herramientas básicas
 RUN apt-get update && \
-    apt-get install -y ca-certificates curl wget gnupg2 lsb-release python3 python3-pip python3-dev build-essential nodejs npm python3-venv && \
+    apt-get install -y \
+        ca-certificates \
+        curl \
+        wget \
+        gnupg2 \
+        lsb-release \
+        python3 \
+        python3-pip \
+        python3-dev \
+        build-essential \
+        nodejs \
+        npm \
+        python3-venv && \
     apt-get clean
 
 # Capa 2: Agrega Docker's GPG key
@@ -20,29 +32,35 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/doc
     apt-get update
 
 # Capa 4: Instala Docker
-RUN apt-get install -y docker-ce-cli && \
+RUN apt-get install -y docker-ce docker-ce-cli containerd.io && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Agrega el usuario jenkins al grupo docker para permitir el acceso al socket de Docker
-RUN groupadd docker && usermod -aG docker jenkins
+# Agrega el usuario Jenkins al grupo Docker para acceso al socket de Docker
+RUN getent group docker || groupadd docker && usermod -aG docker jenkins
 
-# Capa 5: Crea un entorno virtual y activa
+# Capa 5: Configura permisos para el socket de Docker
+RUN chmod 666 /var/run/docker.sock || true
+
+# Capa 6: Crea un entorno virtual de Python
 RUN python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip
 
-# Capa 6: Instalar TensorFlow en el entorno virtual
+# Capa 7: Instala TensorFlow en el entorno virtual
 RUN /venv/bin/pip install --no-cache-dir tensorflow
 
-# Capa 7: Instala Create React App y NestJS CLI globalmente con npm
+# Capa 8: Instala Create React App y NestJS CLI globalmente con npm
 RUN npm install -g create-react-app @nestjs/cli
 
-# Instalar kubectl con reintentos
+# Capa 9: Instala kubectl
 RUN curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl" && \
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl
 
-# Cambia de nuevo al usuario jenkins para la ejecución de Jenkins
+# Capa 10: Instala helm (opcional si lo necesitas)
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# Cambia al usuario Jenkins para la ejecución
 USER jenkins
 
 # Establece el directorio de trabajo
@@ -51,6 +69,10 @@ WORKDIR /var/jenkins_home
 # Exponer puertos para Jenkins
 EXPOSE 8080
 EXPOSE 50000
+
+# Comando de inicio
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
 
 
 
