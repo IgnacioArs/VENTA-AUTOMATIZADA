@@ -17,30 +17,34 @@ spec:
       serviceAccountName: jenkins-sa  # Asegúrate de que este service account exista y tenga permisos adecuados
       containers:
       - name: jenkins
-        image: jenkins:latest  # Aquí usas la imagen local que acabas de construir
-        imagePullPolicy: Never  # No es necesario descargar la imagen, ya está construida localmente
+        image: jenkins:latest
+        imagePullPolicy: Never
         ports:
-        - containerPort: 8080  # Puerto para la interfaz de Jenkins
-        - containerPort: 50000  # Puerto para agentes remotos de Jenkins
+        - containerPort: 8080
+        - containerPort: 50000
         volumeMounts:
         - name: jenkins-home
-          mountPath: /var/jenkins_home  # Donde se almacenan los datos persistentes de Jenkins
+          mountPath: /var/jenkins_home
         - name: kubeconfig
-          mountPath: /root/.kube/config  # Ruta en el contenedor para el kubeconfig
+          mountPath: /root/.kube/config
           subPath: config
         - name: docker-socket
-          mountPath: /var/run/docker.sock  # Montar el socket Docker para acceso al daemon
+          mountPath: /var/run/docker.sock
+        securityContext:
+          runAsUser: 0  # Ejecutar el contenedor como root
+          runAsGroup: 0  # Ejecutar el contenedor en el grupo root
       volumes:
       - name: jenkins-home
         persistentVolumeClaim:
-          claimName: jenkins-pvc  # Asegúrate de que el PVC "jenkins-pvc" esté configurado
+          claimName: jenkins-pvc
       - name: kubeconfig
         configMap:
-          name: kubeconfig-map  # El ConfigMap que contiene tu archivo kubeconfig
+          name: kubeconfig-map
       - name: docker-socket
         hostPath:
           path: /var/run/docker.sock
           type: Socket
+
 
 
 
