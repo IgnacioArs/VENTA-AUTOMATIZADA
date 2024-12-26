@@ -17,8 +17,12 @@ spec:
       serviceAccountName: jenkins-sa  # Asegúrate de que este service account exista y tenga permisos adecuados
       containers:
       - name: jenkins
-        image: jenkins:latest  # Aquí usas la imagen local que acabas de construir
+        image: jenkins:latest  # Usa la imagen local que acabas de construir
         imagePullPolicy: Never  # No es necesario descargar la imagen, ya está construida localmente
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+          privileged: true
         ports:
         - containerPort: 8080  # Puerto para la interfaz de Jenkins
         - containerPort: 50000  # Puerto para agentes remotos de Jenkins
@@ -30,20 +34,6 @@ spec:
           subPath: config
         - name: docker-socket
           mountPath: /var/run/docker.sock  # Montar el socket Docker para acceso al daemon
-        #env:
-        #  - name: DOCKER_GID
-        #    value: "989"  # Reemplaza con el GID que obtuviste del host
-        #command: ["/bin/sh", "-c"]
-        #args:
-        #- >
-        #  if ! getent group docker > /dev/null; then
-        #    groupadd -g $DOCKER_GID docker;
-        #  fi &&
-        #  usermod -aG docker jenkins &&
-        #  /usr/bin/tini -- /usr/local/bin/jenkins.sh;
-        #securityContext:
-          #runAsUser: 0  # Ejecuta como root
-          #runAsGroup: 0 # Ejecuta como root
       volumes:
       - name: jenkins-home
         persistentVolumeClaim:
@@ -55,6 +45,7 @@ spec:
         hostPath:
           path: /var/run/docker.sock
           type: Socket
+
 
 
 

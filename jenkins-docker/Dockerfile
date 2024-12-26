@@ -24,9 +24,6 @@ RUN apt-get install -y docker-ce-cli && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Agrega el usuario jenkins al grupo docker para permitir el acceso al socket de Docker
-RUN groupadd docker && usermod -aG docker jenkins
-
 # Capa 5: Crea un entorno virtual y activa
 RUN python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip
@@ -51,6 +48,7 @@ WORKDIR /var/jenkins_home
 # Exponer puertos para Jenkins
 EXPOSE 8080
 EXPOSE 50000
+
 
 
 

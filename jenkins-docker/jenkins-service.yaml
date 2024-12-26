@@ -14,5 +14,6 @@ spec:
       protocol: TCP
   selector:
     app: jenkins
-  type: LoadBalancer  # O ClusterIP si prefieres no exponerlo fuera del clúster
+  type: NodePort  # Cambiado de LoadBalancer a NodePort para Minikube
+
 

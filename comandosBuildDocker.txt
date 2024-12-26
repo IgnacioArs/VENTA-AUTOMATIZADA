@@ -157,7 +157,11 @@ usermod -aG docker jenkins
 exit  # Sal de la sesión interactiva
 kubectl delete pod <nombre-del-pod>
 
-
+EJECTURAR EN CONTENEDOR:
+groupadd docker
+usermod -aG docker jenkins
+chgrp docker /var/run/docker.sock
+chmod 660 /var/run/docker.sock
 
 *************************************************************************
 
