@@ -19,6 +19,9 @@ spec:
       - name: jenkins
         image: jenkins:latest  # Aquí usas la imagen local que acabas de construir
         imagePullPolicy: Never  # No es necesario descargar la imagen, ya está construida localmente
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
         ports:
         - containerPort: 8080  # Puerto para la interfaz de Jenkins
         - containerPort: 50000  # Puerto para agentes remotos de Jenkins
