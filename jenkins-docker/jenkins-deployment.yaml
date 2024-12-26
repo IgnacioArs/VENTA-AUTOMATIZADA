@@ -17,12 +17,8 @@ spec:
       serviceAccountName: jenkins-sa  # Asegúrate de que este service account exista y tenga permisos adecuados
       containers:
       - name: jenkins
-        image: jenkins:latest  # Usa la imagen local que acabas de construir
+        image: jenkins:latest  # Aquí usas la imagen local que acabas de construir
         imagePullPolicy: Never  # No es necesario descargar la imagen, ya está construida localmente
-        securityContext:
-          runAsUser: 0
-          runAsGroup: 0
-          privileged: true
         ports:
         - containerPort: 8080  # Puerto para la interfaz de Jenkins
         - containerPort: 50000  # Puerto para agentes remotos de Jenkins
@@ -45,7 +41,6 @@ spec:
         hostPath:
           path: /var/run/docker.sock
           type: Socket
-
 
 
 
