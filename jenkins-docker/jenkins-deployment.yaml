@@ -16,13 +16,14 @@ spec:
     spec:
       serviceAccountName: jenkins-sa
       securityContext:
-        fsGroup: 1000  # El grupo que Jenkins utilizará para acceder a los archivos
+        fsGroup: 1000  # Mueve este bloque aquí
       containers:
       - name: jenkins
         image: jenkins:latest
         imagePullPolicy: Never
         securityContext:
-          runAsUser: 0  # Ejecutar como root para garantizar acceso completo
+          runAsUser: 1000
+          runAsGroup: 1000
         ports:
         - containerPort: 8080
         - containerPort: 50000
