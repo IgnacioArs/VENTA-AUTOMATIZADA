@@ -16,17 +16,21 @@ spec:
     spec:
       serviceAccountName: jenkins-sa
       securityContext:
-        fsGroup: 1000  # Mueve este bloque aquí
+        fsGroup: 1000  # Grupo para acceso a archivos
       containers:
       - name: jenkins
         image: jenkins:latest
         imagePullPolicy: Never
         securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
+          runAsUser: 1000  # Usuario Jenkins
+          runAsGroup: 1000  # Grupo Jenkins
+          allowPrivilegeEscalation: false  # Deshabilitar privilegios escalados
         ports:
         - containerPort: 8080
         - containerPort: 50000
+        env:
+        - name: JAVA_OPTS
+          value: "-Djenkins.install.runSetupWizard=false" # Evita el asistente inicial
         volumeMounts:
         - name: jenkins-home
           mountPath: /var/jenkins_home
@@ -46,6 +50,7 @@ spec:
         hostPath:
           path: /var/run/docker.sock
           type: Socket
+
 
 
 
