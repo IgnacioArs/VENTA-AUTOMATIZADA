@@ -1,10 +1,10 @@
-# Usa la imagen oficial de Jenkins como base
+# Dockerfile actualizado
 FROM jenkins/jenkins:latest
 
 # Cambia al usuario root para instalar dependencias
 USER root
 
-# Capa 1: Actualiza el sistema y herramientas básicas
+# Actualiza el sistema y herramientas básicas
 RUN apt-get update && \
     apt-get install -y \
         ca-certificates \
@@ -21,43 +21,41 @@ RUN apt-get update && \
         python3-venv && \
     apt-get clean
 
-# Capa 2: Agrega Docker's GPG key
+# Agrega Docker's GPG key
 RUN install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
     chmod a+r /etc/apt/keyrings/docker.asc
 
-# Capa 3: Agrega el repositorio de Docker utilizando VERSION_CODENAME
+# Agrega el repositorio de Docker utilizando VERSION_CODENAME
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list && \
+  $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" > /etc/apt/sources.list.d/docker.list && \
     apt-get update
 
-# Capa 4: Instala Docker
+# Instala Docker
 RUN apt-get install -y docker-ce docker-ce-cli containerd.io && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Agrega el usuario Jenkins al grupo Docker para acceso al socket de Docker
-RUN getent group docker || groupadd docker && usermod -aG docker jenkins
+# Agrega el usuario Jenkins al grupo Docker
+RUN groupadd docker || true && \
+    usermod -aG docker jenkins
 
-# Capa 5: Configura permisos para el socket de Docker
-RUN chmod 666 /var/run/docker.sock || true
-
-# Capa 6: Crea un entorno virtual de Python
+# Crea un entorno virtual de Python
 RUN python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip
 
-# Capa 7: Instala TensorFlow en el entorno virtual
+# Instala TensorFlow en el entorno virtual
 RUN /venv/bin/pip install --no-cache-dir tensorflow
 
-# Capa 8: Instala Create React App y NestJS CLI globalmente con npm
+# Instala Create React App y NestJS CLI globalmente con npm
 RUN npm install -g create-react-app @nestjs/cli
 
-# Capa 9: Instala kubectl
+# Instala kubectl
 RUN curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl" && \
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl
 
-# Capa 10: Instala helm (opcional si lo necesitas)
+# Instala helm (opcional si lo necesitas)
 RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 # Cambia al usuario Jenkins para la ejecución
@@ -72,6 +70,10 @@ EXPOSE 50000
 
 # Comando de inicio
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
+
+
+
 
 
 
