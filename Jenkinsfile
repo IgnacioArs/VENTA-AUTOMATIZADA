@@ -12,7 +12,7 @@ pipeline {
             steps {
                     git branch: 'main', 
                     url: 'https://github.com/IgnacioArs/VENTA-AUTOMATIZADA.git', 
-                    credentialsId: '40c4f67f-f261-44ee-b866-0bdc09506195'
+                    credentialsId: 'github-user'
             }
         }
 
