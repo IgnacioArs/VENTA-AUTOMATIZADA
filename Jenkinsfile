@@ -24,7 +24,7 @@ pipeline {
                 stage('Build Frontend') {
                     steps {
                         sh '''
-                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE/proyecto-frontapp-desarrollo-devops \
+                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops \
                             --build-arg VITE_ENTORNO=desarrollo ./proyecto-frontApp
                         '''
                     }
@@ -32,7 +32,7 @@ pipeline {
                 stage('Build BFF') {
                     steps {
                         sh '''
-                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-nestjs-bff-desarrollo-devops \
+                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-bff-desarrollo-devops \
                             --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-bff
                         '''
                     }
@@ -40,7 +40,7 @@ pipeline {
                 stage('Build Security') {
                     steps {
                         sh '''
-                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-nestjs-security-desarrollo-devops \
+                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-security-desarrollo-devops \
                             --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-security
                         '''
                     }
@@ -48,7 +48,7 @@ pipeline {
                 stage('Build Python') {
                     steps {
                         sh '''
-                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-python-desarrollo-devops \
+                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-python-desarrollo-devops \
                             --build-arg ENTORNO_ENV=desarrollo ./ms-python
                         '''
                     }
@@ -61,10 +61,10 @@ pipeline {
                 script {
                     docker.withRegistry('', "$DOCKER_CREDENTIALS") {
                         sh '''
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE/proyecto-frontapp-desarrollo-devops
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-nestjs-bff-desarrollo-devops
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-nestjs-security-desarrollo-devops
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-python-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-bff-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-security-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-python-desarrollo-devops
 
                         // Comentado para referencia del repositorio antiguo
                         // docker push antiguo-repositorio/proyecto-frontapp-desarrollo-devops
