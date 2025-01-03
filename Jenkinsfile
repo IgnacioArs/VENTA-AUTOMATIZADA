@@ -61,10 +61,10 @@ pipeline {
                 script {
                     docker.withRegistry('', "$DOCKER_CREDENTIALS") {
                         sh '''
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE/proyecto-frontapp-desarrollo-devops
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-nestjs-bff-desarrollo-devops
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-nestjs-security-desarrollo-devops
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-python-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-bff-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-security-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-python-desarrollo-devops
 
                         // Comentado para referencia del repositorio antiguo
                         // docker push antiguo-repositorio/proyecto-frontapp-desarrollo-devops
