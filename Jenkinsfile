@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         // Configuración para Docker Hub
+        // Configuración para Docker Hub
         // DOCKER_REGISTRY = 'docker.io/devars96' // Antiguo repositorio de Docker (comentado como referencia)
         DOCKER_REGISTRY = 'devars96' // Base del repositorio en Docker Hub
         PROJECT_NAMESPACE = 'jenkins' // Subcarpeta del repositorio (nuevo)
