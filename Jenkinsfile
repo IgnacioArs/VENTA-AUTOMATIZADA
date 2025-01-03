@@ -3,10 +3,8 @@ pipeline {
 
     environment {
         // Configuración para Docker Hub
-        // Configuración para Docker Hub
-        // DOCKER_REGISTRY = 'docker.io/devars96' // Antiguo repositorio de Docker (comentado como referencia)
-        DOCKER_REGISTRY = 'devars96' // Base del repositorio en Docker Hub
-        PROJECT_NAMESPACE = 'jenkins' // Subcarpeta del repositorio (nuevo)
+        //DOCKER_REGISTRY = 'docker.io/devars96' // Antiguo repositorio de Docker (comentado como referencia)
+        DOCKER_REGISTRY = 'docker.io/devars96/jenkins' // Nuevo repositorio de Docker
         DOCKER_CREDENTIALS = 'docker-hub-credentials' // ID de las credenciales almacenadas en Jenkins
         KUBE_CONTEXT = 'minikube'
     }
@@ -14,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', 
+                    git branch: 'main', 
                     url: 'https://github.com/IgnacioArs/VENTA-AUTOMATIZADA.git', 
                     credentialsId: 'github-user'
             }
@@ -24,34 +22,22 @@ pipeline {
             parallel {
                 stage('Build Frontend') {
                     steps {
-                        sh '''
-                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE/proyecto-frontapp-desarrollo-devops \
-                            --build-arg VITE_ENTORNO=desarrollo ./proyecto-frontApp
-                        '''
+                        sh 'docker build -t $DOCKER_REGISTRY/proyecto-frontapp-desarrollo-devops --build-arg VITE_ENTORNO=desarrollo ./proyecto-frontApp'
                     }
                 }
                 stage('Build BFF') {
                     steps {
-                        sh '''
-                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-nestjs-bff-desarrollo-devops \
-                            --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-bff
-                        '''
+                        sh 'docker build -t $DOCKER_REGISTRY/ms-nestjs-bff-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-bff'
                     }
                 }
                 stage('Build Security') {
                     steps {
-                        sh '''
-                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-nestjs-security-desarrollo-devops \
-                            --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-security
-                        '''
+                        sh 'docker build -t $DOCKER_REGISTRY/ms-nestjs-security-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-security'
                     }
                 }
                 stage('Build Python') {
                     steps {
-                        sh '''
-                        docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE/ms-python-desarrollo-devops \
-                            --build-arg ENTORNO_ENV=desarrollo ./ms-python
-                        '''
+                        sh 'docker build -t $DOCKER_REGISTRY/ms-python-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-python'
                     }
                 }
             }
@@ -62,12 +48,13 @@ pipeline {
                 script {
                     docker.withRegistry('', "$DOCKER_CREDENTIALS") {
                         sh '''
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-bff-desarrollo-devops
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-security-desarrollo-devops
-                        docker push $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-python-desarrollo-devops
+                        // Push hacia el nuevo repositorio
+                        docker push $DOCKER_REGISTRY/proyecto-frontapp-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/ms-nestjs-bff-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/ms-nestjs-security-desarrollo-devops
+                        docker push $DOCKER_REGISTRY/ms-python-desarrollo-devops
 
-                        // Comentado para referencia del repositorio antiguo
+                        // Comentado el repositorio antiguo para referencia
                         // docker push antiguo-repositorio/proyecto-frontapp-desarrollo-devops
                         // docker push antiguo-repositorio/ms-nestjs-bff-desarrollo-devops
                         // docker push antiguo-repositorio/ms-nestjs-security-desarrollo-devops
@@ -147,5 +134,4 @@ pipeline {
         }
     }
 }
-
 
