@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: ms-nestjs-security
-        image: ms-nestjs-security-desarrollo-devops:latest
+        #image: ms-nestjs-security-desarrollo-devops:latest  #antigua imagen que he estado utilizando primeras pruebas de jenkins 
+        image: devars96/jenkins/ms-nestjs-security-desarrollo-devops:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 3001

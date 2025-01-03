@@ -2,7 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REGISTRY = 'docker.io/devars96'
+        // Configuración para Docker Hub
+        //DOCKER_REGISTRY = 'docker.io/devars96' // Antiguo repositorio de Docker (comentado como referencia)
+        DOCKER_REGISTRY = 'docker.io/devars96/jenkins' // Nuevo repositorio de Docker
         DOCKER_CREDENTIALS = 'docker-hub-credentials' // ID de las credenciales almacenadas en Jenkins
         KUBE_CONTEXT = 'minikube'
     }
@@ -46,10 +48,17 @@ pipeline {
                 script {
                     docker.withRegistry('', "$DOCKER_CREDENTIALS") {
                         sh '''
+                        // Push hacia el nuevo repositorio
                         docker push $DOCKER_REGISTRY/proyecto-frontapp-desarrollo-devops
                         docker push $DOCKER_REGISTRY/ms-nestjs-bff-desarrollo-devops
                         docker push $DOCKER_REGISTRY/ms-nestjs-security-desarrollo-devops
                         docker push $DOCKER_REGISTRY/ms-python-desarrollo-devops
+
+                        // Comentado el repositorio antiguo para referencia
+                        // docker push antiguo-repositorio/proyecto-frontapp-desarrollo-devops
+                        // docker push antiguo-repositorio/ms-nestjs-bff-desarrollo-devops
+                        // docker push antiguo-repositorio/ms-nestjs-security-desarrollo-devops
+                        // docker push antiguo-repositorio/ms-python-desarrollo-devops
                         '''
                     }
                 }
