@@ -15,7 +15,7 @@ spec:
       containers:
       - name: proyecto-frontapp
         #image: proyecto-frontapp-desarrollo-devops:latest imagen de repositorio antiguo
-        image: devars96/jenkins/proyecto-frontapp-desarrollo-devops:latest #imagen del nuevo repositorio
+        image: devars96/jenkins:proyecto-frontapp-desarrollo-devops
         imagePullPolicy: Never
         ports:
         - containerPort: 80

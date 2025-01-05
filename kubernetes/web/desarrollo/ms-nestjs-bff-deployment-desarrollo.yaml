@@ -17,7 +17,7 @@ spec:
       containers:
       - name: ms-nestjs-bff
         #image: ms-nestjs-bff-desarrollo-devops:latest # antigua imagen utilizada para las primeras pruebas, y primera configuracion de jenkins
-        image: devars96/jenkins/ms-nestjs-bff-desarrollo-devops:latest
+        image: devars96/jenkins:ms-nestjs-bff-desarrollo-devops
         imagePullPolicy: Never
         ports:
         - containerPort: 3002

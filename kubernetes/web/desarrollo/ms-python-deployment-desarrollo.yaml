@@ -17,7 +17,7 @@ spec:
       containers:
       - name: ms-python-desarrollo
         #image: ms-python-desarrollo-devops:latest  #antigua imagen de mis antiguas pruebas
-        image: devars96/jenkins/ms-python-desarrollo-devops:latest
+        image: devars96/jenkins:ms-python-desarrollo-devops
         imagePullPolicy: Never
         ports:
         - containerPort: 3000

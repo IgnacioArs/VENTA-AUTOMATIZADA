@@ -8,6 +8,7 @@ pipeline {
         PROJECT_NAMESPACE = 'jenkins' // Subcarpeta del repositorio (nuevo)
         DOCKER_CREDENTIALS = 'docker-hub-credentials' // ID de las credenciales almacenadas en Jenkins
         KUBE_CONTEXT = 'minikube'
+        SLACK_CREDENTIAL_ID = 'jenkins-slack-notifications'
     }
 
     stages {
@@ -137,13 +138,27 @@ pipeline {
         }
     }
 
-    post {
+     post {
         success {
-            echo 'Pipeline completed successfully!'
+            script {
+                slackSend channel: '#todo-jenkins-proyecto-venta-automatizada', 
+                          message: "Pipeline completado con éxito: ${env.JOB_NAME} [${env.BUILD_NUMBER}] (<${env.BUILD_URL}|Ver Detalles>)",
+                          color: 'good',
+                          tokenCredentialId: env.SLACK_CREDENTIAL_ID
+            }
         }
         failure {
-            echo 'Pipeline failed. Check logs for details.'
+            script {
+                slackSend channel: '#todo-jenkins-proyecto-venta-automatizada', 
+                          message: "Pipeline fallido: ${env.JOB_NAME} [${env.BUILD_NUMBER}] (<${env.BUILD_URL}|Ver Detalles>)",
+                          color: 'danger',
+                          tokenCredentialId: env.SLACK_CREDENTIAL_ID
+            }
+        }
+        always {
+            echo 'Pipeline finalizado.'
         }
     }
 }
+
 

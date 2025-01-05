@@ -58,6 +58,9 @@ RUN curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl" && \
 # Instala helm (opcional si lo necesitas)
 RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
+# Instala plugins de Jenkins, incluyendo Slack Notifications
+RUN jenkins-plugin-cli --plugins slack
+
 # Cambia al usuario Jenkins para la ejecución
 USER jenkins
 
