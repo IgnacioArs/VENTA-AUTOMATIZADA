@@ -115,14 +115,14 @@ pipeline {
             steps {
                 dir('./kubernetes/web/desarrollo') {
                     sh '''
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-deployment-desarrollo.yaml --dry-run=client
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-service-desarrollo.yaml --dry-run=client
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-deployment-desarrollo.yaml --dry-run=client
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-service-desarrollo.yaml --dry-run=client
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-python-deployment-desarrollo.yaml --dry-run=client
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-python-service-desarrollo.yaml --dry-run=client
-                    kubectl --context=$KUBE_CONTEXT apply -f nginx-deployment-desarrollo.yaml --dry-run=client
-                    kubectl --context=$KUBE_CONTEXT apply -f nginx-service-desarrollo.yaml --dry-run=client
+                    kubectl apply -f ms-nestjs-bff-deployment-desarrollo.yaml 
+                    kubectl apply -f ms-nestjs-bff-service-desarrollo.yaml 
+                    kubectl apply -f ms-nestjs-security-deployment-desarrollo.yaml 
+                    kubectl apply -f ms-nestjs-security-service-desarrollo.yaml 
+                    kubectl apply -f ms-python-deployment-desarrollo.yaml 
+                    kubectl apply -f ms-python-service-desarrollo.yaml 
+                    kubectl apply -f nginx-deployment-desarrollo.yaml 
+                    kubectl apply -f nginx-service-desarrollo.yaml 
                     '''
                 }
             }
