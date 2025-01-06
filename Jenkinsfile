@@ -114,34 +114,32 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 dir('./kubernetes/web/desarrollo') {
-                    script {
-                        // Verificar el contexto actual de Kubernetes
-                        sh 'kubectl config current-context'
-                        
-                        // Comprobar si Kubernetes es accesible
-                        sh 'kubectl --context=minikube cluster-info'
+                script {
+                    // Asegurarse de que Minikube está configurado
+                    sh 'eval $(minikube -p minikube docker-env)'
+                    sh 'kubectl config use-context minikube'
 
-                        // Ejecutar los comandos de kubectl
-                        sh '''
-                        echo "Aplicando ms-nestjs-bff-deployment-desarrollo.yaml"
-                        kubectl --context=minikube apply -f ms-nestjs-bff-deployment-desarrollo.yaml 
-                        kubectl --context=minikube apply -f ms-nestjs-bff-service-desarrollo.yaml 
-                        
-                        echo "Aplicando ms-nestjs-security-deployment-desarrollo.yaml"
-                        kubectl --context=minikube apply -f ms-nestjs-security-deployment-desarrollo.yaml 
-                        kubectl --context=minikube apply -f ms-nestjs-security-service-desarrollo.yaml 
-
-                        echo "Aplicando ms-python-deployment-desarrollo.yaml"
-                        kubectl --context=minikube apply -f ms-python-deployment-desarrollo.yaml 
-                        kubectl --context=minikube apply -f ms-python-service-desarrollo.yaml 
-
-                        echo "Aplicando nginx-deployment-desarrollo.yaml"
-                        kubectl --context=minikube apply -f nginx-deployment-desarrollo.yaml 
-                        kubectl --context=minikube apply -f nginx-service-desarrollo.yaml
-                        '''
-                    }
+                    // Comandos de kubectl
+                    sh '''
+                    echo "Aplicando ms-nestjs-bff-deployment-desarrollo.yaml"
+                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-deployment-desarrollo.yaml 
+                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-service-desarrollo.yaml 
+                    
+                    echo "Aplicando ms-nestjs-security-deployment-desarrollo.yaml"
+                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-deployment-desarrollo.yaml 
+                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-service-desarrollo.yaml 
+                    
+                    echo "Aplicando ms-python-deployment-desarrollo.yaml"
+                    kubectl --context=$KUBE_CONTEXT apply -f ms-python-deployment-desarrollo.yaml 
+                    kubectl --context=$KUBE_CONTEXT apply -f ms-python-service-desarrollo.yaml 
+                    
+                    echo "Aplicando nginx-deployment-desarrollo.yaml"
+                    kubectl --context=$KUBE_CONTEXT apply -f nginx-deployment-desarrollo.yaml 
+                    kubectl --context=$KUBE_CONTEXT apply -f nginx-service-desarrollo.yaml
+                    '''
                 }
             }
+          }
         }
 
 
