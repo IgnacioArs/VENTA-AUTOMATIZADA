@@ -114,19 +114,36 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 dir('./kubernetes/web/desarrollo') {
-                    sh '''
-                    kubectl apply -f ms-nestjs-bff-deployment-desarrollo.yaml 
-                    kubectl apply -f ms-nestjs-bff-service-desarrollo.yaml 
-                    kubectl apply -f ms-nestjs-security-deployment-desarrollo.yaml 
-                    kubectl apply -f ms-nestjs-security-service-desarrollo.yaml 
-                    kubectl apply -f ms-python-deployment-desarrollo.yaml 
-                    kubectl apply -f ms-python-service-desarrollo.yaml 
-                    kubectl apply -f nginx-deployment-desarrollo.yaml 
-                    kubectl apply -f nginx-service-desarrollo.yaml 
-                    '''
+                    script {
+                        // Verificar el contexto actual de Kubernetes
+                        sh 'kubectl config current-context'
+                        
+                        // Comprobar si Kubernetes es accesible
+                        sh 'kubectl --context=$KUBE_CONTEXT cluster-info'
+
+                        // Ejecutar los comandos de kubectl
+                        sh '''
+                        echo "Aplicando ms-nestjs-bff-deployment-desarrollo.yaml"
+                        kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-deployment-desarrollo.yaml 
+                        kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-service-desarrollo.yaml 
+                        
+                        echo "Aplicando ms-nestjs-security-deployment-desarrollo.yaml"
+                        kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-deployment-desarrollo.yaml 
+                        kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-service-desarrollo.yaml 
+
+                        echo "Aplicando ms-python-deployment-desarrollo.yaml"
+                        kubectl --context=$KUBE_CONTEXT apply -f ms-python-deployment-desarrollo.yaml 
+                        kubectl --context=$KUBE_CONTEXT apply -f ms-python-service-desarrollo.yaml 
+
+                        echo "Aplicando nginx-deployment-desarrollo.yaml"
+                        kubectl --context=$KUBE_CONTEXT apply -f nginx-deployment-desarrollo.yaml 
+                        kubectl --context=$KUBE_CONTEXT apply -f nginx-service-desarrollo.yaml
+                        '''
+                    }
                 }
             }
         }
+
 
         stage('Validate Deployment') {
             steps {
