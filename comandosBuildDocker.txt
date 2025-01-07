@@ -119,7 +119,7 @@ kubectl apply -f jenkins-service.yaml
 kubectl apply -f jenkins-deployment.yaml
 
 ESTO ES RELEVANTE: 
-kubectl create configmap kubeconfig-map --from-file=$HOME/.kube/config --dry-run=client -o yaml | kubectl apply -f -
+kubectl create configmap kubeconfig-map --from-file=config=/home/devars/.kube/config --dry-run=client -o yaml | kubectl apply -f -
 
 
 

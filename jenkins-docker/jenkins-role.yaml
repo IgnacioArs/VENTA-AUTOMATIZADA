@@ -5,8 +5,8 @@ metadata:
   name: jenkins-secret-access
 rules:
   - apiGroups: [""]
-    resources: ["secrets","pods", "services", "deployments"]
-    verbs: ["get", "list", "create", "update", "delete"]
+    resources: ["secrets"]
+    verbs: ["list", "get"]
 
 
 
