@@ -118,6 +118,11 @@ ls -l ~/.kube/config -> kubectl create configmap kubeconfig-map --from-file=conf
 kubectl apply -f jenkins-service.yaml
 kubectl apply -f jenkins-deployment.yaml
 
+ESTO ES RELEVANTE: 
+kubectl create configmap kubeconfig-map --from-file=$HOME/.kube/config --dry-run=client -o yaml | kubectl apply -f -
+
+
+
 EXPLICACION: 
 Debe ejecutarse en tu clúster Kubernetes después de desplegar la aplicación y la ServiceAccount. 
 Este comando asigna permisos específicos (en este caso, 
