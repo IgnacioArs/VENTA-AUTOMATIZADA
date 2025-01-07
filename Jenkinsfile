@@ -121,21 +121,22 @@ pipeline {
 
                     // Comandos de kubectl
                     sh '''
-                    echo "Aplicando ms-nestjs-bff-deployment-desarrollo.yaml"
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-deployment-desarrollo.yaml 
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-service-desarrollo.yaml 
+                    //echo "Aplicando ms-nestjs-bff-deployment-desarrollo.yaml"
+                    //kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-deployment-desarrollo.yaml 
+                    //kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-service-desarrollo.yaml 
                     
-                    echo "Aplicando ms-nestjs-security-deployment-desarrollo.yaml"
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-deployment-desarrollo.yaml 
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-service-desarrollo.yaml 
+                    //echo "Aplicando ms-nestjs-security-deployment-desarrollo.yaml"
+                    //kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-deployment-desarrollo.yaml 
+                    //kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-service-desarrollo.yaml 
                     
-                    echo "Aplicando ms-python-deployment-desarrollo.yaml"
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-python-deployment-desarrollo.yaml 
-                    kubectl --context=$KUBE_CONTEXT apply -f ms-python-service-desarrollo.yaml 
+                    //echo "Aplicando ms-python-deployment-desarrollo.yaml"
+                    //kubectl --context=$KUBE_CONTEXT apply -f ms-python-deployment-desarrollo.yaml 
+                    //kubectl --context=$KUBE_CONTEXT apply -f ms-python-service-desarrollo.yaml 
                     
-                    echo "Aplicando nginx-deployment-desarrollo.yaml"
-                    kubectl --context=$KUBE_CONTEXT apply -f nginx-deployment-desarrollo.yaml 
-                    kubectl --context=$KUBE_CONTEXT apply -f nginx-service-desarrollo.yaml
+                    //echo "Aplicando nginx-deployment-desarrollo.yaml"
+                    //kubectl --context=$KUBE_CONTEXT apply -f nginx-deployment-desarrollo.yaml 
+                    //kubectl --context=$KUBE_CONTEXT apply -f nginx-service-desarrollo.yaml
+                    kubectl apply -f ./
                     '''
                 }
             }
