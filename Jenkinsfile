@@ -115,43 +115,13 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             parallel {
-                stage('Deploy BFF') {
+                stage('Deploy All Tests') {
                     steps {
                         sh '''
                         eval $(minikube -p minikube docker-env)
                         kubectl config use-context minikube
-                        kubectl apply -f ./kubernetes/web/desarrollo/ms-nestjs-bff-deployment-desarrollo.yaml
-                        kubectl apply -f ./kubernetes/web/desarrollo/ms-nestjs-bff-service-desarrollo.yaml
-                        '''
-                    }
-                }
-                stage('Deploy Security') {
-                    steps {
-                        sh '''
-                        eval $(minikube -p minikube docker-env)
-                        kubectl config use-context minikube
-                        kubectl apply -f ./kubernetes/web/desarrollo/ms-nestjs-security-deployment-desarrollo.yaml
-                        kubectl apply -f ./kubernetes/web/desarrollo/ms-nestjs-security-service-desarrollo.yaml
-                        '''
-                    }
-                }
-                stage('Deploy Python') {
-                    steps {
-                        sh '''
-                        eval $(minikube -p minikube docker-env)
-                        kubectl config use-context minikube
-                        kubectl apply -f ./kubernetes/web/desarrollo/ms-python-deployment-desarrollo.yaml
-                        kubectl apply -f ./kubernetes/web/desarrollo/ms-python-service-desarrollo.yaml
-                        '''
-                    }
-                }
-                stage('Deploy Nginx') {
-                    steps {
-                        sh '''
-                        eval $(minikube -p minikube docker-env)
-                        kubectl config use-context minikube
-                        kubectl apply -f ./kubernetes/web/desarrollo/nginx-deployment-desarrollo.yaml
-                        kubectl apply -f ./kubernetes/web/desarrollo/nginx-service-desarrollo.yaml
+                        set -x
+                        kubectl apply -f ./kubernetes/web/desarrollo/ -v=8
                         '''
                     }
                 }
