@@ -111,37 +111,53 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
-            steps {
-                dir('./kubernetes/web/desarrollo') {
-                script {
-                    // Asegurarse de que Minikube está configurado
-                    sh 'eval $(minikube -p minikube docker-env)'
-                    sh 'kubectl config use-context minikube'
 
-                    // Comandos de kubectl
-                    sh '''
-                    //echo "Aplicando ms-nestjs-bff-deployment-desarrollo.yaml"
-                    //kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-deployment-desarrollo.yaml 
-                    //kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-bff-service-desarrollo.yaml 
-                    
-                    //echo "Aplicando ms-nestjs-security-deployment-desarrollo.yaml"
-                    //kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-deployment-desarrollo.yaml 
-                    //kubectl --context=$KUBE_CONTEXT apply -f ms-nestjs-security-service-desarrollo.yaml 
-                    
-                    //echo "Aplicando ms-python-deployment-desarrollo.yaml"
-                    //kubectl --context=$KUBE_CONTEXT apply -f ms-python-deployment-desarrollo.yaml 
-                    //kubectl --context=$KUBE_CONTEXT apply -f ms-python-service-desarrollo.yaml 
-                    
-                    //echo "Aplicando nginx-deployment-desarrollo.yaml"
-                    //kubectl --context=$KUBE_CONTEXT apply -f nginx-deployment-desarrollo.yaml 
-                    //kubectl --context=$KUBE_CONTEXT apply -f nginx-service-desarrollo.yaml
-                    kubectl apply -f ./
-                    '''
+
+        stage('Deploy to Kubernetes') {
+            parallel {
+                stage('Deploy BFF') {
+                    steps {
+                        sh '''
+                        eval $(minikube -p minikube docker-env)
+                        kubectl config use-context minikube
+                        kubectl apply -f ./kubernetes/web/desarrollo/ms-nestjs-bff-deployment-desarrollo.yaml
+                        kubectl apply -f ./kubernetes/web/desarrollo/ms-nestjs-bff-service-desarrollo.yaml
+                        '''
+                    }
+                }
+                stage('Deploy Security') {
+                    steps {
+                        sh '''
+                        eval $(minikube -p minikube docker-env)
+                        kubectl config use-context minikube
+                        kubectl apply -f ./kubernetes/web/desarrollo/ms-nestjs-security-deployment-desarrollo.yaml
+                        kubectl apply -f ./kubernetes/web/desarrollo/ms-nestjs-security-service-desarrollo.yaml
+                        '''
+                    }
+                }
+                stage('Deploy Python') {
+                    steps {
+                        sh '''
+                        eval $(minikube -p minikube docker-env)
+                        kubectl config use-context minikube
+                        kubectl apply -f ./kubernetes/web/desarrollo/ms-python-deployment-desarrollo.yaml
+                        kubectl apply -f ./kubernetes/web/desarrollo/ms-python-service-desarrollo.yaml
+                        '''
+                    }
+                }
+                stage('Deploy Nginx') {
+                    steps {
+                        sh '''
+                        eval $(minikube -p minikube docker-env)
+                        kubectl config use-context minikube
+                        kubectl apply -f ./kubernetes/web/desarrollo/nginx-deployment-desarrollo.yaml
+                        kubectl apply -f ./kubernetes/web/desarrollo/nginx-service-desarrollo.yaml
+                        '''
+                    }
                 }
             }
-          }
         }
+
 
 
         stage('Validate Deployment') {
