@@ -118,9 +118,21 @@ ls -l ~/.kube/config -> kubectl create configmap kubeconfig-map --from-file=conf
 kubectl apply -f jenkins-service.yaml
 kubectl apply -f jenkins-deployment.yaml
 
-ESTO ES RELEVANTE: 
-kubectl create configmap kubeconfig-map --from-file=config=/home/devars/.kube/config --dry-run=client -o yaml | kubectl apply -f -
 
+1) ESTO ES RELEVANTE: 
+   kubectl create configmap kubeconfig-map --from-file=config=/home/devars/.kube/config --dry-run=client -o yaml | kubectl apply -f -
+
+2) EN CASO QUE NO TENGAMOS CONTEXTO DE KUBERNETES EN JENKINS PODS
+   Contexto de Kubernetes no configurado en Jenkins:
+   kubectl cp ~/.kube/config jenkins-6cf96457f9-r42zk:/var/jenkins_home/.kube/config
+3) Dentro del contenedor, configura la variable de entorno para que apunte al archivo config:
+   export KUBECONFIG=/var/jenkins_home/.kube/config
+4) Permisos en el directorio de trabajo de Jenkins: DENTRO DEL CONTENEDOR
+   chmod -R 775 /var/jenkins_home/workspace
+5) ESTO IGUAL DENTRO DEL PODS SE PUEDE REALIZAR 
+   kubectl config use-context minikube / kubectl config current-context
+6) VERIFICAMOS DENTRO DEL CONTENEDOR ESTO
+   kubectl config get-contexts
 
 
 EXPLICACION: 
