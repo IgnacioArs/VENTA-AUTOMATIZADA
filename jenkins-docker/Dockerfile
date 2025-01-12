@@ -1,4 +1,4 @@
-# Dockerfile actualizado
+# Dockerfile actualizado para Jenkins con Minikube y pytest
 FROM jenkins/jenkins:latest
 
 # Cambia al usuario root para instalar dependencias
@@ -47,6 +47,9 @@ RUN python3 -m venv /venv && \
 # Instala TensorFlow en el entorno virtual
 RUN /venv/bin/pip install --no-cache-dir tensorflow
 
+# Instala pytest en el entorno virtual
+RUN /venv/bin/pip install --no-cache-dir pytest
+
 # Instala Create React App y NestJS CLI globalmente con npm
 RUN npm install -g create-react-app @nestjs/cli
 
@@ -57,6 +60,14 @@ RUN curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl" && \
 
 # Instala helm (opcional si lo necesitas)
 RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# Instala Minikube
+RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
+    chmod +x minikube && \
+    mv minikube /usr/local/bin/minikube
+
+# Agrega Minikube al PATH
+ENV PATH="/usr/local/bin/minikube:${PATH}"
 
 # Instala plugins de Jenkins, incluyendo Slack Notifications
 RUN jenkins-plugin-cli --plugins slack
@@ -73,6 +84,8 @@ EXPOSE 50000
 
 # Comando de inicio
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
+
 
 
 
