@@ -72,6 +72,12 @@ ENV PATH="/usr/local/bin/minikube:${PATH}"
 # Instala plugins de Jenkins, incluyendo Slack Notifications
 RUN jenkins-plugin-cli --plugins slack
 
+# Monta Docker.sock para permitir acceso desde el contenedor
+VOLUME ["/var/run/docker.sock:/var/run/docker.sock"]
+
+# Agrega Minikube como volumen para compartir contexto
+VOLUME ["/usr/local/bin/minikube:/usr/local/bin/minikube"]
+
 # Cambia al usuario Jenkins para la ejecución
 USER jenkins
 
@@ -84,6 +90,7 @@ EXPOSE 50000
 
 # Comando de inicio
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
 
 
 
