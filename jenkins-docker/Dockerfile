@@ -21,14 +21,12 @@ RUN apt-get update && \
         python3-venv && \
     apt-get clean
 
-# Agrega Docker's GPG key
+# Agrega Docker's GPG key y repositorio
 RUN install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
-    chmod a+r /etc/apt/keyrings/docker.asc
-
-# Agrega el repositorio de Docker utilizando VERSION_CODENAME
-RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
-  $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" > /etc/apt/sources.list.d/docker.list && \
+    chmod a+r /etc/apt/keyrings/docker.asc && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+    $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" > /etc/apt/sources.list.d/docker.list && \
     apt-get update
 
 # Instala Docker
@@ -44,27 +42,22 @@ RUN groupadd docker || true && \
 RUN python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip
 
-# Instala TensorFlow en el entorno virtual
-RUN /venv/bin/pip install --no-cache-dir tensorflow
-
-# Instala pytest en el entorno virtual
-RUN /venv/bin/pip install --no-cache-dir pytest
+# Instala TensorFlow y pytest en el entorno virtual
+RUN /venv/bin/pip install --no-cache-dir tensorflow pytest
 
 # Instala Create React App y NestJS CLI globalmente con npm
 RUN npm install -g create-react-app @nestjs/cli
 
-# Instala kubectl
+# Instala kubectl y Minikube
 RUN curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl" && \
     chmod +x ./kubectl && \
-    mv ./kubectl /usr/local/bin/kubectl
+    mv ./kubectl /usr/local/bin/kubectl && \
+    curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
+    chmod +x minikube && \
+    mv minikube /usr/local/bin/minikube
 
 # Instala helm (opcional si lo necesitas)
 RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-# Instala Minikube
-RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
-    chmod +x minikube && \
-    mv minikube /usr/local/bin/minikube
 
 # Agrega Minikube al PATH
 ENV PATH="/usr/local/bin/minikube:${PATH}"
@@ -90,7 +83,6 @@ EXPOSE 50000
 
 # Comando de inicio
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
-
 
 
 
