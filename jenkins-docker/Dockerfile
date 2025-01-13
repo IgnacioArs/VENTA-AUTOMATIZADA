@@ -4,6 +4,8 @@ FROM jenkins/jenkins:latest
 # Cambia al usuario root para instalar dependencias
 USER root
 
+RUN apt-get update && apt-get install -y sudo
+
 # Actualiza el sistema y herramientas básicas
 RUN apt-get update && \
     apt-get install -y \

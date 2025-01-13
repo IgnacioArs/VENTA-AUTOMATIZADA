@@ -25,7 +25,7 @@ pipeline {
                 script {
                     sh '''
                     echo "Configurando entorno..."
-                    apt-get update && apt-get upgrade && apt-get install sudo && sudo apt-get install -y python3 python3-pip nodejs npm docker.io
+                    sudo apt-get update && sudo apt-get install -y python3 python3-pip nodejs npm docker.io
                     '''
                 }
             }
