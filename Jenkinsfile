@@ -20,45 +20,68 @@ pipeline {
             }
         }
 
+        stage('Setup Environment') {
+            steps {
+                script {
+                    sh '''
+                    echo "Configurando entorno..."
+                    sudo apt-get update && sudo apt-get install -y python3 python3-pip nodejs npm docker.io
+                    '''
+                }
+            }
+        }
+
         stage('Build Docker Images') {
             parallel {
                 stage('Build Frontend') {
                     steps {
-                        script {
-                            sh '''
-                            docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops \
-                                --build-arg VITE_ENTORNO=desarrollo ./proyecto-frontApp
-                            '''
+                        dir('./proyecto-frontApp') {
+                            script {
+                                sh '''
+                                npm install
+                                docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops \
+                                    --build-arg VITE_ENTORNO=desarrollo .
+                                '''
+                            }
                         }
                     }
                 }
                 stage('Build BFF') {
                     steps {
-                        script {
-                            sh '''
-                            docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-bff-desarrollo-devops \
-                                --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-bff
-                            '''
+                        dir('./ms-nestjs-bff') {
+                            script {
+                                sh '''
+                                npm install
+                                docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-bff-desarrollo-devops \
+                                    --build-arg ENTORNO_ENV=desarrollo .
+                                '''
+                            }
                         }
                     }
                 }
                 stage('Build Security') {
                     steps {
-                        script {
-                            sh '''
-                            docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-security-desarrollo-devops \
-                                --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-security
-                            '''
+                        dir('./ms-nestjs-security') {
+                            script {
+                                sh '''
+                                npm install
+                                docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-security-desarrollo-devops \
+                                    --build-arg ENTORNO_ENV=desarrollo .
+                                '''
+                            }
                         }
                     }
                 }
                 stage('Build Python') {
                     steps {
-                        script {
-                            sh '''
-                            docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-python-desarrollo-devops \
-                                --build-arg ENTORNO_ENV=desarrollo ./ms-python
-                            '''
+                        dir('./ms-python') {
+                            script {
+                                sh '''
+                                pip install -r requirements.txt
+                                docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-python-desarrollo-devops \
+                                    --build-arg ENTORNO_ENV=desarrollo .
+                                '''
+                            }
                         }
                     }
                 }
@@ -86,7 +109,10 @@ pipeline {
                     steps {
                         dir('./proyecto-frontApp') {
                             script {
-                                sh 'npm test || echo "Test Frontend Failed!"'
+                                sh '''
+                                npm install
+                                npm test || echo "Test Frontend Failed!"
+                                '''
                             }
                         }
                     }
@@ -95,7 +121,10 @@ pipeline {
                     steps {
                         dir('./ms-nestjs-bff') {
                             script {
-                                sh 'npm test || echo "Test BFF Failed!"'
+                                sh '''
+                                npm install
+                                npm test || echo "Test BFF Failed!"
+                                '''
                             }
                         }
                     }
@@ -104,7 +133,10 @@ pipeline {
                     steps {
                         dir('./ms-nestjs-security') {
                             script {
-                                sh 'npm test || echo "Test Security Failed!"'
+                                sh '''
+                                npm install
+                                npm test || echo "Test Security Failed!"
+                                '''
                             }
                         }
                     }
@@ -113,10 +145,10 @@ pipeline {
                     steps {
                         dir('./ms-python') {
                             script {
-                                    sh '''
-                                    pip install pytest || echo "Fallo al instalar pytest"
-                                    pytest || echo "Test Python Failed!"
-                                    '''
+                                sh '''
+                                pip install pytest || echo "Fallo al instalar pytest"
+                                pytest || echo "Test Python Failed!"
+                                '''
                             }
                         }
                     }
