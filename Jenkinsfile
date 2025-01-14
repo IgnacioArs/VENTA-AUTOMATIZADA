@@ -124,7 +124,7 @@ pipeline {
                             script {
                                 sh '''
                                 python3 -m venv venv
-                                . venv/bin/activate
+                                source venv/bin/activate
                                 pip install pytest
                                 pytest || echo "Test Python Failed!"
                                 '''
