@@ -80,16 +80,13 @@ pipeline {
             }
         }
 
-         stage('Run Tests') {
+        stage('Run Tests') {
             parallel {
                 stage('Test Frontend') {
                     steps {
                         dir('./proyecto-frontApp') {
                             script {
-                                sh '''
-                                npm install
-                                npm test || echo "Test Frontend Failed!"
-                                '''
+                                sh 'npm test || echo "Test Frontend Failed!"'
                             }
                         }
                     }
@@ -98,10 +95,7 @@ pipeline {
                     steps {
                         dir('./ms-nestjs-bff') {
                             script {
-                                sh '''
-                                npm install
-                                npm test || echo "Test BFF Failed!"
-                                '''
+                                sh 'npm test || echo "Test BFF Failed!"'
                             }
                         }
                     }
@@ -110,10 +104,7 @@ pipeline {
                     steps {
                         dir('./ms-nestjs-security') {
                             script {
-                                sh '''
-                                npm install
-                                npm test || echo "Test Security Failed!"
-                                '''
+                                sh 'npm test || echo "Test Security Failed!"'
                             }
                         }
                     }
@@ -123,9 +114,7 @@ pipeline {
                         dir('./ms-python') {
                             script {
                                 sh '''
-                                python3 -m venv venv
-                                source venv/bin/activate
-                                pip install pytest
+                                pip install pytest || echo "Fallo al instalar pytest"
                                 pytest || echo "Test Python Failed!"
                                 '''
                             }
