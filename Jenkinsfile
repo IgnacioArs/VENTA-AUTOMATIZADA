@@ -113,10 +113,10 @@ pipeline {
                     steps {
                         dir('./ms-python') {
                             script {
-                                    sh '''
-                                    pip install pytest || echo "Fallo al instalar pytest"
-                                    pytest || echo "Test Python Failed!"
-                                    '''
+                                sh '''
+                                pip install pytest || echo "Fallo al instalar pytest"
+                                pytest || echo "Test Python Failed!"
+                                '''
                             }
                         }
                     }
