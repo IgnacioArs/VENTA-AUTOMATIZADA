@@ -80,47 +80,44 @@ pipeline {
             }
         }
 
-         stage('Run Tests') {
+        stage('Run Tests') {
             parallel {
-                stage('Frontend Tests') {
+                stage('Test Frontend') {
                     steps {
                         dir('./proyecto-frontApp') {
-                            sh '''
-                            npm install
-                            npm test || echo "Frontend Tests Failed"
-                            '''
+                            script {
+                                sh 'npm test || echo "Test Frontend Failed!"'
+                            }
                         }
                     }
                 }
-                stage('BFF Tests') {
+                stage('Test BFF') {
                     steps {
                         dir('./ms-nestjs-bff') {
-                            sh '''
-                            npm install
-                            npm test || echo "BFF Tests Failed"
-                            '''
+                            script {
+                                sh 'npm test || echo "Test BFF Failed!"'
+                            }
                         }
                     }
                 }
-                stage('Security Tests') {
+                stage('Test Security') {
                     steps {
                         dir('./ms-nestjs-security') {
-                            sh '''
-                            npm install
-                            npm test || echo "Security Tests Failed"
-                            '''
+                            script {
+                                sh 'npm test || echo "Test Security Failed!"'
+                            }
                         }
                     }
                 }
-                stage('Python Tests') {
+                stage('Test Python') {
                     steps {
                         dir('./ms-python') {
-                            sh '''
-                            python3 -m venv venv
-                            . venv/bin/activate
-                            pip install -r requirements.txt
-                            pytest || echo "Python Tests Failed"
-                            '''
+                            script {
+                                sh '''
+                                pip install pytest || echo "Fallo al instalar pytest"
+                                pytest || echo "Test Python Failed!"
+                                '''
+                            }
                         }
                     }
                 }
@@ -133,11 +130,11 @@ pipeline {
                     try {
                         sh '''
                         eval $(minikube -p minikube docker-env)
-                        kubectl config use-context $KUBE_CONTEXT
+                        kubectl config use-context minikube
                         kubectl apply -f ./kubernetes/web/desarrollo/ --validate=true
                         '''
                     } catch (Exception e) {
-                        error "Deployment failed: ${e.getMessage()}"
+                        error "Failed to deploy to Kubernetes: ${e}"
                     }
                 }
             }
@@ -158,22 +155,22 @@ pipeline {
     post {
         success {
             script {
-                slackSend channel: '#todo-jenkins-proyecto-venta-automatizada',
-                          message: "Pipeline completed successfully: ${env.JOB_NAME} [${env.BUILD_NUMBER}] (<${env.BUILD_URL}|View Details>)",
+                slackSend channel: '#todo-jenkins-proyecto-venta-automatizada', 
+                          message: "Pipeline completado con éxito: ${env.JOB_NAME} [${env.BUILD_NUMBER}] (<${env.BUILD_URL}|Ver Detalles>)",
                           color: 'good',
                           tokenCredentialId: SLACK_CREDENTIAL_ID
             }
         }
         failure {
             script {
-                slackSend channel: '#todo-jenkins-proyecto-venta-automatizada',
-                          message: "Pipeline failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}] (<${env.BUILD_URL}|View Details>)",
+                slackSend channel: '#todo-jenkins-proyecto-venta-automatizada', 
+                          message: "Pipeline fallido: ${env.JOB_NAME} [${env.BUILD_NUMBER}] (<${env.BUILD_URL}|Ver Detalles>)",
                           color: 'danger',
                           tokenCredentialId: SLACK_CREDENTIAL_ID
             }
         }
         always {
-            echo 'Pipeline execution complete.'
+            echo 'Pipeline finalizado.'
         }
     }
 }
