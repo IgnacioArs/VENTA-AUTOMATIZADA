@@ -129,7 +129,9 @@ pipeline {
                 script {
                     try {
                         sh '''
-                        kubectl apply -f ./kubernetes/web/desarrollo/ 
+                        eval $(minikube -p minikube docker-env)
+                        kubectl config use-context minikube
+                        kubectl apply -f ./kubernetes/web/desarrollo/ --validate=true
                         '''
                     } catch (Exception e) {
                         error "Failed to deploy to Kubernetes: ${e}"
