@@ -80,13 +80,16 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+         stage('Run Tests') {
             parallel {
                 stage('Test Frontend') {
                     steps {
                         dir('./proyecto-frontApp') {
                             script {
-                                sh 'npm test || echo "Test Frontend Failed!"'
+                                sh '''
+                                npm install
+                                npm test || echo "Test Frontend Failed!"
+                                '''
                             }
                         }
                     }
@@ -95,7 +98,10 @@ pipeline {
                     steps {
                         dir('./ms-nestjs-bff') {
                             script {
-                                sh 'npm test || echo "Test BFF Failed!"'
+                                sh '''
+                                npm install
+                                npm test || echo "Test BFF Failed!"
+                                '''
                             }
                         }
                     }
@@ -104,7 +110,10 @@ pipeline {
                     steps {
                         dir('./ms-nestjs-security') {
                             script {
-                                sh 'npm test || echo "Test Security Failed!"'
+                                sh '''
+                                npm install
+                                npm test || echo "Test Security Failed!"
+                                '''
                             }
                         }
                     }
@@ -114,7 +123,9 @@ pipeline {
                         dir('./ms-python') {
                             script {
                                 sh '''
-                                pip install pytest || echo "Fallo al instalar pytest"
+                                python3 -m venv venv
+                                . venv/bin/activate
+                                pip install -r requirements.txt
                                 pytest || echo "Test Python Failed!"
                                 '''
                             }
