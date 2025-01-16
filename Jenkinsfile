@@ -85,16 +85,16 @@ pipeline {
                 stage('Test Frontend') {
                     steps {
                         dir('./proyecto-frontApp') {
-                                script {
-                                    echo "Instalando dependencias de frontend..."
-                                    sh 'npm ci --legacy-peer-deps'
+                            script {
+                                echo "Instalando dependencias de frontend..."
+                                sh 'npm ci --legacy-peer-deps'
 
-                                    echo "Corriendo auditoría de dependencias..."
-                                    sh 'npm audit fix || true'
+                                echo "Corriendo auditoría de dependencias..."
+                                sh 'npm audit fix || true'
 
-                                    echo "Ejecutando pruebas de frontend..."
-                                    sh 'npm run test'
-                                }
+                                echo "Ejecutando pruebas de frontend..."
+                                sh 'npm run test'
+                            }
                         }
                     }
                 }
@@ -102,14 +102,14 @@ pipeline {
                 stage('Test BFF') {
                     steps {
                         dir('./ms-nestjs-bff') {
-                                script {
-                                    echo "Instalando dependencias del BFF..."
-                                    sh '''
-                                        npm install || echo "Dependencies already installed"
-                                        echo "Ejecutando pruebas del BFF..."
-                                        npm test || echo "Test BFF Failed!"
-                                    '''
-                                }
+                            script {
+                                echo "Instalando dependencias del BFF..."
+                                sh '''
+                                    npm install || echo "Dependencies already installed"
+                                    echo "Ejecutando pruebas del BFF..."
+                                    npm test || echo "Test BFF Failed!"
+                                '''
+                            }
                         }
                     }
                 }
@@ -117,14 +117,14 @@ pipeline {
                 stage('Test Security') {
                     steps {
                         dir('./ms-nestjs-security') {
-                                script {
-                                    echo "Instalando dependencias de seguridad..."
-                                    sh '''
-                                        npm install || echo "Dependencies already installed"
-                                        echo "Ejecutando pruebas de seguridad..."
-                                        npm test || echo "Test Security Failed!"
-                                    '''
-                                }
+                            script {
+                                echo "Instalando dependencias de seguridad..."
+                                sh '''
+                                    npm install || echo "Dependencies already installed"
+                                    echo "Ejecutando pruebas de seguridad..."
+                                    npm test || echo "Test Security Failed!"
+                                '''
+                            }
                         }
                     }
                 }
@@ -132,26 +132,26 @@ pipeline {
                 stage('Test Python') {
                     steps {
                         dir('./ms-python') {
-                                script {
-                                    echo "Configurando entorno virtual de Python..."
-                                    sh '''
-                                        # Crear y activar el entorno virtual
-                                        python3 -m venv venv
-                                        . venv/bin/activate
+                            script {
+                                echo "Configurando entorno virtual de Python..."
+                                sh '''
+                                    # Crear y activar el entorno virtual
+                                    python3 -m venv venv
+                                    . venv/bin/activate
 
-                                        # Verificar si el entorno virtual está activado
-                                        echo "Entorno virtual activado: $VIRTUAL_ENV"
+                                    # Verificar si el entorno virtual está activado
+                                    echo "Entorno virtual activado: $VIRTUAL_ENV"
 
-                                        # Actualizar pip para evitar problemas con versiones
-                                        pip install --upgrade pip
+                                    # Actualizar pip para evitar problemas con versiones
+                                    pip install --upgrade pip --break-system-packages
 
-                                        # Instalar dependencias de Python
-                                        pip install -r requirements.txt
+                                    # Instalar dependencias de Python
+                                    pip install -r requirements.txt --break-system-packages
 
-                                        # Ejecutar las pruebas
-                                        pytest > result.log || tail -n 10 result.log
-                                    '''
-                                }
+                                    # Ejecutar las pruebas y mostrar el resultado
+                                    pytest > result.log || tail -n 10 result.log
+                                '''
+                            }
                         }
                     }
                 }
