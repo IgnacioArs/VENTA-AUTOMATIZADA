@@ -30,7 +30,7 @@ spec:
         - containerPort: 50000
         env:
         - name: JAVA_OPTS
-          value: "-Xms512m -Xmx2048m -Djenkins.install.runSetupWizard=false"
+          value: "-Xmx2048m -Xss4m -Dhudson.remoting.ClassFilter=org.jboss.marshalling.*"
         volumeMounts:
         - name: jenkins-home
           mountPath: /var/jenkins_home

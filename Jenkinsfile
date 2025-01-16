@@ -12,6 +12,17 @@ pipeline {
     }
 
     stages {
+
+        stage('Set Environment') {
+            steps {
+                sh '''
+                export PATH="$WORKSPACE/ms-python/venv/bin:$PATH"
+                echo $PATH
+                '''
+            }
+        }
+
+
         stage('Checkout') {
             steps {
                 git branch: 'main', 
