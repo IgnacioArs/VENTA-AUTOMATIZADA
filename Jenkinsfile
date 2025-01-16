@@ -86,10 +86,14 @@ pipeline {
                     steps {
                         dir('./proyecto-frontApp') {
                             script {
-                                sh '''
-                                npm install || echo "Dependencies already installed"
-                                npm test || echo "Test Frontend Failed!"
-                                '''
+                                echo "Instalando dependencias de frontend..."
+                                sh 'npm ci --legacy-peer-deps'
+
+                                echo "Corriendo auditoría de dependencias..."
+                                sh 'npm audit fix || true'
+
+                                echo "Ejecutando pruebas de frontend..."
+                                sh 'npm run test'
                             }
                         }
                     }
@@ -122,12 +126,14 @@ pipeline {
                     steps {
                         dir('./ms-python') {
                             script {
-                                sh '''
-                                python3 -m venv venv || echo "Using existing venv"
-                                source venv/bin/activate
-                                pip install -r requirements.txt || echo "Dependencies already installed"
-                                pytest || echo "Test Python Failed!"
-                                '''
+                                echo "Configurando entorno virtual de Python..."
+                                sh 'python3 -m venv venv && . venv/bin/activate'
+
+                                echo "Instalando dependencias de Python..."
+                                sh 'pip install -r requirements.txt'
+
+                                echo "Ejecutando pruebas de Python..."
+                                sh 'pytest'
                             }
                         }
                     }
