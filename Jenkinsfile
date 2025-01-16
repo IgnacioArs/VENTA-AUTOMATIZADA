@@ -172,16 +172,6 @@ pipeline {
             }
         }
 
-        stage('Post-Test Cleanup') {
-            steps {
-                echo "Limpiando recursos temporales..."
-                sh 'rm -rf ./proyecto-frontApp/node_modules || true'
-                sh 'rm -rf ./ms-nestjs-bff/node_modules || true'
-                sh 'rm -rf ./ms-nestjs-security/node_modules || true'
-                sh 'rm -rf ./ms-python/venv || true'
-            }
-        }
-
         stage('Deploy to Kubernetes') {
             steps {
                 script {
