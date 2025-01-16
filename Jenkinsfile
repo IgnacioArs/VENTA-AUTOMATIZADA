@@ -129,20 +129,26 @@ pipeline {
                 stage('Test Python') {
                     steps {
                         dir('./ms-python') {
-                                script {
-                                    echo "Configurando entorno virtual de Python..."
-                                    sh '''
-                                        if [ -f venv/bin/activate ]; then
+                            script {
+                                        echo "Configurando entorno virtual de Python..."
+                                        sh '''
+                                            # Crear y activar el entorno virtual
+                                            python3 -m venv venv
                                             . venv/bin/activate
-                                            elif [ -f venv\\Scripts\\activate ]; then
-                                            . venv\\Scripts\\activate
-                                            fi
-                                            '''
+
+                                            # Verificar si el entorno virtual está activado
+                                            echo "Entorno virtual activado: $VIRTUAL_ENV"
+
+                                            # Actualizar pip antes de instalar dependencias
+                                            pip install --upgrade pip
+
                                             echo "Instalando dependencias de Python..."
-                                            sh 'pip install -r requirements.txt'
+                                            pip install -r requirements.txt
+
                                             echo "Ejecutando pruebas de Python..."
-                                            sh 'pytest > result.log || tail -n 10 result.log'
-                                }
+                                            pytest > result.log || tail -n 10 result.log
+                                        '''
+                                    }
                         }
                     }
                 }
