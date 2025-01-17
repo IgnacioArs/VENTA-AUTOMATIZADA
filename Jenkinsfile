@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+
     environment {
         // Configuración para Docker Hub
         // DOCKER_REGISTRY = 'docker.io/devars96' // Antiguo repositorio de Docker (comentado como referencia)
