@@ -99,24 +99,33 @@ pipeline {
             parallel {
                 stage('Test Frontend') {
                     steps {
-                        script {
-                            runNodeTests('./proyecto-frontApp', 'npm run test')
+                        dir('./proyecto-frontApp') {
+                            sh '''
+                                npm install
+                                npm run test
+                            '''
                         }
                     }
                 }
 
                 stage('Test BFF') {
                     steps {
-                        script {
-                            runNodeTests('./ms-nestjs-bff')
+                        dir('./ms-nestjs-bff') {
+                            sh '''
+                                npm install
+                                npm run test
+                            '''
                         }
                     }
                 }
 
                 stage('Test Security') {
                     steps {
-                        script {
-                            runNodeTests('./ms-nestjs-security')
+                        dir('./ms-nestjs-security') {
+                            sh '''
+                                npm install
+                                npm run test
+                            '''
                         }
                     }
                 }
@@ -124,23 +133,21 @@ pipeline {
                 stage('Test Python') {
                     steps {
                         dir('./ms-python') {
-                            script {
-                                echo "==> Configurando entorno virtual de Python..."
-                                sh '''
-                                    if [ ! -d ".venv" ]; then
-                                        python3 -m venv .venv
-                                    fi
-                                    source .venv/bin/activate
-                                    pip install --upgrade pip
-                                    pip install -r requirements.txt
-                                    pytest --disable-warnings
-                                '''
-                            }
+                            sh '''
+                                if [ ! -d ".venv" ]; then
+                                    python3 -m venv .venv
+                                fi
+                                . .venv/bin/activate
+                                pip install --upgrade pip
+                                pip install -r requirements.txt
+                                pytest --disable-warnings
+                            '''
                         }
                     }
                 }
             }
         }
+
 
         stage('Deploy to Kubernetes') {
             steps {
