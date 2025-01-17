@@ -1,5 +1,5 @@
 # Etapa 1: Construcción del frontend
-FROM node:20-alpine3.16 AS build
+FROM node:16 AS build
 
 WORKDIR /app
 
