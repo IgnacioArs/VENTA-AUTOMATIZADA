@@ -99,51 +99,24 @@ pipeline {
             parallel {
                 stage('Test Frontend') {
                     steps {
-                        dir('./proyecto-frontApp') {
-                            script {
-                                echo "Instalando dependencias de frontend..."
-                                sh 'npm ci --legacy-peer-deps'
-
-                                echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix || true'
-
-                                echo "Ejecutando pruebas de frontend..."
-                                sh 'npm run test || echo "Pruebas fallidas, revisa los logs"'
-                            }
+                        script {
+                            runNodeTests('./proyecto-frontApp', 'npm run test')
                         }
                     }
                 }
 
                 stage('Test BFF') {
                     steps {
-                        dir('./ms-nestjs-bff') {
-                            script {
-                                echo "Instalando dependencias del BFF..."
-                                sh 'npm ci || echo "Dependencias ya instaladas"'
-
-                                echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix || true'
-
-                                echo "Ejecutando pruebas del BFF..."
-                                sh 'npm test || echo "Pruebas fallidas en BFF, revisa los logs"'
-                            }
+                        script {
+                            runNodeTests('./ms-nestjs-bff')
                         }
                     }
                 }
 
                 stage('Test Security') {
                     steps {
-                        dir('./ms-nestjs-security') {
-                            script {
-                                echo "Instalando dependencias de seguridad..."
-                                sh 'npm ci || echo "Dependencias ya instaladas"'
-
-                                echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix || true'
-
-                                echo "Ejecutando pruebas de seguridad..."
-                                sh 'npm test || echo "Pruebas de seguridad fallidas, revisa los logs"'
-                            }
+                        script {
+                            runNodeTests('./ms-nestjs-security')
                         }
                     }
                 }
@@ -152,22 +125,15 @@ pipeline {
                     steps {
                         dir('./ms-python') {
                             script {
-                                echo "Configurando entorno virtual de Python..."
+                                echo "==> Configurando entorno virtual de Python..."
                                 sh '''
-                                    # Crear y activar el entorno virtual
-                                    python3 -m venv venv
-                                    . venv/bin/activate
-
-                                    echo "Entorno virtual activado: $VIRTUAL_ENV"
-
-                                    # Actualizar pip para evitar problemas con versiones
-                                    pip install --upgrade pip --break-system-packages
-
-                                    # Instalar dependencias de Python
-                                    pip install -r requirements.txt --break-system-packages
-
-                                    echo "Ejecutando pruebas de Python..."
-                                    pytest --disable-warnings || echo "Algunas pruebas fallaron, revisa los logs"
+                                    if [ ! -d ".venv" ]; then
+                                        python3 -m venv .venv
+                                    fi
+                                    source .venv/bin/activate
+                                    pip install --upgrade pip
+                                    pip install -r requirements.txt
+                                    pytest --disable-warnings
                                 '''
                             }
                         }
