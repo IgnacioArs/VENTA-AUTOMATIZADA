@@ -38,7 +38,9 @@ pipeline {
                         script {
                             sh '''
                             docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops \
-                                --build-arg VITE_ENTORNO=desarrollo ./proyecto-frontApp
+                                --build-arg VITE_ENTORNO=desarrollo \
+                                --build-arg VITE_PUERTO_DESARROLLO=3003 \
+                                ./proyecto-frontApp
                             '''
                         }
                     }

@@ -1,5 +1,5 @@
 # Etapa 1: Construcción del frontend
-FROM node:18 AS build
+FROM node:20-alpine3.16 AS build
 
 WORKDIR /app
 
@@ -18,8 +18,8 @@ ARG VITE_PUERTO_DESARROLLO=${VITE_PUERTO_DESARROLLO}
 ARG VITE_PUERTO_PRODUCCION=${VITE_PUERTO_PRODUCCION}
 
 RUN if [ "$VITE_ENTORNO" = "desarrollo" ]; then \
-    echo "VITE_PUERTO=$VITE_PUERTO_DESARROLLO" >> .env; \
-    else echo "VITE_PUERTO=$VITE_PUERTO_PRODUCCION" >> .env; \
+    echo "VITE_PUERTO=${VITE_PUERTO_DESARROLLO}" >> .env; \
+    else echo "VITE_PUERTO=${VITE_PUERTO_PRODUCCION}" >> .env; \
     fi
 
 RUN npm run build
