@@ -41,6 +41,7 @@ pipeline {
                                 docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops \
                                     --build-arg VITE_ENTORNO=desarrollo \
                                     --build-arg VITE_PUERTO_DESARROLLO=3003 \
+                                    --build-arg VITE_PUERTO_PRODUCCION=4003 \
                                     ./proyecto-frontApp
                                 '''
                             }
