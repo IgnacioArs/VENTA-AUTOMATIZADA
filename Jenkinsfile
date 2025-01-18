@@ -12,8 +12,7 @@ pipeline {
         SLACK_CREDENTIAL_ID = 'jenkins-slack-notifications'
     }
 
-    stages {
-
+ stages {
         stage('Set Environment') {
             steps {
                 sh '''
@@ -22,7 +21,6 @@ pipeline {
                 '''
             }
         }
-
 
         stage('Checkout') {
             steps {
@@ -36,15 +34,15 @@ pipeline {
             parallel {
                 stage('Build Frontend') {
                     steps {
-                            script {
-                                sh '''
-                                docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops \
-                                    --build-arg VITE_ENTORNO=desarrollo \
-                                    --build-arg VITE_PUERTO_DESARROLLO=3003 \
-                                    --build-arg VITE_PUERTO_PRODUCCION=4003 \
-                                    ./proyecto-frontApp
-                                '''
-                            }
+                        script {
+                            sh '''
+                            docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops \
+                                --build-arg VITE_ENTORNO=desarrollo \
+                                --build-arg VITE_PUERTO_DESARROLLO=3003 \
+                                --build-arg VITE_PUERTO_PRODUCCION=4003 \
+                                ./proyecto-frontApp
+                            '''
+                        }
                     }
                 }
                 stage('Build BFF') {
