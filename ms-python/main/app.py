@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.testclient import TestClient  # Aquí agregamos TestClient
 import uvicorn
 import os
 from dotenv import load_dotenv
@@ -32,12 +33,21 @@ app.include_router(route_chat_bot.route)
 # Ruta para comprobar el puerto
 @app.get("/home")
 async def init():
-        # Seleccionar el puerto según el entorno
+    # Seleccionar el puerto según el entorno
     if entorno_env == "desarrollo":
         port = int(os.getenv("PORT_DESARROLLO"))  # Puerto para desarrollo
     else:
         port = int(os.getenv("PORT_PRODUCCION"))  # Puerto para producción
     return f"Server Running on PORT: {port}"
+
+# Configuración para pruebas
+client = TestClient(app)
+
+# Ejemplo de prueba simple
+def test_home_endpoint():
+    response = client.get("/home")
+    assert response.status_code == 200
+    assert "Server Running on PORT" in response.text
 
 # Arrancar el servidor Uvicorn
 if __name__ == "__main__":
@@ -52,4 +62,5 @@ if __name__ == "__main__":
 
     # Arrancar el servidor Uvicorn
     uvicorn.run(app, host="127.0.0.1", port=port)
+
 
