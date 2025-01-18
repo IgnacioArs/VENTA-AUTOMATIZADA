@@ -159,8 +159,7 @@ pipeline {
                                     . .venv/bin/activate
                                     pip install --upgrade pip
                                     pip install -r requirements.txt
-                                    pytest --disable-warnings
-                                    pytest -v --tb=long
+                                    pytest -v --maxfail=1 --disable-warnings --tb=long
                                 '''
                             }
                         }
