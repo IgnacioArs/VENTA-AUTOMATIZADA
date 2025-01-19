@@ -156,8 +156,7 @@ pipeline {
                                     fi
                                     . .venv/bin/activate
                                     pip install --upgrade pip setuptools wheel
-                                    pip install -r requirements-light.txt
-                                    pip install tensorflow==2.13.0
+                                    pip install -r requirements.txt
                                     pytest -v --maxfail=1 --disable-warnings --tb=long
                                 '''
                             }
