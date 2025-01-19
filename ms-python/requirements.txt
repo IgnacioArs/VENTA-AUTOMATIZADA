@@ -7,6 +7,5 @@ tensorflow
 nltk
 pytest
 pip-tools
-pip-compile
 pip-audit
 
