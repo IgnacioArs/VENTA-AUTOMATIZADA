@@ -101,6 +101,8 @@ sudo systemctl restart docker
 # - 50000: Puerto para agentes de Jenkins (conectar nodos)
 # - --restart=on-failure: Reinicia el contenedor en caso de fallos.
 docker run -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk17
+SOLUCION PROBLEMAS CON TENSORFLOW TIMEOUT
+kubectl port-forward --request-timeout=10m pod/jenkins 8080:8080
 
 
 # Opción 2: Desplegar Jenkins en Kubernetes
@@ -188,6 +190,7 @@ usermod -aG docker jenkins
 chgrp docker /var/run/docker.sock
 chmod 660 /var/run/docker.sock
 
+-- ESTE ES EL OTRO ARCHIVO: 
 *************************************************************************
 
 Verifica que el usuario jenkins pertenece al grupo docker:

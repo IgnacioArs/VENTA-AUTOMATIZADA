@@ -31,6 +31,13 @@ spec:
         env:
         - name: JAVA_OPTS
           value: "-Xmx2048m -Xss4m -Dhudson.remoting.ClassFilter=org.jboss.marshalling.*"
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2"
         volumeMounts:
         - name: jenkins-home
           mountPath: /var/jenkins_home
