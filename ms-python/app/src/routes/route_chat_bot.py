@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from dotenv import load_dotenv
 import tensorflow as tf
+from tensorflow.keras import Input
 import numpy as np
 import nltk
 import json
@@ -69,7 +70,8 @@ train_y = np.array(list(training[:, 1]))
 
 # Construir el modelo de red neuronal
 model = tf.keras.Sequential([
-    tf.keras.layers.Dense(8, input_shape=(len(train_x[0]),), activation='relu'),
+    Input(shape=(len(train_x[0]),)),
+    tf.keras.layers.Dense(8, activation='relu'),
     tf.keras.layers.Dense(8, activation='relu'),
     tf.keras.layers.Dense(len(train_y[0]), activation='softmax')
 ])

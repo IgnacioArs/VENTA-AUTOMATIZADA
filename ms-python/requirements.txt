@@ -8,4 +8,4 @@ nltk
 pytest
 pip-tools
 pip-audit
-
+httpx
