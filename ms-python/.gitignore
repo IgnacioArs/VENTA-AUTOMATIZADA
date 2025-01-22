@@ -1,15 +1,1 @@
-# Entorno virtual
 .venv/
-
-# Archivos de compilación
-__pycache__/
-*.py[cod]
-
-# Archivos de paquetes
-*.egg
-*.egg-info/
-dist/
-build/
-
-# Configuración del editor
-.vscode/
