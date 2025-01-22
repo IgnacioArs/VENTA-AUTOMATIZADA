@@ -314,9 +314,7 @@ Configuración del daemon Docker desde Jenkins
 RUN groupadd docker && usermod -aG docker jenkins
 
 
-COMMIT NUEVA PRUEBAS 16/01/2025
-COMMIT NUEVA PRUEBAS 16/01/2025
-COMMIT NUEVA PRUEBAS 16/01/2025
+COMMIT NUEVA PRUEBAS 22/01/2025
 
 
 
