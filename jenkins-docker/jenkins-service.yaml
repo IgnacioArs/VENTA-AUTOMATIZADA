@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: jenkins-service
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600" # 1 hora
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "10000" 
 spec:
   ports:
     - name: http  # Añadí un nombre para el puerto 8080

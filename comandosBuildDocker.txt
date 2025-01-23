@@ -313,6 +313,9 @@ Configuración del daemon Docker desde Jenkins
 # Configurar el contexto de Docker en Jenkins
 RUN groupadd docker && usermod -aG docker jenkins
 
+OTRA EJECUCION DE JENKINS PARA MEJORAR BUILD ETAPAS JENKINS
+minikube start --extra-config=kubelet.eviction-hard="memory.available<200Mi,nodefs.available<10%,nodefs.inodesFree<5%,imagefs.available<15%" \
+               --extra-config=kubelet.serialize-image-pulls=false
 
 COMMIT NUEVA PRUEBAS 22/01/2025
 COMMIT NUEVA PRUEBAS 22/01/2025
