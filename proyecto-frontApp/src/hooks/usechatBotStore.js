@@ -31,7 +31,7 @@ export const pythonApiMs = () => {
             }
 
         } catch (error) {
-            console.error("Error al realizar la solicitud:", error);
+     /*        console.error("Error al realizar la solicitud:", error); */
             return error;
         }
     }

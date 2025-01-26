@@ -64,13 +64,13 @@ const Chatbot = () => {
           setUserToken(token);
           
         } else {
-          console.warn("El formato de `parsedData` no es el esperado.");
+       /*    console.warn("El formato de `parsedData` no es el esperado."); */
         }
       } catch (error) {
-        console.error("Error al analizar el JSON del token", error);
+    /*     console.error("Error al analizar el JSON del token", error); */
       }
     } else {
-      console.warn("out session");
+/*       console.warn("out session"); */
     }
   }, [authPayload, status]);
     

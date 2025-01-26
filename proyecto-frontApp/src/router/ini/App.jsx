@@ -63,7 +63,7 @@ function App() {
       const inactivityTime = currentTime - lastActivityTime;
   
       if (inactivityTime >= 60000) { // 1 minuto de inactividad
-        console.log("Inactividad detectada. Cerrando sesión...");
+   /*      console.log("Inactividad detectada. Cerrando sesión..."); */
         sessionLogOutMethod(dispatch); // Cierra la sesión
         logAuthMethod(dispatch, navigate); // Redirige al login
       }
@@ -72,7 +72,7 @@ function App() {
     // Función para actualizar la última actividad
     const resetActivityTimer = () => {
       lastActivityTime = Date.now();
-      console.log("Actividad detectada, reiniciando temporizador...");
+     /*  console.log("Actividad detectada, reiniciando temporizador..."); */
     };
   
     // Configura el intervalo para verificar la inactividad
@@ -96,7 +96,7 @@ function App() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      console.log("Ejecutando acción cada minuto...");
+   /*    console.log("Ejecutando acción cada minuto..."); */
       const stateSession =  verifySession(authPayload, status);
       if(stateSession === true){
         const resSessionStatus = verifiTokenSesseion();

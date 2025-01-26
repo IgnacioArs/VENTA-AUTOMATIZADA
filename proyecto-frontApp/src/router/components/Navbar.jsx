@@ -24,7 +24,7 @@ const Navbar = () => {
                     setUser(parsedData.user);
                 }
             } catch {
-                console.error("Token inválido");
+             /*    console.error("Token inválido"); */
             }
         }
     }, [authPayload, status]);

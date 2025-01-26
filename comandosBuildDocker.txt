@@ -317,6 +317,25 @@ OTRA EJECUCION DE JENKINS PARA MEJORAR BUILD ETAPAS JENKINS
 minikube start --extra-config=kubelet.eviction-hard="memory.available<200Mi,nodefs.available<10%,nodefs.inodesFree<5%,imagefs.available<15%" \
                --extra-config=kubelet.serialize-image-pulls=false
 
+kubectl port-forward --request-timeout=59m service/jenkins-service 8080:8080
+
+PROBLEMAS ETAPAS DE TEST:
+Buscar sobre ReactJS y Vite:
+
+"Fix vulnerabilities in ReactJS project Vite 2024"
+"How to update React Vite project to latest version"
+Específicos para vulnerabilidades:
+
+"Fix npm vulnerabilities in Vite React project"
+"PostCSS vulnerability solution React Vite"
+Cómo configurar React con Vite correctamente:
+
+"Vite ReactJS setup step by step"
+npm install --legacy-peer-deps
+npm audit fix
+npm run build
+
+
 COMMIT NUEVA PRUEBAS 22/01/2025
 COMMIT NUEVA PRUEBAS 22/01/2025
 COMMIT NUEVA PRUEBAS 22/01/2025

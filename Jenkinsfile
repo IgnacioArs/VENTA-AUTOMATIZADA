@@ -103,7 +103,7 @@ pipeline {
                                 sh 'npm ci --legacy-peer-deps'
 
                                 echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix || true'
+                                sh 'npm audit fix --force || true'
 
                                 echo "Ejecutando pruebas de frontend..."
                                 sh 'npm run test || echo "Pruebas fallidas, revisa los logs"'
@@ -117,10 +117,10 @@ pipeline {
                         dir('./ms-nestjs-bff') {
                             script {
                                 echo "Instalando dependencias del BFF..."
-                                sh 'npm ci || echo "Dependencias ya instaladas"'
+                                sh 'npm ci --legacy-peer-deps || echo "Dependencias ya instaladas"'
 
                                 echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix || true'
+                                sh 'npm audit fix --force || true'
 
                                 echo "Ejecutando pruebas del BFF..."
                                 sh 'npm test || echo "Pruebas fallidas en BFF, revisa los logs"'
@@ -134,10 +134,10 @@ pipeline {
                         dir('./ms-nestjs-security') {
                             script {
                                 echo "Instalando dependencias de seguridad..."
-                                sh 'npm ci || echo "Dependencias ya instaladas"'
+                                sh 'npm ci --legacy-peer-deps || echo "Dependencias ya instaladas"'
 
                                 echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix || true'
+                                sh 'npm audit fix --force || true'
 
                                 echo "Ejecutando pruebas de seguridad..."
                                 sh 'npm test || echo "Pruebas de seguridad fallidas, revisa los logs"'

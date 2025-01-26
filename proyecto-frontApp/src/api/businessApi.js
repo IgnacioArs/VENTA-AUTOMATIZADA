@@ -27,14 +27,14 @@ function cargarToken() {
         }
     }
 
-    console.warn("Sesión no iniciada o token no encontrado.");
+    /* console.warn("Sesión no iniciada o token no encontrado."); */
     return null; // No hay token
 }
 
 businessApi.interceptors.request.use(config => {
     const token = cargarToken();
 
-    console.log("VEO EL TOKEN NESTJS", token);
+/*     console.log("VEO EL TOKEN NESTJS", token); */
 
     if (token) {
         // Configurar los headers de la solicitud con el formato 'Bearer <token>'

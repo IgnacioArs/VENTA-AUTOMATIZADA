@@ -78,7 +78,7 @@ const Registro = () => {
             "name": username
         }
         const resRegistro = await registro(jsonUser);
-        console.log("se envia", jsonUser, "resultado es", resRegistro);
+/*         console.log("se envia", jsonUser, "resultado es", resRegistro); */
         if (resRegistro === 500) {
             setAbrirModalError(true);
             setMensajeModalError('El email o nombre de usuario se encuentran registrado');

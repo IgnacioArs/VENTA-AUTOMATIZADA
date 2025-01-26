@@ -20,6 +20,11 @@ spec:
       containers:
       - name: jenkins
         image: jenkins:latest
+        command:
+          - java
+          - "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+          - "-jar"
+          - "/usr/share/jenkins/jenkins.war"
         imagePullPolicy: IfNotPresent
         securityContext:
           runAsUser: 1000  # Usuario Jenkins
