@@ -336,8 +336,7 @@ npm install --legacy-peer-deps
 npm audit fix
 npm run build
 
-COMMIT NUEVA PRUEBAS 26/01/2025
-COMMIT NUEVA PRUEBAS 26/01/2025
+COMMIT NUEVA PRUEBAS 27/01/2025
 
 
 
