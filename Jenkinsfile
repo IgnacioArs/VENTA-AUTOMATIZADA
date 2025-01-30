@@ -171,9 +171,13 @@ pipeline {
                 script {
                     try {
                         sh '''
+                        export KUBECONFIG=/var/jenkins_home/.kube/config
                         eval $(minikube -p minikube docker-env)
                         kubectl config use-context minikube
-                        kubectl apply -f ./kubernetes/web/desarrollo/ --validate=true
+                        kubectl apply -f ./kubernetes/web/desarrollo/ --dry-run=client --validate=true
+                        '''
+                        sh '''
+                        kubectl apply -f ./kubernetes/web/desarrollo/
                         '''
                     } catch (Exception e) {
                         error "Failed to deploy to Kubernetes: ${e}"
