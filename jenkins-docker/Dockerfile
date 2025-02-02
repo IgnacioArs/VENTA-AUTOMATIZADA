@@ -74,6 +74,12 @@ ENV PATH="/usr/local/bin/minikube:${PATH}"
 # Instala plugins de Jenkins, incluyendo Slack Notifications
 RUN jenkins-plugin-cli --plugins slack
 
+# Descarga el plugin 'workflow-support.hpi' para Jenkins
+RUN wget -P /var/jenkins_home/plugins/ https://updates.jenkins.io/latest/workflow-support.hpi
+
+# Establece parámetros de memoria para Java
+ENV JAVA_ARGS="-Xmx2048m -Xms512m"
+
 # Monta Docker.sock para permitir acceso desde el contenedor
 VOLUME ["/var/run/docker.sock:/var/run/docker.sock"]
 
@@ -92,6 +98,7 @@ EXPOSE 50000
 
 # Comando de inicio
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
 
 
 
