@@ -38,19 +38,18 @@ RUN apt-get install -y docker-ce docker-ce-cli containerd.io && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Agrega el usuario Jenkins al grupo Docker
+# Agrega el usuario Jenkins a los grupos Docker y Minikube
 RUN groupadd docker || true && \
-    usermod -aG docker jenkins
+    usermod -aG docker jenkins && \
+    groupadd minikube || true && \
+    usermod -aG minikube jenkins
 
 # Crea un entorno virtual de Python
 RUN python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip
 
-# Instala TensorFlow en el entorno virtual
-RUN /venv/bin/pip install --no-cache-dir tensorflow
-
-# Instala pytest en el entorno virtual
-RUN /venv/bin/pip install --no-cache-dir pytest
+# Instala TensorFlow y pytest en el entorno virtual
+RUN /venv/bin/pip install --no-cache-dir tensorflow pytest
 
 # Instala Create React App y NestJS CLI globalmente con npm
 RUN npm install -g create-react-app @nestjs/cli
@@ -70,6 +69,16 @@ RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/mi
 
 # Agrega Minikube al PATH
 ENV PATH="/usr/local/bin/minikube:${PATH}"
+
+# Configura el contexto de Kubernetes dentro del contenedor
+RUN mkdir -p /var/jenkins_home/.kube && \
+    touch /var/jenkins_home/.kube/config && \
+    chown -R jenkins:jenkins /var/jenkins_home/.kube && \
+    mkdir -p /var/jenkins_home/workspace && \
+    chmod -R 775 /var/jenkins_home/workspace 
+
+# Exporta la variable de entorno KUBECONFIG
+ENV KUBECONFIG=/var/jenkins_home/.kube/config
 
 # Instala plugins de Jenkins, incluyendo Slack Notifications
 RUN jenkins-plugin-cli --plugins slack
@@ -98,6 +107,7 @@ EXPOSE 50000
 
 # Comando de inicio
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
 
 
 

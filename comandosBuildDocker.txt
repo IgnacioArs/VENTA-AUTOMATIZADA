@@ -124,6 +124,7 @@ kubectl apply -f jenkins-deployment.yaml
 
 1) ESTO ES RELEVANTE: 
    kubectl create configmap kubeconfig-map --from-file=config=/home/devars/.kube/config --dry-run=client -o yaml | kubectl apply -f -
+   
 2) mkdir -p /var/jenkins_home/.kube
 3) EN CASO QUE NO TENGAMOS CONTEXTO DE KUBERNETES EN JENKINS PODS
    Contexto de Kubernetes no configurado en Jenkins:
@@ -132,6 +133,7 @@ kubectl apply -f jenkins-deployment.yaml
    export KUBECONFIG=/var/jenkins_home/.kube/config
 5) Permisos en el directorio de trabajo de Jenkins: DENTRO DEL CONTENEDOR
    chmod -R 775 /var/jenkins_home/workspace
+   chown -R jenkins:jenkins /var/jenkins_home/.kube
 6) ESTO IGUAL DENTRO DEL PODS SE PUEDE REALIZAR 
    kubectl config use-context minikube / kubectl config current-context
 7) VERIFICAMOS DENTRO DEL CONTENEDOR ESTO
@@ -341,9 +343,182 @@ COMMIT NUEVA PRUEBAS 02/02/2025
 
 
 
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
 
 
 
 
 
 
+RESPALDO DOCKERFILE ACTUAL
+# Dockerfile actualizado para Jenkins con Minikube y pytest
+FROM jenkins/jenkins:latest
+
+# Cambia al usuario root para instalar dependencias
+USER root
+
+RUN apt-get update && apt-get install -y sudo
+
+# Actualiza el sistema y herramientas básicas
+RUN apt-get update && \
+    apt-get install -y \
+        ca-certificates \
+        curl \
+        wget \
+        gnupg2 \
+        lsb-release \
+        python3 \
+        python3-pip \
+        python3-dev \
+        build-essential \
+        nodejs \
+        npm \
+        python3-venv && \
+    apt-get clean
+
+# Agrega Docker's GPG key
+RUN install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
+    chmod a+r /etc/apt/keyrings/docker.asc
+
+# Agrega el repositorio de Docker utilizando VERSION_CODENAME
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable" > /etc/apt/sources.list.d/docker.list && \
+    apt-get update
+
+# Instala Docker
+RUN apt-get install -y docker-ce docker-ce-cli containerd.io && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Agrega el usuario Jenkins al grupo Docker
+RUN groupadd docker || true && \
+    usermod -aG docker jenkins
+
+# Crea un entorno virtual de Python
+RUN python3 -m venv /venv && \
+    /venv/bin/pip install --upgrade pip
+
+# Instala TensorFlow en el entorno virtual
+RUN /venv/bin/pip install --no-cache-dir tensorflow
+
+# Instala pytest en el entorno virtual
+RUN /venv/bin/pip install --no-cache-dir pytest
+
+# Instala Create React App y NestJS CLI globalmente con npm
+RUN npm install -g create-react-app @nestjs/cli
+
+# Instala kubectl
+RUN curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl" && \
+    chmod +x ./kubectl && \
+    mv ./kubectl /usr/local/bin/kubectl
+
+# Instala helm (opcional si lo necesitas)
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# Instala Minikube
+RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
+    chmod +x minikube && \
+    mv minikube /usr/local/bin/minikube
+
+# Agrega Minikube al PATH
+ENV PATH="/usr/local/bin/minikube:${PATH}"
+
+# Instala plugins de Jenkins, incluyendo Slack Notifications
+RUN jenkins-plugin-cli --plugins slack
+
+# Descarga el plugin 'workflow-support.hpi' para Jenkins
+RUN wget -P /var/jenkins_home/plugins/ https://updates.jenkins.io/latest/workflow-support.hpi
+
+# Establece parámetros de memoria para Java
+ENV JAVA_ARGS="-Xmx2048m -Xms512m"
+
+# Monta Docker.sock para permitir acceso desde el contenedor
+VOLUME ["/var/run/docker.sock:/var/run/docker.sock"]
+
+# Agrega Minikube como volumen para compartir contexto
+VOLUME ["/usr/local/bin/minikube:/usr/local/bin/minikube"]
+
+# Cambia al usuario Jenkins para la ejecución
+USER jenkins
+
+# Establece el directorio de trabajo
+WORKDIR /var/jenkins_home
+
+# Exponer puertos para Jenkins
+EXPOSE 8080
+EXPOSE 50000
+
+# Comando de inicio
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
+
+RESPALDO DEPLOYMENT JENKINS:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  labels:
+    app: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      serviceAccountName: jenkins-sa
+      securityContext:
+        fsGroup: 999  # ID del grupo Docker en el host
+      containers:
+      - name: jenkins
+        image: jenkins:latest
+        command:
+          - java
+          - "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+          - "-jar"
+          - "/usr/share/jenkins/jenkins.war"
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          runAsUser: 1000  # Usuario Jenkins
+          runAsGroup: 1000  # Grupo Jenkins
+          privileged: true  # Da privilegios adicionales al contenedor
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000
+        env:
+        - name: JAVA_OPTS
+          value: "-Xms2g -Xmx4g -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "0.5"
+          limits:
+            memory: "4Gi"
+            cpu: "2"
+        volumeMounts:
+        - name: jenkins-home
+          mountPath: /var/jenkins_home
+        - name: kubeconfig
+          mountPath: /root/.kube/config
+          subPath: config
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
+      volumes:
+      - name: jenkins-home
+        persistentVolumeClaim:
+          claimName: jenkins-pvc
+      - name: kubeconfig
+        configMap:
+          name: kubeconfig-map
+      - name: docker-socket
+        hostPath:
+          path: /var/run/docker.sock
+          type: Socket
