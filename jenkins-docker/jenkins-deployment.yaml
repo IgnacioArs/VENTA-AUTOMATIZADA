@@ -35,7 +35,7 @@ spec:
         - containerPort: 50000
         env:
         - name: JAVA_OPTS
-          value: "-Xms2g -Xmx4g -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+          value: "-Xms2g -Xmx4g -Xss4m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
         resources:
           requests:
             memory: "2Gi"
