@@ -176,7 +176,7 @@ pipeline {
                         kubectl config use-context minikube
 
                         # Definir la ruta dentro del pod de Jenkins
-                        KUBE_MANIFEST_PATH=/var/jenkins_home/workspace/pipline_venta_automatizada/kubernetes/web/desarrollo
+                        KUBE_MANIFEST_PATH=/var/jenkins_home/workspace/pipline_venta_automatizada_nuevo/kubernetes/web/desarrollo
 
                         # Validar los archivos YAML antes de aplicarlos
                         kubectl apply -f $KUBE_MANIFEST_PATH --dry-run=client --validate=true
