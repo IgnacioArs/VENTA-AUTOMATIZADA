@@ -13,6 +13,19 @@ pipeline {
     }
 
  stages {
+        
+        stage('Clean Workspace') {
+            steps {
+                script {
+                    sh '''
+                    echo "Eliminando archivos del workspace..."
+                    rm -rf $WORKSPACE/*
+                    echo "Workspace limpio."
+                    '''
+                }
+            }
+        }
+
         stage('Set Environment') {
             steps {
                 sh '''
