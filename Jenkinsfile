@@ -164,13 +164,29 @@ pipeline {
                         dir('./ms-python') {
                             script {
                                 sh '''
+                                    set -e  # Detener la ejecución en caso de error
+
+                                    # Crear entorno virtual si no existe
                                     if [ ! -d ".venv" ]; then
                                         python3 -m venv .venv
                                     fi
-                                    . .venv/bin/activate
+
+                                    # Activar el entorno virtual
+                                    source .venv/bin/activate
+
+                                    # Actualizar herramientas esenciales
                                     pip install --upgrade pip setuptools wheel
-                                    pip install -r requirements.txt
-                                    pytest -v --maxfail=1 --disable-warnings --tb=long
+
+                                    # Instalar dependencias solo si es necesario
+                                    pip install --requirement requirements.txt --timeout=10000
+
+                                    # Asegurar que pytest está instalado
+                                    if ! python -c "import pytest" 2>/dev/null; then
+                                        pip install pytest
+                                    fi
+
+                                    # Ejecutar pruebas apuntando a la carpeta de tests
+                                    pytest tests/ -v --maxfail=1 --disable-warnings --tb=long
                                 '''
                             }
                         }
