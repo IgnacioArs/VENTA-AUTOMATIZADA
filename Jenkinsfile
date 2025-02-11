@@ -166,27 +166,41 @@ pipeline {
                                 sh '''
                                     set -e  # Detener la ejecución en caso de error
 
+                                    # Verificar conexión a internet antes de instalar dependencias
+                                    if ! ping -c 2 pypi.org > /dev/null 2>&1; then
+                                        echo "ERROR: No hay conexión a Internet. No se pueden instalar dependencias."
+                                        exit 1
+                                    fi
+
                                     # Crear entorno virtual si no existe
                                     if [ ! -d ".venv" ]; then
                                         python3 -m venv .venv
                                     fi
 
-                                    # Activar el entorno virtual de forma compatible con `sh`
-                                    . .venv/bin/activate || source .venv/bin/activate || bash -c "source .venv/bin/activate"
+                                    # Activar entorno virtual de forma más compatible
+                                    if [ -f ".venv/bin/activate" ]; then
+                                        source .venv/bin/activate
+                                    elif [ -f ".venv/Scripts/activate" ]; then
+                                        source .venv/Scripts/activate
+                                    else
+                                        echo "ERROR: No se pudo activar el entorno virtual."
+                                        exit 1
+                                    fi
 
                                     # Actualizar herramientas esenciales
                                     pip install --upgrade pip setuptools wheel
 
-                                    # Instalar dependencias con timeout de 10000
-                                    pip install -r requirements.txt --timeout=10000
+                                    # Instalar dependencias usando un mirror de PyPI con reintentos
+                                    pip install -r requirements.txt --timeout=10000 --index-url https://pypi.org/simple --retries 3
 
-                                    # Ejecutar pytest en la carpeta 'tests/'
-                                    pytest tests/ -v --maxfail=1 --disable-warnings --tb=long
+                                    # Ejecutar pytest con logs detallados para Jenkins
+                                    pytest tests/ -v --maxfail=1 --disable-warnings --tb=long | tee pytest-report.log
                                 '''
                             }
                         }
                     }
                 }
+
 
             }
         }
