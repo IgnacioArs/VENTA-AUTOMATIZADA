@@ -116,10 +116,10 @@ pipeline {
                         dir('./proyecto-frontApp') {
                             script {
                                 echo "Instalando dependencias de frontend..."
-                                sh 'npm ci --legacy-peer-deps'
+                                sh 'npm ci'
 
                                 echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix --force || true'
+                                sh 'npm audit fix || true'
 
                                 echo "Ejecutando pruebas de frontend..."
                                 sh 'npm run test || echo "Pruebas fallidas, revisa los logs"'
@@ -133,10 +133,10 @@ pipeline {
                         dir('./ms-nestjs-bff') {
                             script {
                                 echo "Instalando dependencias del BFF..."
-                                sh 'npm ci --legacy-peer-deps || echo "Dependencias ya instaladas"'
+                                sh 'npm ci || echo "Dependencias ya instaladas"'
 
                                 echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix --force || true'
+                                sh 'npm audit fix || true'
 
                                 echo "Ejecutando pruebas del BFF..."
                                 sh 'npm test || echo "Pruebas fallidas en BFF, revisa los logs"'
@@ -150,10 +150,10 @@ pipeline {
                         dir('./ms-nestjs-security') {
                             script {
                                 echo "Instalando dependencias de seguridad..."
-                                sh 'npm ci --legacy-peer-deps || echo "Dependencias ya instaladas"'
+                                sh 'npm ci || echo "Dependencias ya instaladas"'
 
                                 echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix --force || true'
+                                sh 'npm audit fix || true'
 
                                 echo "Ejecutando pruebas de seguridad..."
                                 sh 'npm test || echo "Pruebas de seguridad fallidas, revisa los logs"'
@@ -171,9 +171,8 @@ pipeline {
                                         python3 -m venv .venv
                                     fi
                                     . .venv/bin/activate
-                                    pip install --upgrade pip setuptools wheel
                                     pip install -r requirements.txt --timeout=10000
-                                    pytest tests/ -v --maxfail=1 --disable-warnings --tb=long
+                                    pytest tests/ 
                                 '''
                             }
                         }
