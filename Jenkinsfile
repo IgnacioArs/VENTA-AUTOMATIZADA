@@ -171,27 +171,23 @@ pipeline {
                                         python3 -m venv .venv
                                     fi
 
-                                    # Activar el entorno virtual
-                                    source .venv/bin/activate
+                                    # Activar el entorno virtual de forma compatible con `sh`
+                                    . .venv/bin/activate || source .venv/bin/activate || bash -c "source .venv/bin/activate"
 
                                     # Actualizar herramientas esenciales
                                     pip install --upgrade pip setuptools wheel
 
-                                    # Instalar dependencias solo si es necesario
-                                    pip install --requirement requirements.txt --timeout=10000
+                                    # Instalar dependencias con timeout de 10000
+                                    pip install -r requirements.txt --timeout=10000
 
-                                    # Asegurar que pytest está instalado
-                                    if ! python -c "import pytest" 2>/dev/null; then
-                                        pip install pytest
-                                    fi
-
-                                    # Ejecutar pruebas apuntando a la carpeta de tests
+                                    # Ejecutar pytest en la carpeta 'tests/'
                                     pytest tests/ -v --maxfail=1 --disable-warnings --tb=long
                                 '''
                             }
                         }
                     }
                 }
+
             }
         }
 
