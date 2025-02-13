@@ -20,7 +20,8 @@ RUN apt-get update && \
         build-essential \
         nodejs \
         npm \
-        python3-venv && \
+        python3-venv \
+        nano && \
     apt-get clean
 
 # Agrega Docker's GPG key

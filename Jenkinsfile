@@ -182,23 +182,19 @@ pipeline {
             }
         }
 
+
         stage('Deploy to Kubernetes') {
             steps {
                 script {
                     try {
                         sh '''
-                        export KUBECONFIG=/var/jenkins_home/.kube/config
-                        eval $(minikube -p minikube docker-env)
-                        kubectl config use-context minikube
+                        set -x  # Activa el modo de depuración para ver cada comando ejecutado
 
-                        # Definir la ruta dentro del pod de Jenkins
-                        KUBE_MANIFEST_PATH=/var/jenkins_home/workspace/pipline_venta_automatizada/kubernetes/web/desarrollo
+                        sh 'pwd && ls -la'  // Ver qué archivos hay en el workspace
 
-                        # Validar los archivos YAML antes de aplicarlos
-                        kubectl apply -f $KUBE_MANIFEST_PATH --dry-run=client --validate=true
-
-                        # Aplicar la configuración en Kubernetes
-                        kubectl apply -f $KUBE_MANIFEST_PATH
+                        
+                        echo "Aplicando los archivos YAML..."
+                        kubectl apply -f /var/jenkins_home/workspace/pipline_venta_automatizada/kubernetes/web/desarrollo
                         '''
                     } catch (Exception e) {
                         error "Failed to deploy to Kubernetes: ${e}"
@@ -206,6 +202,7 @@ pipeline {
                 }
             }
         }
+
 
 
         stage('Validate Deployment') {

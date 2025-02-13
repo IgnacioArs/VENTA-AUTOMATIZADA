@@ -131,6 +131,7 @@ kubectl apply -f jenkins-deployment.yaml
 4) Dentro del contenedor, configura la variable de entorno para que apunte al archivo config:
    export KUBECONFIG=/var/jenkins_home/.kube/config
 5) Permisos en el directorio de trabajo de Jenkins: DENTRO DEL CONTENEDOR
+   mkdir -p /var/jenkins_home/workspace
    chmod -R 775 /var/jenkins_home/workspace
    chown -R jenkins:jenkins /var/jenkins_home/.kube
 6) ESTO IGUAL DENTRO DEL PODS SE PUEDE REALIZAR 
@@ -337,13 +338,95 @@ npm install --legacy-peer-deps
 npm audit fix
 npm run build
 
-COMMIT NUEVA PRUEBAS 02/02/2025
-
-
 
 
 ******************************************************************************************************
 ******************************************************************************************************
+Paso 1: Verifica la Configuración de Kubernetes en WSL
+
+Ejecuta el siguiente comando en WSL para verificar dónde está el archivo de configuración de Kubernetes:
+echo $HOME/.kube/config
+
+Normalmente, estará en /home/tu_usuario/.kube/config.
+También revisa los permisos para asegurarte de que el archivo existe:
+ls -l $HOME/.kube/config
+
+Copia el archivo .kube/config desde WSL al pod de Jenkins:
+kubectl cp $HOME/.kube/config jenkins-645f85f4db-ksd5x:/var/jenkins_home/.kube/config
+
+Dentro del contenedor de Jenkins, verifica que el archivo fue copiado correctamente:
+kubectl exec -it jenkins-645f85f4db-ksd5x -- ls -l /var/jenkins_home/.kube/config
+
+Paso 3: Configurar la Variable de Entorno KUBECONFIG en Jenkins
+Ahora, dentro del contenedor de Jenkins, configura la variable de entorno KUBECONFIG para que apunte al archivo de configuración:
+export KUBECONFIG=/var/jenkins_home/.kube/config
+
+Para hacer esto permanente en Jenkins, agrega esta línea en el archivo ~/.bashrc o ~/.profile dentro del contenedor:
+echo 'export KUBECONFIG=/var/jenkins_home/.kube/config' >> ~/.bashrc
+source ~/.bashrc
+
+Paso 4: Prueba la Conexión a Minikube desde Jenkins
+Ahora prueba si Jenkins dentro del contenedor puede comunicarse con Minikube:
+kubectl get nodes
+kubectl get pods -A
+
+🔧 Solución: Copiar los Certificados de Minikube al Contenedor
+
+Paso 1: Copiar los Archivos Faltantes al Contenedor
+Desde WSL, copia los certificados de Minikube al contenedor de Jenkins:
+kubectl cp $HOME/.minikube jenkins-645f85f4db-ksd5x:/var/jenkins_home/.minikube
+Esto copia la carpeta .minikube que contiene los archivos de certificados (client.crt, client.key, ca.crt) al contenedor.
+
+Paso 2: Ajustar las Rutas en el Archivo .kube/config
+Ingresa al contenedor de Jenkins:
+kubectl exec -it jenkins-645f85f4db-ksd5x -- /bin/bash
+
+Edita el archivo de configuración de kubectl:
+nano /var/jenkins_home/.kube/config
+
+Busca las líneas que hacen referencia a los certificados y modifica las rutas.
+Por ejemplo, cambia esto:
+
+yaml
+Copiar
+Editar
+client-certificate: /home/devars/.minikube/profiles/minikube/client.crt
+client-key: /home/devars/.minikube/profiles/minikube/client.key
+certificate-authority: /home/devars/.minikube/ca.crt
+Por esto:
+
+yaml
+Copiar
+Editar
+client-certificate: /var/jenkins_home/.minikube/profiles/minikube/client.crt
+client-key: /var/jenkins_home/.minikube/profiles/minikube/client.key
+certificate-authority: /var/jenkins_home/.minikube/ca.crt
+Guarda los cambios (en nano, presiona CTRL + X, luego Y y Enter).
+
+Paso 3: Exportar la Configuración en el Contenedor
+Dentro del contenedor, ejecuta:
+
+bash
+Copiar
+Editar
+export KUBECONFIG=/var/jenkins_home/.kube/config
+Para hacerlo permanente, agrégalo a ~/.bashrc:
+
+bash
+Copiar
+Editar
+echo 'export KUBECONFIG=/var/jenkins_home/.kube/config' >> ~/.bashrc
+source ~/.bashrc
+Paso 4: Probar la Configuración
+Ahora, dentro del contenedor de Jenkins, ejecuta:
+
+bash
+Copiar
+Editar
+kubectl get nodes
+kubectl get pods -A
+Si todo está bien, ahora Jenkins podrá usar kubectl sin errores. 🚀
+
 ******************************************************************************************************
 ******************************************************************************************************
 
