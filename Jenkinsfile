@@ -188,22 +188,27 @@ pipeline {
                 script {
                     try {
                         sh '''
-                        set -x  # Activa el modo de depuración para ver cada comando ejecutado
+                        echo "Contenido del directorio actual:"
+                        pwd && ls -la
 
-                        sh 'pwd && ls -la'  // Ver qué archivos hay en el workspace
+                        echo "Verificando acceso al contexto de Minikube"
+                        kubectl config current-context
 
-                        
                         echo "Aplicando los archivos YAML..."
-                        kubectl apply -f /var/jenkins_home/workspace/pipline_venta_automatizada/kubernetes/web/desarrollo
+                        kubectl apply -f /var/jenkins_home/workspace/pipline_venta_automatizada/kubernetes/web/desarrollo || {
+                            echo "Error al aplicar los manifiestos YAML";
+                            exit 1;
+                        }
+
+                        echo "Verificando despliegue en Kubernetes..."
+                        kubectl get pods -o wide
                         '''
                     } catch (Exception e) {
-                        error "Failed to deploy to Kubernetes: ${e}"
+                        error "Error en el despliegue: ${e}"
                     }
                 }
             }
         }
-
-
 
         stage('Validate Deployment') {
             steps {
