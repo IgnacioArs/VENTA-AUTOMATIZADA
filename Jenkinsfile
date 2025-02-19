@@ -171,7 +171,7 @@ pipeline {
                                     fi
                                     . .venv/bin/activate
                                     pip install --upgrade pip setuptools wheel
-                                    pip install -r requirements.txt
+                                    pip install -r requirements.txt --timeout=10000
                                     pytest tests/ -v --maxfail=1 --disable-warnings --tb=long
                                 '''
                             }
