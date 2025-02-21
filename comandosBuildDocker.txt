@@ -608,9 +608,6 @@ spec:
 
 
 
-pruebas pipline 18/02/2025
-pruebas pipline 20/02/2025
-pruebas pipline 20/02/2025
 pruebas pipline 20/02/2025
 
 
