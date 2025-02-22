@@ -106,7 +106,6 @@ pipeline {
             }
         }
 
-
         stage('Run Tests') {
             parallel {
                 stage('Test Frontend') {
@@ -126,7 +125,6 @@ pipeline {
                     }
                 }
 
-
                 stage('Test BFF') {
                     steps {
                         dir('./ms-nestjs-bff') {
@@ -143,7 +141,6 @@ pipeline {
                         }
                     }
                 }
-
 
                 stage('Test Security') {
                     steps {
