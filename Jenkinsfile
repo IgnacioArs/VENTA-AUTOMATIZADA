@@ -183,7 +183,6 @@ pipeline {
             }
         }
 
-
         stage('Deploy to Kubernetes') {
             steps {
                 script {
@@ -192,12 +191,9 @@ pipeline {
                         echo "Contenido del directorio actual:"
                         sh 'pwd && ls -la'
 
-                        // Verificando acceso al contexto de Minikube
-                        echo "Verificando acceso al contexto de Minikube"
-                        sh '''
-                        export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json
-                        kubectl config current-context
-                        '''
+                        // Verificando acceso al contexto de Kubernetes
+                        echo "Verificando acceso al contexto de Kubernetes"
+                        sh 'kubectl config current-context'
 
                         // Aplicando los archivos YAML para el despliegue
                         echo "Aplicando los archivos YAML..."
@@ -208,6 +204,10 @@ pipeline {
                         }
                         '''
 
+                        // Espera para que los pods inicien correctamente
+                        echo "Esperando a que los pods se inicien..."
+                        sh 'sleep 10'
+
                         // Verificando los pods en Kubernetes
                         echo "Verificando despliegue en Kubernetes..."
                         sh 'kubectl get pods -o wide'
@@ -217,8 +217,6 @@ pipeline {
                 }
             }
         }
-
-
 
         stage('Validate Deployment') {
             steps {

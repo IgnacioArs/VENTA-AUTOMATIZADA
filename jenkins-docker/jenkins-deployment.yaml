@@ -36,6 +36,8 @@ spec:
         env:
         - name: JAVA_OPTS
           value: "-Xms2g -Xmx4g -Xss4m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+        - name: KUBECONFIG
+          value: "/var/jenkins_home/.minikube/profiles/minikube/config.json"
         resources:
           requests:
             memory: "2Gi"
