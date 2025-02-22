@@ -108,9 +108,7 @@ pipeline {
 
 
         stage('Run Tests') {
-            
             parallel {
-
                 stage('Test Frontend') {
                     steps {
                         dir('./proyecto-frontApp') {
