@@ -140,6 +140,10 @@ kubectl apply -f jenkins-deployment.yaml
    kubectl config get-contexts
 8) "test": "react-scripts test --env=jsdom" -> JSON DE REACTJS EN SCRIPTS
 
+  226  echo 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json' >> ~/.bashrc
+  227  source ~/.bashrc
+  228  echo 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json' >> ~/.zshrc
+  229  source ~/.zshrc
   245  which minikube 
   246  minikube version
   247  docker image ls

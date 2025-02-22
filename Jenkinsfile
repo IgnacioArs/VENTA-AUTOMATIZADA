@@ -188,28 +188,37 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh '''
+                        // Verificación de directorio actual
                         echo "Contenido del directorio actual:"
-                        pwd && ls -la
+                        sh 'pwd && ls -la'
 
+                        // Verificando acceso al contexto de Minikube
                         echo "Verificando acceso al contexto de Minikube"
+                        sh '''
+                        export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json
                         kubectl config current-context
+                        '''
 
+                        // Aplicando los archivos YAML para el despliegue
                         echo "Aplicando los archivos YAML..."
+                        sh '''
                         kubectl apply -f /var/jenkins_home/workspace/pipline_venta_automatizada/kubernetes/web/desarrollo || {
                             echo "Error al aplicar los manifiestos YAML";
                             exit 1;
                         }
-
-                        echo "Verificando despliegue en Kubernetes..."
-                        kubectl get pods -o wide
                         '''
+
+                        // Verificando los pods en Kubernetes
+                        echo "Verificando despliegue en Kubernetes..."
+                        sh 'kubectl get pods -o wide'
                     } catch (Exception e) {
                         error "Error en el despliegue: ${e}"
                     }
                 }
             }
         }
+
+
 
         stage('Validate Deployment') {
             steps {
