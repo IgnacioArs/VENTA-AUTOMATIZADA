@@ -115,12 +115,6 @@ pipeline {
                     steps {
                         dir('./proyecto-frontApp') {
                             script {
-                                echo "Instalando dependencias de frontend..."
-                                sh 'npm ci --legacy-peer-deps'
-
-                                echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix --force || true'
-
                                 echo "Ejecutando pruebas de frontend..."
                                 sh 'npm run test || echo "Pruebas fallidas, revisa los logs"'
                             }
@@ -133,13 +127,7 @@ pipeline {
                     steps {
                         dir('./ms-nestjs-bff') {
                             script {
-                               echo "Instalando dependencias de seguridad..."
-                                sh 'npm ci --legacy-peer-deps || echo "Dependencias ya instaladas"'
-
-                                echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix --force || true'
-
-                                echo "Ejecutando pruebas de seguridad..."
+                                echo "Ejecutando pruebas de seguridad BFF..."
                                 sh 'npm test || echo "Pruebas de seguridad fallidas, revisa los logs"'
                             }
                         }
@@ -151,13 +139,7 @@ pipeline {
                     steps {
                         dir('./ms-nestjs-security') {
                             script {
-                                echo "Instalando dependencias de seguridad..."
-                                sh 'npm ci --legacy-peer-deps || echo "Dependencias ya instaladas"'
-
-                                echo "Resolviendo vulnerabilidades de dependencias..."
-                                sh 'npm audit fix --force || true'
-
-                                echo "Ejecutando pruebas de seguridad..."
+                                echo "Ejecutando pruebas de seguridad security ..."
                                 sh 'npm test || echo "Pruebas de seguridad fallidas, revisa los logs"'
                             }
                         }
