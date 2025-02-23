@@ -116,7 +116,7 @@ pipeline {
                         dir('./proyecto-frontApp') {
                             script {
                                 echo "Instalando dependencias de frontend..."
-                                sh 'npm ci --legacy-peer-deps || echo "Dependencias ya instaladas'
+                                sh 'npm ci --legacy-peer-deps'
 
                                 echo "Resolviendo vulnerabilidades de dependencias..."
                                 sh 'npm audit fix --force || true'
