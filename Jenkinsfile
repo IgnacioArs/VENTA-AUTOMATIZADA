@@ -169,10 +169,19 @@ pipeline {
             }
         }
 
+
         stage('Deploy to Kubernetes') {
             steps {
                 script {
                     try {
+                        // Estableciendo la variable KUBECONFIG
+                        echo "Configurando KUBECONFIG..."
+                        sh 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json'
+                        sh 'echo "export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json" >> ~/.bashrc'
+                        sh 'source ~/.bashrc'
+                        sh 'echo "export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json" >> ~/.zshrc'
+                        sh 'source ~/.zshrc'
+
                         // Verificación de directorio actual
                         echo "Contenido del directorio actual:"
                         sh 'pwd && ls -la'
@@ -203,6 +212,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Validate Deployment') {
             steps {
