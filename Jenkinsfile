@@ -178,9 +178,9 @@ pipeline {
                         echo "Configurando KUBECONFIG..."
                         sh 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json'
                         sh 'echo "export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json" >> ~/.bashrc'
-                        sh 'source ~/.bashrc'
+                        sh '. ~/.bashrc'
                         sh 'echo "export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json" >> ~/.zshrc'
-                        sh 'source ~/.zshrc'
+                        sh '. ~/.zshrc'
 
                         // Verificación de directorio actual
                         echo "Contenido del directorio actual:"
