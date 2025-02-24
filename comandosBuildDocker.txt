@@ -140,16 +140,38 @@ kubectl apply -f jenkins-deployment.yaml
    kubectl config get-contexts
 8) "test": "react-scripts test --env=jsdom" -> JSON DE REACTJS EN SCRIPTS
 
-  226  echo 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json' >> ~/.bashrc
-  227  source ~/.bashrc
-  228  echo 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json' >> ~/.zshrc
-  229  source ~/.zshrc
   245  which minikube 
   246  minikube version
   247  docker image ls
   248  kubectl config use-context minikube
   249  kubectl config current-context
   250  kubectl config get-contexts
+
+kubectl exec -it jenkins-797f8c8b67-9gcjz -- /bin/sh  <--- USUARIO ROOT
+
+sudo chown -R jenkins:jenkins /var/jenkins_home/.minikube
+
+Copiar los certificados dentro del contenedor Jenkins
+kubectl cp ~/.minikube/profiles/minikube/client.crt jenkins-797f8c8b67-9gcjz:/var/jenkins_home/.minikube/profiles/minikube/
+kubectl cp ~/.minikube/profiles/minikube/client.key jenkins-797f8c8b67-9gcjz:/var/jenkins_home/.minikube/profiles/minikube/
+kubectl cp ~/.minikube/ca.crt jenkins-797f8c8b67-9gcjz:/var/jenkins_home/.minikube/
+
+Asegurar los permisos dentro del contenedor
+kubectl exec -it jenkins-797f8c8b67-9gcjz -- /bin/bash
+
+Dentro del contenedor, asigna permisos y dueño:
+chown -R jenkins:jenkins /var/jenkins_home/.minikube
+chmod -R 775 /var/jenkins_home/.minikube
+
+Configurar el entorno en Jenkins
+echo 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json' >> ~/.bashrc
+source ~/.bashrc
+echo 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json' >> ~/.zshrc
+source ~/.zshrc
+
+kubectl get all
+
+
 
 
 EXPLICACION: 

@@ -6,6 +6,9 @@ USER root
 
 RUN apt-get update && apt-get install -y sudo
 
+# Configurar Jenkins para ejecutar sudo sin contraseña
+RUN echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
 # Actualiza el sistema y herramientas básicas
 RUN apt-get update && \
     apt-get install -y \
@@ -108,6 +111,7 @@ EXPOSE 50000
 
 # Comando de inicio
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
 
 
 
