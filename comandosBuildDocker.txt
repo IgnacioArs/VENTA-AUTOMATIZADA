@@ -147,7 +147,7 @@ kubectl apply -f jenkins-deployment.yaml
   249  kubectl config current-context
   250  kubectl config get-contexts
 
-kubectl exec -it jenkins-797f8c8b67-9gcjz -- /bin/sh  <--- USUARIO ROOT
+kubectl exec -it jenkins-797f8c8b67-9gcjz -- /bin/sh  <--- USUARIO ROOT:
 
 sudo chown -R jenkins:jenkins /var/jenkins_home/.minikube
 

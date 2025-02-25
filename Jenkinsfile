@@ -193,14 +193,10 @@ pipeline {
                             exit 1;
                         }
                         '''
-
+                        
                         // Espera para que los pods inicien correctamente
                         echo "Esperando a que los pods se inicien..."
                         sh 'sleep 10'
-
-                        // Verificando los pods en Kubernetes
-                        echo "Verificando despliegue en Kubernetes..."
-                        sh 'kubectl get pods -o wide'
                     } catch (Exception e) {
                         error "Error en el despliegue: ${e}"
                     }
