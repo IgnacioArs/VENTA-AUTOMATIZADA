@@ -185,10 +185,6 @@ pipeline {
                         echo "Contenido del directorio actual:"
                         sh 'pwd && ls -la'
 
-                        // Verificando acceso al contexto de Kubernetes
-                        echo "Verificando acceso al contexto de Kubernetes"
-                        sh 'kubectl config current-context'
-
                         // Aplicando los archivos YAML para el despliegue
                         echo "Aplicando los archivos YAML..."
                         sh '''
