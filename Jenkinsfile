@@ -203,18 +203,6 @@ pipeline {
                 }
             }
         }
-
-
-        stage('Validate Deployment') {
-            steps {
-                script {
-                    sh '''
-                    kubectl --context=$KUBE_CONTEXT get pods -o wide
-                    kubectl --context=$KUBE_CONTEXT get services -o wide
-                    '''
-                }
-            }
-        }
     }
 
     post {
