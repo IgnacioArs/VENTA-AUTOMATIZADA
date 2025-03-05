@@ -31,7 +31,11 @@ kubectl port-forward deployment/ms-python-desarrollo 32000:3000
 kubectl port-forward deployment/ms-nestjs-security 32001:3001
 kubectl port-forward deployment/ms-nestjs-bff 32002:3002
 kubectl port-forward deployment/proyecto-frontapp-desarrollo 32003:80
-
+REAJUSTANDO
+kubectl port-forward deployment/ms-python-desarrollo 3000:32000
+kubectl port-forward deployment/ms-nestjs-security 3001:32001
+kubectl port-forward deployment/ms-nestjs-bff 3002:32002
+kubectl port-forward deployment/proyecto-frontapp-desarrollo 80:32003
 
 bash
 Copiar código
