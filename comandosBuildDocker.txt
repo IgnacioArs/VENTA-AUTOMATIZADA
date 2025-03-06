@@ -29,7 +29,7 @@ Si deseas ejecutar todos los comandos en paralelo, puedes abrir varias terminale
 PARA CADA TERMINAL
 kubectl port-forward deployment/ms-python-desarrollo 32000:3000
 kubectl port-forward deployment/ms-nestjs-security 32001:3001
-kubectl port-forward deployment/ms-nestjs-bff 32002:3002
+kubectl port-forward deployment/ms-nestjs-bff 32002:3002 
 kubectl port-forward deployment/proyecto-frontapp-desarrollo 32003:80
 REAJUSTANDO
 kubectl port-forward deployment/ms-python-desarrollo 3000:32000
