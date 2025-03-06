@@ -636,12 +636,69 @@ spec:
           type: Socket
 
 
-pruebas pipline 06/03/2025
-pruebas pipline 06/03/2025
 
+VIRTUAL NETWORK OBSERVACION:
 
+🔍 Explicación del problema y solución
+🛑 ¿Por qué no funcionó con la IP del clúster y el NodePort?
+Kubernetes en Minikube (WSL2) maneja las redes de forma especial.
+🔹 El puerto externo (NodePort) solo es accesible desde la máquina donde corre Minikube y no desde el host directamente (Windows).
+🔹 Minikube en WSL2 no expone los puertos al sistema operativo anfitrión (Windows), por lo que 192.168.49.2:32003 no es accesible desde tu navegador en Windows.
+
+✅ ¿Por qué funcionó con kubectl port-forward?
+Cuando ejecutaste:
+
+sh
+Copiar
+Editar
+kubectl port-forward deployment/ms-python-desarrollo 32000:3000
+🔹 Redirigiste el puerto 3000 del pod al puerto 32000 en tu máquina local.
+🔹 Ahora, cualquier solicitud a localhost:32000 es enviada directamente al contenedor que corre Python en Kubernetes.
+
+🛠 El error anterior fue porque intentaste hacer lo inverso (3000:32000).
+El puerto 32000 no está expuesto dentro del contenedor, solo en el servicio Kubernetes.
+
+🔥 ¿Cómo acceder correctamente al servicio en Minikube?
+Opción 1: Exponer con kubectl port-forward (lo que ya hiciste)
+sh
+Copiar
+Editar
+kubectl port-forward deployment/ms-python-desarrollo 32000:3000
+Acceder en http://localhost:32000
+
+Opción 2: Utilizar minikube service (Forma recomendada)
+sh
+Copiar
+Editar
+minikube service proyecto-frontapp-desarrollo --url
+💡 Esto abrirá el navegador con la URL correcta para acceder al servicio.
+
+Si no tienes minikube en el PATH, prueba:
+
+sh
+Copiar
+Editar
+minikube tunnel
+Y luego accede con http://127.0.0.1:32003.
+
+Opción 3: Exponer en WSL2 manualmente
+Si quieres hacer accesibles los puertos en Windows, debes configurar reglas en netsh desde PowerShell en Windows:
+
+powershell
+Copiar
+Editar
+netsh interface portproxy add v4tov4 listenport=32003 listenaddress=0.0.0.0 connectport=32003 connectaddress=192.168.49.2
+Esto redirige las conexiones de Windows a Minikube en WSL2.
+
+🎯 Conclusión
+Los puertos NodePort no funcionan bien en WSL2 por el aislamiento de red.
+port-forward funciona porque crea un túnel temporal entre tu máquina y el pod.
+Usa minikube service <nombre-servicio> --url para obtener el acceso directo.
+Si necesitas exponerlo a Windows, usa netsh interface portproxy.
+🚀 Dime si con esto ya puedes ver bien los servicios! 😃
 
            
+pruebas pipline 06/03/2025
 
 
 

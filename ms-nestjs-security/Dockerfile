@@ -5,11 +5,14 @@ FROM node:18-slim
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package*.json ./
+COPY package*.json tsconfig*.json ./
 RUN npm install
 
 # Copy application files
 COPY . .
+
+# Compila el código TypeScript a JavaScript
+RUN npm run build
 
 # Define ARG and default ENV
 ARG ENTORNO_ENV=desarrollo
