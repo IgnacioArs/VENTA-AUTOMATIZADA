@@ -7,21 +7,40 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 
+# Copiar todos los archivos del frontend
 COPY . .
 
-# Determinar entorno desde argumentos
+# Copiar el archivo de entorno
+COPY .env .env
+
+# Definir argumentos de entorno
 ARG VITE_ENTORNO
+ARG VITE_PUERTO_DESARROLLO
+ARG VITE_PUERTO_PRODUCCION
+ARG VITE_ENV_MS_BUSINESS_API_URL_DESARROLLO
+ARG VITE_ENV_MS_PYTHON_API_URL_DESARROLLO
+ARG VITE_ENV_MS_BUSINESS_API_URL_PRODUCCION
+ARG VITE_ENV_MS_PYTHON_API_URL_PRODUCCION
+
+# Definir variables de entorno en la imagen
 ENV VITE_ENTORNO=${VITE_ENTORNO}
+ENV VITE_PUERTO_DESARROLLO=${VITE_PUERTO_DESARROLLO}
+ENV VITE_PUERTO_PRODUCCION=${VITE_PUERTO_PRODUCCION}
+ENV VITE_ENV_MS_BUSINESS_API_URL_DESARROLLO=${VITE_ENV_MS_BUSINESS_API_URL_DESARROLLO}
+ENV VITE_ENV_MS_PYTHON_API_URL_DESARROLLO=${VITE_ENV_MS_PYTHON_API_URL_DESARROLLO}
+ENV VITE_ENV_MS_BUSINESS_API_URL_PRODUCCION=${VITE_ENV_MS_BUSINESS_API_URL_PRODUCCION}
+ENV VITE_ENV_MS_PYTHON_API_URL_PRODUCCION=${VITE_ENV_MS_PYTHON_API_URL_PRODUCCION}
 
-# Configuración del puerto según entorno
-ARG VITE_PUERTO_DESARROLLO=${VITE_PUERTO_DESARROLLO}
-ARG VITE_PUERTO_PRODUCCION=${VITE_PUERTO_PRODUCCION}
+# Crear el archivo `.env` para Vite basado en el entorno
+RUN echo "VITE_ENTORNO=${VITE_ENTORNO}" > .env && \
+    echo "VITE_PUERTO=$(if [ "$VITE_ENTORNO" = "desarrollo" ]; then echo "$VITE_PUERTO_DESARROLLO"; else echo "$VITE_PUERTO_PRODUCCION"; fi)" >> .env && \
+    echo "VITE_ENV_MS_BUSINESS_API_URL=$(if [ "$VITE_ENTORNO" = "desarrollo" ]; then echo "$VITE_ENV_MS_BUSINESS_API_URL_DESARROLLO"; else echo "$VITE_ENV_MS_BUSINESS_API_URL_PRODUCCION"; fi)" >> .env && \
+    echo "VITE_ENV_MS_PYTHON_API_URL=$(if [ "$VITE_ENTORNO" = "desarrollo" ]; then echo "$VITE_ENV_MS_PYTHON_API_URL_DESARROLLO"; else echo "$VITE_ENV_MS_PYTHON_API_URL_PRODUCCION"; fi)" >> .env
 
-RUN if [ "$VITE_ENTORNO" = "desarrollo" ]; then \
-    echo "VITE_PUERTO=${VITE_PUERTO_DESARROLLO}" >> .env; \
-    else echo "VITE_PUERTO=${VITE_PUERTO_PRODUCCION}" >> .env; \
-    fi
+# Verificar que el archivo .env se creó correctamente
+RUN cat .env
 
+# Ejecutar la construcción del frontend
 RUN npm run build
 
 # Etapa 2: Configuración de Nginx
@@ -43,5 +62,6 @@ COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
+
 
 
