@@ -53,6 +53,8 @@ pipeline {
                                 --build-arg VITE_ENTORNO=desarrollo \
                                 --build-arg VITE_PUERTO_DESARROLLO=3003 \
                                 --build-arg VITE_PUERTO_PRODUCCION=4003 \
+                                --build-arg VITE_ENV_MS_BUSINESS_API_URL_DESARROLLO=http://127.0.0.1:32002 \
+                                --build-arg VITE_ENV_MS_PYTHON_API_URL_DESARROLLO=http://127.0.0.1:32002 \
                                 ./proyecto-frontApp
                             '''
                         }
