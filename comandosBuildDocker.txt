@@ -701,6 +701,7 @@ Si necesitas exponerlo a Windows, usa netsh interface portproxy.
 pruebas pipline 06/03/2025
 pruebas pipline 06/03/2025
 pruebas pipline 07/03/2025
+pruebas pipline 08/03/2025
 
 ETAPA DE USO SONARQUBE
 
