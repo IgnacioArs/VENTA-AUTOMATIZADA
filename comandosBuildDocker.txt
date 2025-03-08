@@ -26,7 +26,7 @@ Comandos para Port Forward
 Ejecución simultánea
 Si deseas ejecutar todos los comandos en paralelo, puedes abrir varias terminales o utilizar un solo comando en el fondo con &:
 
-PARA CADA TERMINAL
+PARA CADA TERMINAL CORRECTO
 kubectl port-forward deployment/ms-python-desarrollo 32000:3000
 kubectl port-forward deployment/ms-nestjs-security 32001:3001
 kubectl port-forward deployment/ms-nestjs-bff 32002:3002 
