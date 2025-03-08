@@ -702,6 +702,15 @@ pruebas pipline 06/03/2025
 pruebas pipline 06/03/2025
 pruebas pipline 07/03/2025
 
+ETAPA DE USO SONARQUBE
+
+1) descargar sonarqube 
+   docker pull sonarqube
+2) creamos los archivos deployment y service
+3) ejecutamos los archivos kubectl apply -f ./  -------- mejor ejecutar sonarqube con docker,
+   ya que da problemas y sobrecarga con minikube asi que lo pondremos a la altura de minikube
+   docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
+4) kubectl port-forward --request-timeout=59m service/sonarqube 9000:9000
 
 
 
