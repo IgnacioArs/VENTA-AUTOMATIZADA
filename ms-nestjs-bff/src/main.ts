@@ -46,7 +46,7 @@ async function bootstrap() {
   console.log(`██████████████████████████████████████████████████████████████████`);
   console.log(`██**************************************************************██`);
   console.log(`██**************************************************************██`);
-  console.log(`   SECURITY application is running at: http://localhost:${port}   `);
+  console.log(`   BFF application is running at: http://localhost:${port}   `);
   console.log(`   Swagger Docs available at: http://localhost:${port}/api/nestjs   `);
   console.log(`██**************************************************************██`);
   console.log(`██**************************************************************██`);
