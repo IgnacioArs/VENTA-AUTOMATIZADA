@@ -698,10 +698,7 @@ Si necesitas exponerlo a Windows, usa netsh interface portproxy.
 🚀 Dime si con esto ya puedes ver bien los servicios! 😃
 
            
-pruebas pipline 06/03/2025
-pruebas pipline 06/03/2025
-pruebas pipline 07/03/2025
-pruebas pipline 08/03/2025
+
 
 ETAPA DE USO SONARQUBE
 
@@ -741,3 +738,7 @@ ETAPA DE USO SONARQUBE
         kubectl run test --rm -it --image=alpine -- sh
      🔹 Dentro del pod, ejecuta:
         wget -qO- http://sonarqube:9000
+
+
+
+pruebas pipline 11/03/2025
