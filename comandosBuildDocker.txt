@@ -707,15 +707,37 @@ ETAPA DE USO SONARQUBE
 
 1) descargar sonarqube 
    docker pull sonarqube
-2) creamos los archivos deployment y service
-3) ejecutamos los archivos kubectl apply -f ./  -------- mejor ejecutar sonarqube con docker,
-   ya que da problemas y sobrecarga con minikube asi que lo pondremos a la altura de minikube
-   docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
-4) kubectl port-forward --request-timeout=59m service/sonarqube 9000:9000
-
-
-
-
-
-
-
+2) luego desde fuera del contexto de minikube si no en el contexto de docker ejecutamos este comando
+    docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
+3) http://127.0.0.1:9000/
+4) cambiar contraseña actual de sonarqube a un actual para cambiar
+5) crear un nuevo token en security -> users a la derecha 0 tokens creamos nuevo token
+6) crear red docker
+   docker network create jenkins_sonarqube
+7) conectar sonarqube a la red
+   docker network connect jenkins_sonarqube sonarqube
+   luego a minikube
+   minikube delete --> y empezar de nuevo con la nueva configuracion
+   minikube start --driver=docker
+   docker network connect jenkins_sonarqube minikube
+   VERIFICAR SONARQUBE QUE ESTE EN ESA RED docker network inspect jenkins_sonarqube
+8) Exponer SonarQube en Minikube
+   Aquí es donde cambia la estrategia, porque Minikube no puede simplemente conectarse a una red Docker normal.
+  🔹 Ver la IP de Minikube
+     minikube ip
+9)🔹 Ejecutar SonarQube con un binding a esta IP
+     Si SonarQube no está corriendo aún, inícialo asegurándote de que escuche en la IP de Minikube:
+     docker run -d --name sonarqube --network=jenkins_sonarqube -p 9000:9000 -p 9092:9092 sonarqube
+10) Hacer que Kubernetes (Minikube) se Conecte a SonarQube
+    Ahora, necesitas que los pods dentro de Minikube puedan conectarse a SonarQube. Como Minikube 
+    corre en su propio entorno, lo mejor es exponer SonarQube como un servicio en Kubernetes.
+    Crea un Service y un Endpoint en Kubernetes para que Minikube pueda acceder a SonarQube.
+    🔹 Crear el Endpoint en Kubernetes (sonarqube-endpoint.yaml)
+    🔹 Crear el Service en Kubernetes (sonarqube-service.yaml)
+    🔹 Aplicar los recursos en Kubernetes
+       kubectl apply -f sonarqube-endpoint.yaml
+       kubectl apply -f sonarqube-service.yaml
+11)  🔹 Para probar si un pod dentro de Minikube puede acceder a SonarQube:
+        kubectl run test --rm -it --image=alpine -- sh
+     🔹 Dentro del pod, ejecuta:
+        wget -qO- http://sonarqube:9000
