@@ -4,7 +4,7 @@ metadata:
   name: sonarqube
 subsets:
   - addresses:
-      - ip: 172.17.108.43  # Usa la IP de tu WSL (verificada con `ip addr show eth0`)
+      - ip: 172.19.0.2  # IP del contenedor SonarQube en la red jenkins_sonarqube
     ports:
       - port: 9000
 

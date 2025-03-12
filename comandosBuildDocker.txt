@@ -739,6 +739,14 @@ ETAPA DE USO SONARQUBE
      🔹 Dentro del pod, ejecuta:
         wget -qO- http://sonarqube:9000
 
+Explicación:
+
+tools { sonarQubeScanner 'sonarscaner' }
+Le dice a Jenkins que use la instalación de SonarQube Scanner que configuraste en Manage Jenkins > Global Tool Configuration.
+withSonarQubeEnv('sonarqubetest')
+Usa la configuración del servidor SonarQube que agregaste en "SonarQube servers".
+sh "${tool 'sonarscaner'}/bin/sonar-scanner ..."
+Ejecuta el SonarQube Scanner con las opciones necesarias para analizar el código.
 
 
 pruebas pipline 11/03/2025

@@ -12,6 +12,10 @@ pipeline {
         SLACK_CREDENTIAL_ID = 'jenkins-slack-notifications'
     }
 
+    tools {
+        sonarQubeScanner 'sonarscanner'  // Nombre de la herramienta configurada en Global Tool Configuration
+    }
+
  stages {
         
         stage('Clean Workspace') {
@@ -42,6 +46,23 @@ pipeline {
                     credentialsId: 'github-user'
             }
         }
+
+
+        stage('SonarQube Analysis') {
+            steps {
+                 withSonarQubeEnv('sonarqubetest') {
+                 sh """
+                    ${tool 'sonarscanner'}/bin/sonar-scanner \
+                    -Dsonar.projectKey=VENTA-AUTOMATIZADA \
+                    -Dsonar.sources=ms-nestjs-bff,ms-python,ms-nestjs-security,proyecto-frontApp \
+                    -Dsonar.java.binaries=ms-nestjs-bff/dist,ms-nestjs-security/dist \
+                    -Dsonar.host.url=http://sonarqube:9000 \
+                    -Dsonar.login=${sonarqube}
+                    """
+                 }
+            }
+        }
+
 
         stage('Build Docker Images') {
             parallel {
