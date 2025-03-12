@@ -13,7 +13,7 @@ pipeline {
     }
 
     tools {
-        sonarRunner 'sonarscanner'  // Nombre configurado en Global Tool Configuration
+        sonarQubeScanner 'sonarscanner'  // Cambié sonarRunner por sonarQubeScanner
     }
 
  stages {
