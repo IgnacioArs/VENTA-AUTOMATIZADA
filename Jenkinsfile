@@ -27,6 +27,7 @@ pipeline {
             }
         }
 
+
         stage('Set Environment') {
             steps {
                 sh '''
@@ -35,6 +36,7 @@ pipeline {
                 '''
             }
         }
+
 
         stage('Checkout') {
             steps {
@@ -47,12 +49,11 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqubetest') {  // Usa el nombre de tu servidor SonarQube en Jenkins
+                withSonarQubeEnv('sonarqubetest') {
                     sh """
                         sonar-scanner \
                         -Dsonar.projectKey=VENTA-AUTOMATIZADA \
                         -Dsonar.sources=ms-nestjs-bff,ms-python,ms-nestjs-security,proyecto-frontApp \
-                        -Dsonar.java.binaries=ms-nestjs-bff/dist,ms-nestjs-security/dist \
                         -Dsonar.host.url=http://sonarqube:9000 \
                         -Dsonar.login=${sonarqube}
                     """
@@ -110,6 +111,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Push Docker Images') {
             steps {
