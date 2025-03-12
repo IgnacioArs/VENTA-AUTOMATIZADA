@@ -12,9 +12,6 @@ pipeline {
         SLACK_CREDENTIAL_ID = 'jenkins-slack-notifications'
     }
 
-    tools {
-        sonarScanner 'sonarScanner'  // Nombre de la herramienta configurado en Jenkins
-    }
 
  stages {
         
@@ -50,9 +47,9 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqubetest') {
+                withSonarQubeEnv('sonarqubetest') {  // Usa el nombre de tu servidor SonarQube en Jenkins
                     sh """
-                        ${tool 'sonarScanner'}/bin/sonar-scanner \
+                        sonar-scanner \
                         -Dsonar.projectKey=VENTA-AUTOMATIZADA \
                         -Dsonar.sources=ms-nestjs-bff,ms-python,ms-nestjs-security,proyecto-frontApp \
                         -Dsonar.java.binaries=ms-nestjs-bff/dist,ms-nestjs-security/dist \
