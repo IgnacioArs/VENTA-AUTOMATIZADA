@@ -13,7 +13,7 @@ pipeline {
     }
 
     tools {
-        sonarQubeScanner 'sonarscanner'  // Cambié sonarRunner por sonarQubeScanner
+        sonarScanner 'sonarScanner'  // Nombre de la herramienta configurado en Jenkins
     }
 
  stages {
@@ -52,7 +52,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarqubetest') {
                     sh """
-                        ${tool 'sonarscanner'}/bin/sonar-scanner \
+                        ${tool 'sonarScanner'}/bin/sonar-scanner \
                         -Dsonar.projectKey=VENTA-AUTOMATIZADA \
                         -Dsonar.sources=ms-nestjs-bff,ms-python,ms-nestjs-security,proyecto-frontApp \
                         -Dsonar.java.binaries=ms-nestjs-bff/dist,ms-nestjs-security/dist \
