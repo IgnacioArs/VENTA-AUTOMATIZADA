@@ -50,16 +50,16 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                 withSonarQubeEnv('sonarqubetest') {
-                 sh """
-                    ${tool 'sonarscanner'}/bin/sonar-scanner \
-                    -Dsonar.projectKey=VENTA-AUTOMATIZADA \
-                    -Dsonar.sources=ms-nestjs-bff,ms-python,ms-nestjs-security,proyecto-frontApp \
-                    -Dsonar.java.binaries=ms-nestjs-bff/dist,ms-nestjs-security/dist \
-                    -Dsonar.host.url=http://sonarqube:9000 \
-                    -Dsonar.login=${sonarqube}
+                withSonarQubeEnv('sonarqubetest') {
+                    sh """
+                        ${tool 'sonarscanner'}/bin/sonar-scanner \
+                        -Dsonar.projectKey=VENTA-AUTOMATIZADA \
+                        -Dsonar.sources=ms-nestjs-bff,ms-python,ms-nestjs-security,proyecto-frontApp \
+                        -Dsonar.java.binaries=ms-nestjs-bff/dist,ms-nestjs-security/dist \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=${sonarqube}
                     """
-                 }
+                }
             }
         }
 
