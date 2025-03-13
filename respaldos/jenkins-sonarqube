@@ -27,6 +27,7 @@ pipeline {
             }
         }
 
+
         stage('Set Environment') {
             steps {
                 sh '''
@@ -36,6 +37,7 @@ pipeline {
             }
         }
 
+
         stage('Checkout') {
             steps {
                 git branch: 'main', 
@@ -43,6 +45,22 @@ pipeline {
                     credentialsId: 'github-user'
             }
         }
+
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqubetest') {
+                    sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=VENTA-AUTOMATIZADA \
+                        -Dsonar.sources=ms-nestjs-bff,ms-python,ms-nestjs-security,proyecto-frontApp \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=${sonarqube}
+                    """
+                }
+            }
+        }
+
 
         stage('Build Docker Images') {
             parallel {
