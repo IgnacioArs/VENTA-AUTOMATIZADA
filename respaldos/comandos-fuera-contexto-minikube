@@ -1,0 +1,23 @@
+DESCARGAMOS LA IMAGEN EN DOCKER
+docker pull sonarqube
+docker pull jenkins/jenkins:lts
+
+HACEMOS CORRER LOS CONTENEDORES
+docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
+docker run -d --name jenkins -p 8080:8080 jenkins/jenkins:lts
+
+PASSWORD JENKINS
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+
+CREAMOS UNA RED DOCKER
+docker network create jenkins_sonarqube
+
+CONECTAMOS A LA RED DOCKER
+docker network connect jenkins_sonarqube sonarqube
+docker network connect jenkins_sonarqube jenkins
+
+VERIFICAMOS LA RED QUE ESTEN LOS CONTENEDORES
+docker network inspect jenkins_sonarqube
+
+VER DETALLE DE UN CONTENEDOR EN DOCKER 
+docker container inspect sonarqube 
