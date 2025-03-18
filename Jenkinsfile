@@ -27,6 +27,7 @@ pipeline {
             }
         }
 
+
         stage('Set Environment') {
             steps {
                 sh '''
@@ -36,6 +37,7 @@ pipeline {
             }
         }
 
+
         stage('Checkout') {
             steps {
                 git branch: 'main', 
@@ -43,6 +45,25 @@ pipeline {
                     credentialsId: 'github-user'
             }
         }
+
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('SonarQube') {
+                        sh '''
+                        sonar-scanner \
+                        -Dsonar.projectKey=venta-automatizada \
+                        -Dsonar.sources=ms-python,ms-nestjs-bff,ms-nestjs-security,proyecto-frontApp \
+                        -Dsonar.exclusions=jenkins-docker/**,kubernetes/**,respaldos/**,README.md \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=${SONARQUBE_TOKEN}
+                        '''
+                    }
+                }
+            }
+        }
+
 
         stage('Build Docker Images') {
             parallel {
@@ -173,40 +194,42 @@ pipeline {
             }
         }
 
+
         stage('Deploy to Kubernetes') {
             steps {
                 script {
                     try {
-                        // Estableciendo la variable KUBECONFIG
-                        echo "Configurando KUBECONFIG..."
-                        sh 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json'
-                        sh 'echo "export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json" >> ~/.bashrc'
-                        sh '. ~/.bashrc'
-                        sh 'echo "export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json" >> ~/.zshrc'
-                        sh '. ~/.zshrc'
+                        echo "Configurando el contexto de Minikube..."
 
-                        // Verificación de directorio actual
-                        echo "Contenido del directorio actual:"
-                        sh 'pwd && ls -la'
+                        // Activar el entorno Docker de Minikube
+                        sh 'eval $(minikube docker-env)'
 
-                        // Aplicando los archivos YAML para el despliegue
+                        // Establecer el contexto de Minikube
+                        sh 'kubectl config use-context minikube'
+
+                        // Verificar el contexto actual
+                        sh 'kubectl config current-context'
+
+                        // Aplicar los manifiestos de Kubernetes
                         echo "Aplicando los archivos YAML..."
                         sh '''
-                        kubectl apply -f /var/jenkins_home/workspace/pipline_venta_automatizada/kubernetes/web/desarrollo || {
+                        kubectl apply -f kubernetes/web/desarrollo || {
                             echo "Error al aplicar los manifiestos YAML";
                             exit 1;
                         }
                         '''
-                        
-                        // Espera para que los pods inicien correctamente
+
+                        // Esperar que los pods arranquen
                         echo "Esperando a que los pods se inicien..."
                         sh 'sleep 10'
+
                     } catch (Exception e) {
                         error "Error en el despliegue: ${e}"
                     }
                 }
             }
         }
+
     }
 
     post {

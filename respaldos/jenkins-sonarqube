@@ -49,14 +49,17 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqubetest') {
-                    sh """
+                script {
+                    withSonarQubeEnv('SonarQube') {
+                        sh '''
                         sonar-scanner \
-                        -Dsonar.projectKey=VENTA-AUTOMATIZADA \
-                        -Dsonar.sources=ms-nestjs-bff,ms-python,ms-nestjs-security,proyecto-frontApp \
-                        -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=${sonarqube}
-                    """
+                        -Dsonar.projectKey=venta-automatizada \
+                        -Dsonar.sources=ms-python,ms-nestjs-bff,ms-nestjs-security,proyecto-frontApp \
+                        -Dsonar.exclusions=jenkins-docker/**,kubernetes/**,respaldos/**,README.md \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=${SONARQUBE_TOKEN}
+                        '''
+                    }
                 }
             }
         }
