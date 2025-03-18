@@ -752,3 +752,4 @@ Ejecuta el SonarQube Scanner con las opciones necesarias para analizar el códig
 pruebas pipline 18/03/2025
 pruebas pipline 18/03/2025
 pruebas pipline 18/03/2025
+pruebas pipline 18/03/2025
