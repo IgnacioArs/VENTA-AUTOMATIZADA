@@ -1,5 +1,4 @@
 Para ms-python:
-
 Copiar código
 docker build -t ms-python-desarrollo-devops --build-arg ENTORNO_ENV=desarrollo ./ms-python
 docker build -t ms-python-produccion-devops --build-arg ENTORNO_ENV=produccion ./ms-python
