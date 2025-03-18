@@ -209,6 +209,7 @@ env:
           runAsGroup: 0 # Ejecuta como root
 
 
+
 verificar grupo de jenkins
 groups jenkins
 
