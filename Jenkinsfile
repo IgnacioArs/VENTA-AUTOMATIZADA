@@ -199,30 +199,30 @@ pipeline {
             steps {
                 script {
                     try {
-                        echo "Configurando el contexto de Minikube..."
+                        // Estableciendo la variable KUBECONFIG
+                        echo "Configurando KUBECONFIG..."
+                        sh 'export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json'
+                        sh 'echo "export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json" >> ~/.bashrc'
+                        sh '. ~/.bashrc'
+                        sh 'echo "export KUBECONFIG=/var/jenkins_home/.minikube/profiles/minikube/config.json" >> ~/.zshrc'
+                        sh '. ~/.zshrc'
 
-                        // Activar el entorno Docker de Minikube
-                        sh 'eval $(minikube docker-env)'
+                        // Verificación de directorio actual
+                        echo "Contenido del directorio actual:"
+                        sh 'pwd && ls -la'
 
-                        // Establecer el contexto de Minikube
-                        sh 'kubectl config use-context minikube'
-
-                        // Verificar el contexto actual
-                        sh 'kubectl config current-context'
-
-                        // Aplicar los manifiestos de Kubernetes
+                        // Aplicando los archivos YAML para el despliegue
                         echo "Aplicando los archivos YAML..."
                         sh '''
-                        kubectl apply -f kubernetes/web/desarrollo || {
+                        kubectl apply -f /var/jenkins_home/workspace/pipline_venta_automatizada/kubernetes/web/desarrollo || {
                             echo "Error al aplicar los manifiestos YAML";
                             exit 1;
                         }
                         '''
-
-                        // Esperar que los pods arranquen
+                        
+                        // Espera para que los pods inicien correctamente
                         echo "Esperando a que los pods se inicien..."
                         sh 'sleep 10'
-
                     } catch (Exception e) {
                         error "Error en el despliegue: ${e}"
                     }
