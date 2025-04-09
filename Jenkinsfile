@@ -55,7 +55,7 @@ pipeline {
                         -Dsonar.projectKey=venta-automatizada \
                         -Dsonar.sources=ms-python,ms-nestjs-bff,ms-nestjs-security,proyecto-frontApp \
                         -Dsonar.exclusions=jenkins-docker/**,kubernetes/**,respaldos/**,README.md \
-                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.host.url=http://sonarqube:9000 \
                         -Dsonar.login=${SONARQUBE_TOKEN}
                         '''
                     }
