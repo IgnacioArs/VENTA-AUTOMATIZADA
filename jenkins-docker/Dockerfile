@@ -1,4 +1,4 @@
-# Dockerfile actualizado para Jenkins con Minikube y pytest
+# Dockerfile actualizado para Jenkins con Minikube, pytest y SonarScanner
 FROM jenkins/jenkins:latest
 
 # Cambia al usuario root para instalar dependencias
@@ -24,8 +24,25 @@ RUN apt-get update && \
         nodejs \
         npm \
         python3-venv \
+        unzip \
         nano && \
     apt-get clean
+
+# Instala SonarScanner (última versión estable disponible públicamente)
+RUN apt-get update && apt-get install -y unzip wget && \
+    cd /opt && \
+    wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.0.2.4839-linux-x64.zip && \
+    unzip sonar-scanner-cli-7.0.2.4839-linux-x64.zip && \
+    mv sonar-scanner-7.0.2.4839-linux-x64 sonar-scanner && \
+    rm sonar-scanner-cli-7.0.2.4839-linux-x64.zip && \
+    echo 'export PATH=$PATH:/opt/sonar-scanner/bin' >> /etc/profile && \
+    echo 'export SONAR_SCANNER_HOME=/opt/sonar-scanner' >> /etc/profile
+
+
+# Agrega SonarScanner al PATH
+ENV PATH="$PATH:/opt/sonar-scanner/bin"
+ENV SONAR_SCANNER_HOME=/opt/sonar-scanner
+
 
 # Agrega Docker's GPG key
 RUN install -m 0755 -d /etc/apt/keyrings && \
@@ -79,7 +96,7 @@ RUN mkdir -p /var/jenkins_home/.kube && \
     touch /var/jenkins_home/.kube/config && \
     chown -R jenkins:jenkins /var/jenkins_home/.kube && \
     mkdir -p /var/jenkins_home/workspace && \
-    chmod -R 775 /var/jenkins_home/workspace 
+    chmod -R 775 /var/jenkins_home/workspace
 
 # Exporta la variable de entorno KUBECONFIG
 ENV KUBECONFIG=/var/jenkins_home/.kube/config
@@ -111,6 +128,7 @@ EXPOSE 50000
 
 # Comando de inicio
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
 
 
 

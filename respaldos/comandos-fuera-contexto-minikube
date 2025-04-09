@@ -14,7 +14,41 @@ docker exec -u root -it jenkins bash
 chown -R jenkins:jenkins /var/jenkins_home
 chmod -R 777 /var/jenkins_home
 docker restart jenkins
+----------------------------------------------------------------------------
+CONFIGURAR SONARQUBE
+1️⃣ Configuración en Jenkins (SonarQube Global Settings)
+📌 SonarQube Servers
+Ve a "Administrar Jenkins" → "Configuración del sistema" → "SonarQube Servers" y añade una nueva instancia de SonarQube:
 
+Name: SonarQube
+URL del servidor: http://localhost:9000 (o la IP donde esté corriendo SonarQube)
+Server authentication token: 🔑 Debes generar un token en SonarQube:
+Entra a http://localhost:9000
+Ve a "My Account" → "Security" → "Generate Tokens"
+Copia el token y agrégalo en Jenkins.
+secret text : SONARQUBE_TOKEN
+📌 SonarQube Scanner
+Ve a "Administrar Jenkins" → "Global Tool Configuration" → "SonarQube Scanner" y añade una instalación:
+
+Name: SonarScanner
+Instalar automáticamente: ✅ (opcional)
+Versión: SonarQube Scanner 7.0.2.4839 (o la más reciente)
+
+LUEGO INSTALARLO DENTRO DEL CONTENEDOR SonarScanner
+docker exec -u root -it jenkins bash
+
+apt update && apt install -y unzip wget
+cd /opt
+wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-7.0.2.4839-linux.zip
+unzip sonar-scanner-7.0.2.4839-linux.zip
+mv sonar-scanner-7.0.2.4839-linux sonar-scanner
+
+echo 'export PATH=$PATH:/opt/sonar-scanner/bin' >> ~/.bashrc
+echo 'export SONAR_SCANNER_HOME=/opt/sonar-scanner' >> ~/.bashrc
+source ~/.bashrc
+
+
+----------------------------------------------------------------------------
 
 PASSWORD JENKINS
 docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
