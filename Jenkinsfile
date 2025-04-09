@@ -50,7 +50,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv('SonarQube') {
+                    withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
                         sh '''
                         sonar-scanner \
                         -Dsonar.projectKey=venta-automatizada \
