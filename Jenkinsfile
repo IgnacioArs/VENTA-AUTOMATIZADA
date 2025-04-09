@@ -54,8 +54,8 @@ pipeline {
                         sh '''
                         sonar-scanner \
                         -Dsonar.projectKey=venta-automatizada \
-                        -Dsonar.sources=ms-python,ms-nestjs-bff,ms-nestjs-security,proyecto-frontApp \
-                        -Dsonar.exclusions=jenkins-docker/**,kubernetes/**,respaldos/**,README.md \
+                        -Dsonar.sources=... \
+                        -Dsonar.exclusions=... \
                         -Dsonar.host.url=http://localhost:9000 \
                         -Dsonar.login=${SONARQUBE_TOKEN}
                         '''

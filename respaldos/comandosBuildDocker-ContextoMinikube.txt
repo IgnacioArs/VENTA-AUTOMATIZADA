@@ -750,5 +750,35 @@ sh "${tool 'sonarscaner'}/bin/sonar-scanner ..."
 Ejecuta el SonarQube Scanner con las opciones necesarias para analizar el código.
 
 
+
+***************************************************************************************
+NUEVA CONFIGURACION DE SONARQUBE
+
+1️⃣ Configuración en Jenkins (SonarQube Global Settings)
+📌 SonarQube Servers
+Ve a "Administrar Jenkins" → "Configuración del sistema" → "SonarQube Servers" y añade una nueva instancia de SonarQube:
+
+Name: SonarQube
+
+URL del servidor: http://localhost:9000 (o la IP donde esté corriendo SonarQube)
+
+Server authentication token: 🔑 Debes generar un token en SonarQube:
+
+Entra a http://localhost:9000
+
+Ve a "My Account" → "Security" → "Generate Tokens"
+
+Copia el token y agrégalo en Jenkins.
+
+📌 SonarQube Scanner
+Ve a "Administrar Jenkins" → "Global Tool Configuration" → "SonarQube Scanner" y añade una instalación:
+
+Name: SonarScanner
+
+Instalar automáticamente: ✅ (opcional)
+
+Versión: SonarQube Scanner 7.0.2.4839 (o la más reciente)
+
+
 pruebas pipline 18/03/2025
 pruebas pipline 18/03/2025
