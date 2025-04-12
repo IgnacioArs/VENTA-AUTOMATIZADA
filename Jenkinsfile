@@ -52,16 +52,13 @@ pipeline {
                     withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
                         sh '''
                         sonar-scanner \
-                        -Dsonar.projectKey=venta-automatizada \
-                        -Dsonar.sources=ms-python,ms-nestjs-bff,ms-nestjs-security,proyecto-frontApp \
-                        -Dsonar.exclusions=jenkins-docker/**,kubernetes/**,respaldos/**,README.md \
-                        -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=${SONARQUBE_TOKEN}
+                        -Dsonar.token=$SONAR_TOKEN
                         '''
                     }
                 }
             }
         }
+
 
         stage('Build Docker Images') {
             parallel {

@@ -1,0 +1,17 @@
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+                        sh '''
+                        sonar-scanner \
+                        -Dsonar.projectKey=venta-automatizada \
+                        -Dsonar.token=$SONAR_TOKEN \
+                        -Dsonar.sources=ms-python,ms-nestjs-security,ms-nestjs-bff,proyecto-frontApp \
+                        -Dsonar.exclusions=**/venv/**,**/node_modules/**,jenkins-docker/**,kubernetes/**,respaldos/**,README.md \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.sourceEncoding=UTF-8
+                        '''
+                    }
+                }
+            }
+        }
