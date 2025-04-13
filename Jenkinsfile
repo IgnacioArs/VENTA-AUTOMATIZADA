@@ -48,13 +48,16 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                        sh '''
-                        sonar-scanner \
-                        -Dsonar.token=$SONAR_TOKEN \
-                        -Dproject.settings=sonar-project.properties
-                        '''
+                dir('./proyecto-frontApp') {
+                    script {
+                        sh 'npm install --legacy-peer-deps'
+                        withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+                            sh '''
+                            sonar-scanner \
+                            -Dsonar.token=$SONAR_TOKEN \
+                            -Dproject.settings=sonar-project.properties
+                            '''
+                        }
                     }
                 }
             }
@@ -135,6 +138,8 @@ pipeline {
                     steps {
                         dir('./proyecto-frontApp') {
                             script {
+                                echo "Instalando dependencias frontend..."
+                                sh 'npm install --legacy-peer-deps'
                                 echo "Ejecutando pruebas de frontend..."
                                 sh 'npm run test || echo "Pruebas fallidas, revisa los logs"'
                             }
