@@ -6,6 +6,7 @@ HACEMOS CORRER LOS CONTENEDORES
 docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
 docker build -t jenkins:latest .
 docker run -d --name jenkins -p 8080:8080 jenkins/jenkins:lts
+docker run -d --name sonarqube -p 9000:9000 sonarqube
 --------------------------------------------------------------------------
 Crear la imagen de jenkins con nuestro Dockerfile jenkins-docker
 docker build -t jenkins:latest .
