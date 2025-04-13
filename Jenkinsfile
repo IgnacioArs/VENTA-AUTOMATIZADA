@@ -52,13 +52,13 @@ pipeline {
                     withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
                         sh '''
                         sonar-scanner \
-                        -Dsonar.token=$SONAR_TOKEN
+                        -Dsonar.token=$SONAR_TOKEN \
+                        -Dproject.settings=sonar-project.properties
                         '''
                     }
                 }
             }
         }
-
 
         stage('Build Docker Images') {
             parallel {
