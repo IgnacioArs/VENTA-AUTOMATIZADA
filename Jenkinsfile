@@ -46,6 +46,7 @@ pipeline {
             }
         }
 
+
         stage('SonarQube Analysis') {
             steps {
                 dir('./proyecto-frontApp') {
@@ -62,6 +63,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Build Docker Images') {
             parallel {
@@ -138,8 +140,6 @@ pipeline {
                     steps {
                         dir('./proyecto-frontApp') {
                             script {
-                                echo "Instalando dependencias frontend..."
-                                sh 'npm install --legacy-peer-deps'
                                 echo "Ejecutando pruebas de frontend..."
                                 sh 'npm run test || echo "Pruebas fallidas, revisa los logs"'
                             }
