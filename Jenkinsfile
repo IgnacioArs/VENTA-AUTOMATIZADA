@@ -47,14 +47,18 @@ pipeline {
          }
  
 
-  
+        stage('Setup Minikube Docker Env') {
+            steps {
+                sh 'eval $(minikube -p minikube docker-env)'
+            }
+        }
+ 
          stage('Build Docker Images') {
              parallel {
                  stage('Build Frontend') {
                      steps {
                          script {
                              sh '''
-			     eval \$(minikube -p minikube docker-env)
                              docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops \
                                  --build-arg VITE_ENTORNO=desarrollo \
                                  --build-arg VITE_PUERTO_DESARROLLO=3003 \
@@ -70,7 +74,6 @@ pipeline {
                      steps {
                          script {
                              sh '''
-		             eval \$(minikube -p minikube docker-env)
                              docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-bff-desarrollo-devops \
                                  --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-bff
                              '''
@@ -81,7 +84,6 @@ pipeline {
                      steps {
                          script {
                              sh '''
-                             eval \$(minikube -p minikube docker-env)
                              docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-security-desarrollo-devops \
                                  --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-security
                              '''
@@ -92,7 +94,6 @@ pipeline {
                      steps {
                          script {
                              sh '''
-			     eval \$(minikube -p minikube docker-env)
                              docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-python-desarrollo-devops \
                                  --build-arg ENTORNO_ENV=desarrollo ./ms-python
                              '''
@@ -200,35 +201,37 @@ pipeline {
         }
  
  
-         stage('Deploy to Kubernetes') {
-             steps {
-                 script {
-                     try {
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    try {
+                        // Entrar en el contexto del Docker de Minikube
+                        sh "eval \$(minikube -p minikube docker-env) && docker info"
 
-			 sh "eval \$(minikube docker-env) && docker info"
- 
-                         // Verificación de directorio actual
-                         echo "Contenido del directorio actual:"
-                         sh 'pwd && ls -la'
- 
-                         // Aplicando los archivos YAML para el despliegue
-                         echo "Aplicando los archivos YAML..."
-                         sh '''
-                         kubectl apply -f /var/jenkins_home/workspace/pipline_venta_automatizada/kubernetes/web/desarrollo || {
-                             echo "Error al aplicar los manifiestos YAML";
-                             exit 1;
-                         }
-                         '''
- 
-                         // Espera para que los pods inicien correctamente
-                         echo "Esperando a que los pods se inicien..."
-                         sh 'sleep 10'
-                     } catch (Exception e) {
-                         error "Error en el despliegue: ${e}"
-                     }
-                 }
-             }
-         }
+                        // Mostrar contenido del workspace
+                        echo "Contenido del directorio actual:"
+                        sh "pwd && ls -la"
+
+                        // Aplicar manifiestos YAML con manejo de errores
+                        echo "Aplicando los archivos YAML..."
+                        sh """
+                            if ! kubectl apply -f kubernetes/web/desarrollo; then
+                                echo "Error al aplicar los manifiestos YAML"
+                                exit 1
+                            fi
+                        """
+
+                        // Esperar a que los pods arranquen
+                        echo "Esperando a que los pods se inicien..."
+                        sh "sleep 10"
+
+                    } catch (Exception e) {
+                        error "Error en el despliegue: ${e}"
+                    }
+                }
+            }
+        }
+
  
      }
  
