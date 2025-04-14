@@ -205,7 +205,7 @@ pipeline {
                  script {
                      try {
 
-			 eval $(minikube -p minikube docker-env)
+			 sh "eval \$(minikube docker-env) && docker info"
  
                          // Verificación de directorio actual
                          echo "Contenido del directorio actual:"
