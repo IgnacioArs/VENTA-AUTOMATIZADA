@@ -54,7 +54,7 @@ pipeline {
                      steps {
                          script {
                              sh '''
-			     eval $(minikube -p minikube docker-env)
+			     eval \$(minikube -p minikube docker-env)
                              docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:proyecto-frontapp-desarrollo-devops \
                                  --build-arg VITE_ENTORNO=desarrollo \
                                  --build-arg VITE_PUERTO_DESARROLLO=3003 \
@@ -70,7 +70,7 @@ pipeline {
                      steps {
                          script {
                              sh '''
-		             eval $(minikube -p minikube docker-env)
+		             eval \$(minikube -p minikube docker-env)
                              docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-bff-desarrollo-devops \
                                  --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-bff
                              '''
@@ -81,7 +81,7 @@ pipeline {
                      steps {
                          script {
                              sh '''
-                             eval $(minikube -p minikube docker-env)
+                             eval \$(minikube -p minikube docker-env)
                              docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-nestjs-security-desarrollo-devops \
                                  --build-arg ENTORNO_ENV=desarrollo ./ms-nestjs-security
                              '''
@@ -92,7 +92,7 @@ pipeline {
                      steps {
                          script {
                              sh '''
-			     eval $(minikube -p minikube docker-env)
+			     eval \$(minikube -p minikube docker-env)
                              docker build -t $DOCKER_REGISTRY/$PROJECT_NAMESPACE:ms-python-desarrollo-devops \
                                  --build-arg ENTORNO_ENV=desarrollo ./ms-python
                              '''
