@@ -48,23 +48,27 @@ pipeline {
  
 
         stage('Setup Minikube Docker Env') {
-            steps {
-                script {
-                    def dockerEnv = sh(
-                        script: "minikube -p minikube docker-env",
-                        returnStdout: true
-                    ).trim()
-                    
-                    // Esto ejecuta TODO en una sola shell para mantener las variables
-                    sh """
-                        ${dockerEnv}
-                        echo 'Minikube Docker environment set'
-                        docker info
-                    """
-                }
-            }
-        }
+  	       steps {
+    	         script {
+                 // Diagnóstico
+                 sh "minikube status || true"
+            
+                // Intento de obtener entorno
+                def dockerEnv = sh(
+                script: "minikube -p minikube docker-env",
+                returnStdout: true
+                ).trim()
+            
+               // Ejecutar con el entorno correcto
+               sh """
+                ${dockerEnv}
+                docker info
+            """
+               }
+           }
+       }
 
+	
 
  
          stage('Build Docker Images') {
